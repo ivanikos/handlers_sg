@@ -8,14 +8,19 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 import time
 
+with open('account_data.txt', 'r') as ad:
+    ac_data = ad.readlines()
+    print(ac_data[0].strip(), ac_data[1].strip(), ac_data[2].strip())
+
 driver = webdriver.Chrome(r"C:\Users\ignatenkoia\Documents\python\act_work\weldlog_summary\chromedriver.exe")
-driver.get('https://agpz.sgaz.pro/faces/zeroLevelOOP')
+driver.get(f'{ac_data[0].strip()}')
+
 
 id_box = driver.find_element_by_id('loginInput')
-id_box.send_keys('IgnatenkoIA')
+id_box.send_keys(f'{ac_data[1].strip()}')
 
 passw_box = driver.find_element_by_id('passInput')
-passw_box.send_keys('Buyfntyrj22')
+passw_box.send_keys(f'{ac_data[2].strip()}')
 
 login_button = driver.find_element_by_id('enter_btn')
 login_button.click()
