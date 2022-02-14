@@ -127,3 +127,12 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+/chromedriver.exe
+/account_data.txt
+*.xlsx
+*.xlk
+/HANDLER_Phase_1_test_added.py
+/HANDLER_Phase_2_test_added.py
+/selen_try_parse_naks.py
+/test_date.py
+/weldlog_summary_test_added.py
