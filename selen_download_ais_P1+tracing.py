@@ -8,19 +8,19 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 import time
 
-options = webdriver.ChromeOptions()
-options.add_argument('headless')
+with open('account_data.txt', 'r') as ad:
+    ac_data = ad.readlines()
+    print(ac_data[0].strip(), ac_data[1].strip(), ac_data[2].strip())
 
 driver = webdriver.Chrome(r"C:\Users\ignatenkoia\Documents\python\act_work\weldlog_summary\chromedriver.exe")
-driver.get('https://agpz.sgaz.pro/faces/zeroLevelOOP')
+driver.get(f'{ac_data[0].strip()}')
 
-print('Запустился в фоновом режиме.')
 
 id_box = driver.find_element_by_id('loginInput')
-id_box.send_keys('IgnatenkoIA')
+id_box.send_keys(f'{ac_data[1].strip()}')
 
 passw_box = driver.find_element_by_id('passInput')
-passw_box.send_keys('Buyfntyrj22')
+passw_box.send_keys(f'{ac_data[2].strip()}')
 
 login_button = driver.find_element_by_id('enter_btn')
 login_button.click()
@@ -60,7 +60,7 @@ driver.find_element_by_id('C8zl006::content').click()
 time.sleep(5)
 driver.find_element_by_xpath('//div[@id="k6gtgh_10"]').click()
 time.sleep(5)
-driver.find_element_by_xpath('//div[@id="hyj3sh_5-dropdown-target"]').click()
+driver.find_element_by_xpath('//*[@id="hyj3sh_2-dropdown-target"]').click()
 
 time.sleep(1)
 element = driver.find_element_by_xpath('//div[@title="Технологические трубопроводы"]')
@@ -168,7 +168,7 @@ driver.find_element_by_id('C8zl006::content').click()
 time.sleep(5)
 driver.find_element_by_xpath('//div[@id="k6gtgh_10"]').click()
 time.sleep(3)
-driver.find_element_by_xpath('//div[@id="hyj3sh_5-dropdown-target"]').click()
+driver.find_element_by_xpath('//*[@id="hyj3sh_2-dropdown-target"]').click()
 time.sleep(1)
 driver.find_element_by_xpath('//div[@title="Антикоррозийная защита"]').click()
 time.sleep(1)
