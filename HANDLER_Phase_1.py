@@ -9,64 +9,70 @@ import pandas as pd
 
 
 # Создание общего словаря ТП-------------------------------------------
-wb_phase1 = xl.load_workbook('Phase 1 - ISO list vs Testpacks - 14.11.2021.xlsx')
-sheet_TP_phase1 = wb_phase1['Лист1']
-sheet_iso_tp_phase1 = wb_phase1['TP ISO FOLLOW UP']
+wb_phase1 = xl.load_workbook(r'C:\Users\ignatenkoia\PycharmProjects\GIT_PROJECTS\handlers_sg\БД ТП ФАЗА 1.xlsx')
+sheet_TP_phase1 = wb_phase1['TP_PHASE1']
+sheet_iso_tp_phase1 = wb_phase1['ISO_PHASE1']
 
 testpackages_p1 = {}
 
-for l in sheet_TP_phase1['A2':'J2743']:
-    tp_number = str(l[0].value).strip()
-    tp_short_code_BD = str(l[1].value).strip()
+for l in sheet_TP_phase1['A3':'K2764']:
+    tp_number = ' '
+    tp_short_code_BD = str(l[0].value).strip()
     title = str(l[2].value).strip()
-    fluid = str(l[4].value).strip()
-    category_tp = str(l[5].value)
-    erection_rfi = ' ' + str(l[6].value).strip()
-    test_rfi = ' ' + str(l[7].value).strip()
-    airb_rfi = ' ' + str(l[8].value).strip()
-    reinst_rfi = ' ' + str(l[9].value).strip()
-    length = round(float(str(l[3].value)), 3)
+    fluid = str(l[3].value).strip()
+    category_tp = str(l[4].value)
+    erection_rfi = ' ' + str(l[5].value).strip()
+    test_rfi = ' ' + str(l[6].value).strip()
+    airb_rfi = ' ' + str(l[7].value).strip()
+    reinst_rfi = ' ' + str(l[8].value).strip()
+    length = round(float(str(l[10].value)), 3)
 
     testpackages_p1[tp_short_code_BD] = [title, fluid, category_tp, length, '', '', erection_rfi, test_rfi, airb_rfi,
                                          reinst_rfi, tp_number]
 
-print(len(testpackages_p1.keys()))
+print(f'В словаре {len(testpackages_p1.keys())}  ТП.')
 
 isotpdic_p1 = {}
-for i in sheet_iso_tp_phase1['A2':'O17787']:
-    isometric = str(i[0].value).strip()
-    testpack = str(i[3].value).strip()
-    isolength = round(float(str(i[1].value)), 3)
-    title_iso = str(i[4].value).strip()
-    type_insulation = str(i[5].value).strip()
-    try:
-        area_insulation_tt_zra = round(float(i[6].value), 3)
-    except:
-        area_insulation_tt_zra = str(i[6].value).strip()
-    try:
-        area_ins_zra = round(float(i[7].value), 3)
-    except:
-        area_ins_zra = str(i[7].value).strip()
-    try:
-        count_ins_zra = round(float(i[8].value), 3)
-    except:
-        count_ins_zra = str(i[8].value).strip()
-    try:
-        area_insulation_tt = round(float(i[9].value), 3)
-    except:
-        area_insulation_tt = str(i[9].value).strip()
+sc_isotpdic_p1 = {}
 
-    rfi_min_vata_tt = ' ' + str(i[10].value).strip()
-    rfi_metall_tt = ' ' + str(i[11].value).strip()
-    rfi_foamglass_tt = ' ' + str(i[12].value).strip()
-    rfi_metall_box = ' ' + str(i[13].value).strip()
-    rfi_therm_cover = ' ' + str(i[14].value).strip()
+for i in sheet_iso_tp_phase1['A3':'S17651']:
+    sc_iso_tp = str(i[3].value).strip() + str(i[0].value).strip()
+    isometric = str(i[3].value).strip()
+    testpack = str(i[0].value).strip()
+    isolength = round(float(str(i[8].value)), 3)
+    title_iso = str(i[4].value).strip()
+    type_insulation = str(i[9].value).strip()
+    try:
+        area_insulation_tt_zra = round(float(i[10].value), 3)
+    except:
+        area_insulation_tt_zra = str(i[10].value).strip()
+    try:
+        area_ins_zra = round(float(i[11].value), 3)
+    except:
+        area_ins_zra = str(i[11].value).strip()
+    try:
+        count_ins_zra = round(float(i[12].value), 3)
+    except:
+        count_ins_zra = str(i[12].value).strip()
+    try:
+        area_insulation_tt = round(float(i[13].value), 3)
+    except:
+        area_insulation_tt = str(i[13].value).strip()
+
+    rfi_min_vata_tt = ' ' + str(i[14].value).strip()
+    rfi_metall_tt = ' ' + str(i[15].value).strip()
+    rfi_foamglass_tt = ' ' + str(i[16].value).strip()
+    rfi_metall_box = ' ' + str(i[17].value).strip()
+    rfi_therm_cover = ' ' + str(i[18].value).strip()
 
     isotpdic_p1[isometric] = [testpack, isolength, title_iso, type_insulation, area_insulation_tt, area_ins_zra,
                               count_ins_zra, area_insulation_tt_zra, rfi_min_vata_tt, rfi_metall_tt, rfi_foamglass_tt,
                               rfi_metall_box, rfi_therm_cover, '']
+    sc_isotpdic_p1[sc_iso_tp] = [isometric, testpack, isolength, title_iso, '', '', '', '']
 
 wb_phase1.close()
+print(f'Уникальных изометрий - {len(sc_isotpdic_p1.keys())} \n '
+      f'Переходящих изометрий - {len(sc_isotpdic_p1.keys()) - len(isotpdic_p1.keys())}')
 print('Общий словарь создан')
 # Общий словарь создан--------------------------------------------------
 
@@ -159,7 +165,8 @@ for i in sheet['B2':'AO30000']:
                 testpackages_p1[tp_shortname][6] = rfi_number
             if 'испыт' and 'рочност' in description_rfi:
                 testpackages_p1[tp_shortname][7] = rfi_number
-            if 'испытаний технологического трубопровода  на прочность' in description_rfi:
+            if 'испытаний технологического трубопровода  на прочность' in description_rfi or 'Гидравлические испытания'\
+                    in description_rfi:
                 testpackages_p1[tp_shortname][7] = rfi_number
             if 'сборки технологических трубопроводов в проект' in description_rfi:
                 testpackages_p1[tp_shortname][9] = rfi_number
@@ -197,7 +204,46 @@ for i in sheet['B2':'AO30000']:
                 if 'родувка' in description_rfi:
                     testpackages_p1[tp_shortname][8] = rfi_number + ' ФОП'
 
+
+
     for isom in list_iso.split(';'):
+        if isom.strip() + tp_shortname in sc_isotpdic_p1.keys():
+            if 'Принято' in category_cancelled:
+                if 'Монтаж технологического трубопровода в рамках' in description_rfi:
+                    sc_isotpdic_p1[isom.strip() + tp_shortname][4] = rfi_number
+                if 'испыт' and 'рочност' in description_rfi:
+                    sc_isotpdic_p1[isom.strip() + tp_shortname][5] = rfi_number
+                if 'испытаний технологического трубопровода  на прочность' in description_rfi:
+                    sc_isotpdic_p1[isom.strip() + tp_shortname][5] = rfi_number
+                if 'сборки технологических трубопроводов в проект' in description_rfi:
+                    sc_isotpdic_p1[isom.strip() + tp_shortname][7] = rfi_number
+                if 'родувка' in description_rfi:
+                    sc_isotpdic_p1[isom.strip() + tp_shortname][6] = rfi_number
+            else:
+                if 'подтвержд' in comment:
+                    if 'Монтаж технологического трубопровода в рамках' in description_rfi:
+                        sc_isotpdic_p1[isom.strip() + tp_shortname][4] = rfi_number + ' ФОП'
+                    if 'испыт' and 'рочност' in description_rfi:
+                        sc_isotpdic_p1[isom.strip() + tp_shortname][5] = rfi_number + ' ФОП'
+                    if 'испытаний технологического трубопровода  на прочность' in description_rfi:
+                        sc_isotpdic_p1[isom.strip() + tp_shortname][5] = rfi_number + ' ФОП'
+                    if 'сборки технологических трубопроводов в проект' in description_rfi:
+                        sc_isotpdic_p1[isom.strip() + tp_shortname][7] = rfi_number + ' ФОП'
+                    if 'родувка' in description_rfi:
+                        sc_isotpdic_p1[isom.strip() + tp_shortname][6] = rfi_number + ' ФОП'
+                if 'зафиксирован' in comment:
+                    if 'Монтаж технологического трубопровода в рамках' in description_rfi:
+                        sc_isotpdic_p1[isom.strip() + tp_shortname][4] = rfi_number + ' ФОП'
+                    if 'испыт' and 'рочност' in description_rfi:
+                        sc_isotpdic_p1[isom.strip() + tp_shortname][5] = rfi_number + ' ФОП'
+                    if 'испытаний технологического трубопровода  на прочность' in description_rfi:
+                        sc_isotpdic_p1[isom.strip() + tp_shortname][5] = rfi_number + ' ФОП'
+                    if 'сборки технологических трубопроводов в проект' in description_rfi:
+                        sc_isotpdic_p1[isom.strip() + tp_shortname][7] = rfi_number + ' ФОП'
+                    if 'родувка' in description_rfi:
+                        sc_isotpdic_p1[isom.strip() + tp_shortname][6] = rfi_number + ' ФОП'
+
+
         if isom.strip() in isotpdic_p1.keys():
             if 'дополн' in description_rfi:
                 if 'Принято' in category_cancelled:
@@ -252,8 +298,6 @@ for i in sheet['B2':'AO30000']:
                         if iso in isotpdic_p1.keys():
                             isotpdic_p1[iso.strip()][10] = rfi_number
 
-# isotpdic_p1[isometric] = [testpack0, isolength1, title_iso2, type_insulation3, area_insulation_tt4,
-# area_ins_zra5, count_ins_zra6, area_insulation_tt_zra7, rfi_min_vata_tt8, rfi_metall_tt9, rfi_foamglass_tt10, rfi_metall_box11, rfi_therm_cover12]
 # ------------------------------------------------------------
 
 print('Проверил Журнал заявок')
@@ -336,20 +380,22 @@ for key in isotpdic_p1.keys():
     except:
         pass
 
-# ---Проверка на проведение АЭ --------------------------------------
-wb_ae = xl.load_workbook('Испытания АЭ P2.xlsx')
-sheet_ae = wb_ae['Трубопроводы Р2']
-tp_done_ae = {}
-for i in sheet_ae['C200':'G1000']:
-    try:
-        date_ae = str(i[0].value)[0:10]
-        tp_ae = str(i[2].value).strip()
-        tp_done_ae[tp_ae] = date_ae
-    except:
-        pass
+# # ---Проверка на проведение АЭ --------------------------------------
+# wb_ae = xl.load_workbook('Испытания АЭ P2.xlsx')
+# sheet_ae = wb_ae['Трубопроводы Р2']
+# tp_done_ae = {}
+# for i in sheet_ae['C200':'G1000']:
+#     try:
+#         date_ae = str(i[0].value)[0:10]
+#         tp_ae = str(i[2].value).strip()
+#         tp_done_ae[tp_ae] = date_ae
+#     except:
+#         pass
+#
+# print('Информация о проведении АЭ добавлена.')
+# # ------------------------------------------------------------------
 
-print('Информация о проведении АЭ добавлена.')
-# ------------------------------------------------------------------
+
 n_dic_1_60 = {'NODRAH': ['Дренаж углеводородов', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
               'NHC4P+': ['Бутановая фракция', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
               'NHC3P+': ['Пропановая фракция', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -557,6 +603,12 @@ for i in n_list_1_70:
     n_list_1_60.append(i)
 n_list_1_60.append(empty_str)
 
+double_iso_summary_table_p1 = [['Изометрия', 'Тестпакет', 'Длина', 'Установка', 'RFI ERECTION', 'RFI TEST', 'RFI AIRBLOWING',
+                             'RFI REINSTATEMENT']]
+for key in sc_isotpdic_p1.keys():
+    double_iso_summary_table_p1.append([sc_isotpdic_p1[key][0], sc_isotpdic_p1[key][1], sc_isotpdic_p1[key][2],
+                                        sc_isotpdic_p1[key][3], sc_isotpdic_p1[key][4], sc_isotpdic_p1[key][5],
+                                        sc_isotpdic_p1[key][6], sc_isotpdic_p1[key][7]])
 # ЗАПИСЬ В ФАЙЛ------------------------------------------------
 
 workbook_summary_p1 = xlsxwriter.Workbook(f'Сводка по ФАЗЕ 1 на {datetime.datetime.now().strftime("%d.%m.%Y")}.xlsx')
@@ -704,8 +756,7 @@ ws3.set_column(11, 14, 15)
 ws3.set_column(15, 20, 22)
 ws3.autofilter('A1:T20000')
 
-for i, (
-testpack, ustan, flud, metr_ng, stat_id_1, stat_id_2, inst_rfi, test_rfi, elev, ten, odinn, twelve, thirteen, fourten,
+for i, (testpack, ustan, flud, metr_ng, stat_id_1, stat_id_2, inst_rfi, test_rfi, elev, ten, odinn, twelve, thirteen, fourten,
 fiveten, sixten, seventen, eighten, nineten, twenty, t_one) in enumerate(info_summary_iso_phase1, start=1):
     if 'CPECC' in elev:
         color = cell_format_green
@@ -755,6 +806,47 @@ fiveten, sixten, seventen, eighten, nineten, twenty, t_one) in enumerate(info_su
     ws3.write(f'S{i}', nineten, color_2)
     ws3.write(f'T{i}', twenty, color_2)
     ws3.write(f'U{i}', t_one, color_2)
+
+ws01 = workbook_summary_p1.add_worksheet('Double isometric')
+ws01.set_column(0, 0, 37)
+ws01.set_column(1, 1, 32)
+ws01.set_column(2, 3, 12)
+ws01.set_column(4, 7, 22)
+ws01.autofilter('A1:S20000')
+for i, (one, two, three, four, five, six, seven, eight) in enumerate(double_iso_summary_table_p1, start=1):
+    if one == 'Изометрия':
+        color = cell_format_hat
+        color.set_bold('bold')
+        color.set_text_wrap(text_wrap=1)
+        color_2 = cell_format_hat
+        color_2.set_bold('bold')
+        color_2.set_text_wrap(text_wrap=1)
+    elif eight:
+        color = cell_format_green
+        color.set_text_wrap(text_wrap=0)
+        color_2 = cell_format_ins
+        color_2.set_text_wrap(text_wrap=0)
+    else:
+        color = cell_format_blue
+        color.set_text_wrap(text_wrap=0)
+        color_2 = cell_format_ins
+        color_2.set_text_wrap(text_wrap=0)
+    try:
+        color.set_border(style=1)
+        color_2.set_border(style=1)
+    except:
+        pass
+
+    ws01.write(f'A{i}', one, color)
+    ws01.write(f'B{i}', two, color)
+    ws01.write(f'C{i}', three, color)
+    ws01.write(f'D{i}', four, color)
+    ws01.write(f'E{i}', five, color)
+    ws01.write(f'F{i}', six, color)
+    ws01.write(f'G{i}', seven, color)
+    ws01.write(f'H{i}', eight, color)
+
+
 
 workbook_summary_p1.close()
 print('Создан итоговый файл')

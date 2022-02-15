@@ -10,7 +10,7 @@ import time
 
 with open('account_data.txt', 'r') as ad:
     ac_data = ad.readlines()
-    print(ac_data[0].strip(), ac_data[1].strip(), ac_data[2].strip())
+
 
 driver = webdriver.Chrome(r"C:\Users\ignatenkoia\Documents\python\act_work\weldlog_summary\chromedriver.exe")
 driver.get(f'{ac_data[0].strip()}')
@@ -168,7 +168,7 @@ driver.find_element_by_id('C8zl006::content').click()
 time.sleep(5)
 driver.find_element_by_xpath('//div[@id="k6gtgh_10"]').click()
 time.sleep(3)
-driver.find_element_by_xpath('//*[@id="hyj3sh_2-dropdown-target"]').click()
+driver.find_element_by_xpath('//*[@id="hyj3sh_5-dropdown-target"]').click()
 time.sleep(1)
 driver.find_element_by_xpath('//div[@title="Антикоррозийная защита"]').click()
 time.sleep(1)

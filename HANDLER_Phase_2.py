@@ -1327,12 +1327,13 @@ for i, (testpack, ustan, flud, metr_ng, stat_id_1, stat_id_2, stat_id_3, inst_rf
     ws5.write(f'S{i}', seven, color_2)
 
 ws01 = workbook_summary.add_worksheet('Double_iso')
-ws01.set_column(0, 0, 32)
-ws01.set_column(1, 1, 28)
+ws01.set_column(0, 0, 37)
+ws01.set_column(1, 1, 32)
 ws01.set_column(2, 3, 12)
 ws01.set_column(4, 7, 22)
 
 ws01.autofilter('A1:S20000')
+
 for i, (one, two, three, four, five, six, seven, eight) in enumerate(double_iso_summary_table, start=1):
     if one == 'Изометрия':
         color = cell_format_hat
