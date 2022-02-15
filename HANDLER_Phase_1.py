@@ -426,6 +426,9 @@ n_list_1_70 = [['', f'Статус по ТП 1-70 на {datetime.datetime.now().strftime("%d
                                'Принята ОС, ТП', 'Остаток ОС, м.', 'Остаток ОС, ТП']]
 ITOG_list_1_70 = ['', 'Итого:', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 
+brief_summary = [['Краткая сводка 1-60', 'Дата ', f'{datetime.datetime.now().strftime("%d.%m.%Y")}',
+                  ' ', ' ']]
+
 for key in testpackages_p1.keys():
 
     if testpackages_p1[key][0] == '1-60':
@@ -495,6 +498,19 @@ n_list_1_60.append(ost_list_1_60)
 empty_str = [' * ', ' * ', ' * ', '  *  ', '  *  ', '  *  ', '  *  ', '  ', '  ', '  ', '  ', '', '', '-']
 n_list_1_60.append(empty_str)
 
+brief_summary.append(['Всего ТП/м.', f'{ITOG_list_1_60[3]}', 'Остаток, ТП', f'{round(ITOG_list_1_60[2], 3)}', 'Остаток, м.'])
+brief_summary.append(['Конструктив принят', f'{ITOG_list_1_60[5]}', f'{ost_list_1_60[5]}',
+                      f'{round(ITOG_list_1_60[4], 3)}', f'{round(ost_list_1_60[4], 3)}'])
+brief_summary.append(['Испытания зафиксированы', f'{ITOG_list_1_60[7]}', f'{ost_list_1_60[7]}',
+                      f'{round(ITOG_list_1_60[6], 3)}', f'{round(ost_list_1_60[6], 3)}'])
+brief_summary.append(['Продувка зафиксирована', f'{ITOG_list_1_60[9]}', f'{ost_list_1_60[9]}',
+                      f'{round(ITOG_list_1_60[8], 3)}', f'{round(ost_list_1_60[8], 3)}'])
+brief_summary.append(['Обратная сборка принята', f'{ITOG_list_1_60[11]}', f'{ost_list_1_60[11]}',
+                      f'{round(ITOG_list_1_60[10], 3)}', f'{round(ost_list_1_60[10], 3)}'])
+brief_summary.append(['*', '*', '*', '*', '*',])
+brief_summary.append(['Краткая сводка 1-70', 'Дата ', f'{datetime.datetime.now().strftime("%d.%m.%Y")}',
+                  ' ', ' '])
+
 for key in n_dic_1_70.keys():
     n_list_1_70.append([key, n_dic_1_70[key][0], n_dic_1_70[key][1], n_dic_1_70[key][2], n_dic_1_70[key][3],
                         n_dic_1_70[key][4], n_dic_1_70[key][5], n_dic_1_70[key][6], n_dic_1_70[key][7],
@@ -520,6 +536,17 @@ ost_list_1_70 = ['', 'Остаток:', '', '', ITOG_list_1_70[2] - ITOG_list_1_70[4], 
                  ITOG_list_1_70[2] - ITOG_list_1_70[10], ITOG_list_1_70[3] - ITOG_list_1_70[11], '', '']
 n_list_1_70.append(ost_list_1_70)
 
+brief_summary.append(['Всего ТП/м.', f'{ITOG_list_1_70[3]}', 'Остаток, ТП', f'{round(ITOG_list_1_70[2], 3)}', 'Остаток, м.'])
+brief_summary.append(['Конструктив принят', f'{ITOG_list_1_70[5]}', f'{ost_list_1_70[5]}',
+                      f'{round(ITOG_list_1_70[4], 3)}', f'{round(ost_list_1_70[4], 3)}'])
+brief_summary.append(['Испытания зафиксированы', f'{ITOG_list_1_70[7]}', f'{ost_list_1_70[7]}',
+                      f'{round(ITOG_list_1_70[6], 3)}', f'{round(ost_list_1_70[6], 3)}'])
+brief_summary.append(['Продувка зафиксирована', f'{ITOG_list_1_70[9]}', f'{ost_list_1_70[9]}',
+                      f'{round(ITOG_list_1_70[8], 3)}', f'{round(ost_list_1_70[8], 3)}'])
+brief_summary.append(['Обратная сборка принята', f'{ITOG_list_1_70[11]}', f'{ost_list_1_70[11]}',
+                      f'{round(ITOG_list_1_70[10], 3)}', f'{round(ost_list_1_70[10], 3)}'])
+brief_summary.append(['*', '*', '*', '*', '*',])
+
 for i in n_list_1_70:
     n_list_1_60.append(i)
 n_list_1_60.append(empty_str)
@@ -528,12 +555,10 @@ n_list_1_60.append(empty_str)
 
 workbook_summary_p1 = xlsxwriter.Workbook(f'Сводка по ФАЗЕ 1 на {datetime.datetime.now().strftime("%d.%m.%Y")}.xlsx')
 
-ws0 = workbook_summary_p1.add_worksheet('Краткая сводка по установкам')
-ws0.set_column(0, 0, 12)
-ws0.set_column(1, 1, 40)
-ws0.set_column(4, 13, 12)
-ws0.set_column(2, 2, 12)
-ws0.set_column(3, 3, 12)
+ws_brief = workbook_summary_p1.add_worksheet('Краткая сводка')
+
+ws_brief.set_column(0, 0, 35)
+ws_brief.set_column(1, 4, 25)
 
 cell_format_green = workbook_summary_p1.add_format()
 cell_format_green.set_bg_color('#98FB98')
@@ -543,6 +568,42 @@ cell_format_hat = workbook_summary_p1.add_format()
 cell_format_hat.set_bg_color('#FFDAB9')
 cell_format_date = workbook_summary_p1.add_format()
 cell_format_date.set_font_size(font_size=14)
+
+for i, (one, two, three, four, five) in enumerate(brief_summary, start=1):
+    color_1 = cell_format_green
+    color_1.set_bold('bold')
+    if 'Краткая' in one or 'Всего' in one:
+        color = cell_format_hat
+        color.set_bold('bold')
+        color_1 = cell_format_hat
+        color_1.set_bold('bold')
+    elif '*' in one:
+        color_1 = cell_format_blue
+    else:
+        color = cell_format_blue
+    try:
+        color.set_border(style=1)
+        color.set_text_wrap(text_wrap=1)
+        color_1.set_border(style=1)
+        color_1.set_text_wrap(text_wrap=1)
+    except:
+        pass
+
+    ws_brief.write(f'A{i}', one, color_1)
+    ws_brief.write(f'B{i}', two, color)
+    ws_brief.write(f'C{i}', three, color)
+    ws_brief.write(f'D{i}', four, color)
+    ws_brief.write(f'E{i}', five, color)
+
+
+ws0 = workbook_summary_p1.add_worksheet('Cводка по установкам')
+ws0.set_column(0, 0, 12)
+ws0.set_column(1, 1, 40)
+ws0.set_column(4, 13, 12)
+ws0.set_column(2, 2, 12)
+ws0.set_column(3, 3, 12)
+
+
 for i, (one, two, three, four, five, six, seven, eight, nine, ten, eleven, twelve, thirteen,
         fourteen) in enumerate(n_list_1_60, start=2):
     if fourteen == 0:
