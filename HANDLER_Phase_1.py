@@ -440,6 +440,9 @@ for key in testpackages_p1.keys():
         if 'CC' in testpackages_p1[key][7]:
             n_dic_1_60[testpackages_p1[key][1]][5] += testpackages_p1[key][3]
             n_dic_1_60[testpackages_p1[key][1]][6] += 1
+        if 'CC' not in testpackages_p1[key][7] and 'CC' in testpackages_p1[key][8]:
+            n_dic_1_60[testpackages_p1[key][1]][5] += testpackages_p1[key][3]
+            n_dic_1_60[testpackages_p1[key][1]][6] += 1
         if 'CC' in testpackages_p1[key][8]:
             n_dic_1_60[testpackages_p1[key][1]][7] += testpackages_p1[key][3]
             n_dic_1_60[testpackages_p1[key][1]][8] += 1
@@ -458,6 +461,9 @@ for key in testpackages_p1.keys():
             n_dic_1_70[testpackages_p1[key][1]][3] += testpackages_p1[key][3]
             n_dic_1_70[testpackages_p1[key][1]][4] += 1
         if 'CC' in testpackages_p1[key][7]:
+            n_dic_1_70[testpackages_p1[key][1]][5] += testpackages_p1[key][3]
+            n_dic_1_70[testpackages_p1[key][1]][6] += 1
+        if 'CC' not in testpackages_p1[key][7] and 'CC' in testpackages_p1[key][8]:
             n_dic_1_70[testpackages_p1[key][1]][5] += testpackages_p1[key][3]
             n_dic_1_70[testpackages_p1[key][1]][6] += 1
         if 'CC' in testpackages_p1[key][8]:

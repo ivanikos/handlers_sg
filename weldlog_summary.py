@@ -1,6 +1,7 @@
 import openpyxl as xl
 import xlsxwriter
 import datetime
+import pandas as pd
 import warnings
 #warnings.simplefilter('ignore')
 print('start')
@@ -9,23 +10,38 @@ print('start')
 result_WL = [['Тестпак', 'Линия', 'Изометрия', 'Стык', 'Процент контроля', 'Номер закл. УЗК ПО', 'Результат ПО',
               'Номер закл. РК ПО', 'Результат ПО', 'Дубль НК СГ']]
 
+sorting_journal = pd.read_excel('Журнал P2 .xlsx')
+sorting_journal = sorting_journal.sort_values(by='Дата РК', ascending=True)
+sorting_journal.to_excel('Журнал P2 .xlsx')
+
+
 wb_sg = xl.load_workbook('Журнал P2 .xlsx')
-sheet_sg = wb_sg['Лист1']
+sheet_sg = wb_sg['Sheet1']
 sg_rt_dic = {}
 for k in sheet_sg['H2':'X24000']:
     iso_number_sg = str(k[0].value).strip()
     joint_number_sg = str(k[5].value).strip()
+    joint_status_rw = str(k[6].value).strip()
     xr_res_sg = str(k[16].value)
-    sg_rt_dic[iso_number_sg+joint_number_sg] = [iso_number_sg, joint_number_sg, xr_res_sg]
+    sg_rt_dic[iso_number_sg+joint_number_sg+joint_status_rw] = [iso_number_sg, joint_number_sg, xr_res_sg]
 
 print('сг RT закончил')
+wb_sg.close()
 #----------------------------------------------------
 #Журнал УЗК------------------------------------------
+try:
+    sorting_journal = pd.read_excel('Журнал УЗК труба.xlsx', sheet_name='P2')
+    sorting_journal = sorting_journal.sort_values('Дата УЗК', ascending=True)
+    sorting_journal.to_excel('Журнал УЗК труба.xlsx')
+except:
+    pass
+
+
 wb_ut_sg = xl.load_workbook('Журнал УЗК труба.xlsx')
-sheet_ut_sg = wb_ut_sg['P2']
+sheet_ut_sg = wb_ut_sg['Sheet1']
 
 sg_ut_dic = {}
-for i in sheet_ut_sg['D3':'O3000']:
+for i in sheet_ut_sg['E3':'P3000']:
     iso_number_ut = str(i[0].value).strip()
     joint_number_ut = str(i[4].value).strip()
     ut_res_sg = str(i[11].value).strip()
@@ -33,11 +49,14 @@ for i in sheet_ut_sg['D3':'O3000']:
 
 
 print('сг UT закончил')
+wb_ut_sg.close()
+
+# Скан WeldLog'а -----------------
 
 wb_WL = xl.load_workbook('WeldLog.xlsx')
 sheet = wb_WL['WELDLOG']
 wl_dic = {}
-for i in sheet['D7':'CI90000']:
+for i in sheet['D7':'CI100000']:
     line_number = str(i[0].value).strip()
     iso_number = str(i[3].value).strip()
     control_percent = str(i[5].value)
