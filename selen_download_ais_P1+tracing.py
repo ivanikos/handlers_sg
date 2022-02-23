@@ -47,11 +47,11 @@ element = driver.find_element_by_xpath('//div[@data-value="35"]')
 element.location_once_scrolled_into_view
 
 time.sleep(1)
-driver.find_element_by_xpath('//div[@data-value="35"]').click()
+driver.find_element_by_xpath('//div[@data-value="12"]').click()
 time.sleep(1)
-driver.find_element_by_xpath('//div[@data-value="36"]').click()
+driver.find_element_by_xpath('//div[@data-value="17"]').click()
 time.sleep(1)
-driver.find_element_by_xpath('//div[@data-value="30"]').click()
+driver.find_element_by_xpath('//div[@data-value="18"]').click()
 
 time.sleep(1)
 date_box = driver.find_element_by_id('C8zl006::content').clear()
@@ -155,11 +155,11 @@ element.location_once_scrolled_into_view
 # Выбор статус инспекции СК
 
 time.sleep(1)
-driver.find_element_by_xpath('//div[@data-value="35"]').click()
+driver.find_element_by_xpath('//div[@data-value="12"]').click()
 time.sleep(1)
-driver.find_element_by_xpath('//div[@data-value="36"]').click()
+driver.find_element_by_xpath('//div[@data-value="17"]').click()
 time.sleep(1)
-driver.find_element_by_xpath('//div[@data-value="30"]').click()
+driver.find_element_by_xpath('//div[@data-value="18"]').click()
 
 time.sleep(1)
 date_box = driver.find_element_by_id('C8zl006::content').clear()
@@ -185,7 +185,7 @@ driver.find_element_by_xpath('//div[@id="wwyw8f"]').click()
 print('Выгрузил инспекции')
 
 dir_files = r'C:\Users\ignatenkoia\Downloads\\'
-dir_destination = r'C:\Users\ignatenkoia\Documents\python\act_work\weldlog_summary\\'
+dir_destination = r'C:\Users\ignatenkoia\PycharmProjects\GIT_PROJECTS\handlers_sg\\'
 
 
 def get_new_file():

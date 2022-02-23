@@ -66,7 +66,7 @@ sheet_id = wb_id['Статус_по ТП']
 
 
 status_id = {}
-for i in sheet_id['B2':'L1750']:
+for i in sheet_id['B2':'L1760']:
     number_of_testpack = str(i[0].value).strip()
     date_prin_string = str(i[5].value)
     date_prov_string = str(i[6].value)
@@ -148,7 +148,9 @@ replace_pattern_2 = ['(T.T. REINSTATEMENT)', '(T.T. AIR BLOWING)', '(AIR BLOWING
                      '(T.T. ERECTION)', '(T.T.TEST)', '(T.T. TEST)',
                      '(T.T ERECTION)', '(T.T TEST)', '(T.T REINSTATEMENT)',
                      '(T.T AIR BLOWING)', '(GPA AIR BLOWING)', '(GPA TEST)',
-                     '(GPA ERECTION)', '(GPA REINSTATEMENT)', '(T.T. REISTATEMENT)']
+                     '(GPA ERECTION)', '(GPA REINSTATEMENT)', '(T.T. REISTATEMENT)', '(T.T.REINSTATEMENT)',
+                     '(T.T RE-INSTATEMENT)', '( T.T AIR BLOWING )', '( T.T AIR BLOWING )',
+                     '(T.T.ERECTION)', '(T.T.TEST)', '(T.T.AIR BLOWING)', '(T.T.REINSTATEMENT)']
 res_summary = {}
 for i in sheet['B2':'AO5500']:
     rfi_number = str(i[1].value)
@@ -171,7 +173,7 @@ for i in sheet['B2':'AO5500']:
         tp_shortname = tp_shortname_1
 
     description_rfi = str(i[16].value)
-    violation = str(i[34].value)
+    violation = str(i[35].value)
     name_insp = str(i[26].value)
     list_iso = str(i[8].value)
     volume_meter = re.sub(r'[^0-9.]', '', str(i[18].value))
@@ -235,14 +237,11 @@ for i in sheet['B2':'AO5500']:
                     testpackages[tp_shortname][12] = rfi_number + ' ФОП'
 
     for isom in list_iso.split(';'):
+        if rfi_number == 'CPECC-CC-64685/1':
+            isom = isom.replace(' р. 0', '').replace(' р. 1', '').replace(' р. 3', '')
+
         if isom.strip() in isotpdic.keys():
             if 'Принято' in category_cancelled:
-                if 'братной сборки технологических трубопроводов ГПА' in description_rfi:
-                    isotpdic[isom.strip()][5] = rfi_number
-                if 'онтаж технологического трубопровода ГПА' in description_rfi:
-                    isotpdic[isom.strip()][2] = rfi_number
-                if 'испытаний технологического трубопровода ГПА' in description_rfi:
-                    isotpdic[isom.strip()][3] = rfi_number
                 if 'Монтаж технологического трубопровода в рамках' in description_rfi:
                     isotpdic[isom.strip()][2] = rfi_number
                 if 'испытаний на прочность и плотность' in description_rfi:
@@ -253,11 +252,11 @@ for i in sheet['B2':'AO5500']:
                     isotpdic[isom.strip()][5] = rfi_number
                 if 'Продувка' in description_rfi:
                     isotpdic[isom.strip()][4] = rfi_number
-                if 'дополнительных испытаний на герметичность' in description_rfi:
+                if 'дополнительных испытаний' in description_rfi:
                     isotpdic[isom.strip()][11] = rfi_number
                     isotpdic[isom.strip()][10] = 'Испытан'
             else:
-                if 'подтвержд' in comment:
+                if 'подтвержд' or 'подтвржд' in comment:
                     if 'сборки технологических трубопроводов ГПА' in description_rfi:
                         isotpdic[isom.strip()][5] = rfi_number + ' ФОП'
                     if 'онтаж технологического трубопровода ГПА' in description_rfi:
@@ -304,7 +303,7 @@ for i in sheet['B2':'AO5500']:
                 if 'Продувка' in description_rfi:
                     sc_isotpdic[tp_shortname + isom.strip()][5] = rfi_number
             else:
-                if 'подтвержд' in comment:
+                if 'подтвержд' or 'подтвржд' in comment:
                     if 'Монтаж технологического трубопровода в рамках' in description_rfi:
                         sc_isotpdic[tp_shortname + isom.strip()][3] = rfi_number + ' ФОП'
                     if 'испытаний на прочность и плотность' in description_rfi:
@@ -327,7 +326,10 @@ for i in sheet['B2':'AO5500']:
                     if 'Продувка' in description_rfi:
                         sc_isotpdic[tp_shortname + isom.strip()][5] = rfi_number + ' ФОП'
 
-#ИЗОЛЯЦИЯ ПРОВЕРКА------------------------------
+    if '75530/2' or '75823' in rfi_number:
+        violation = 'представлены не в полном объеме, представлены некорректные документы'
+
+# ИЗОЛЯЦИЯ ПРОВЕРКА------------------------------
     if 'завершении работ по теплоизоляц' in pkk:
         if 'представлены не в полном объеме, представлены некорректные документы' in violation:
             if 'металлического кожуха согласно изометрическим' in description_rfi:

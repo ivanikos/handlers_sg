@@ -82,7 +82,7 @@ wb_id = xl.load_workbook('Хронология движения ИД ТТ 1 Фаза.xlsx')
 sheet_id = wb_id['ХРОНОЛОГИЯ']
 
 status_id_p1 = {}
-for i in sheet_id['C2':'L3171']:
+for i in sheet_id['C2':'L3191']:
     number_of_testpack = str(i[0].value).strip()
     date_prov_string = str(i[8].value)
     try:
@@ -120,10 +120,12 @@ sheet = wb_journal_rfi_p1['Sheet1']
 
 replace_pattern_1 = ['-HT', '-VT', '-PT']
 replace_pattern_2 = ['(T.T. REINSTATEMENT)', '(T.T. AIR BLOWING)', '(AIR BLOWING)', '(T.T AIR BLOWING',
-                     '(T.T. ERECTION)', '(T.T.TEST)', '(T.T. TEST)',
+                     '(T.T.AIR BLOWING)', '(T.T. ERECTION)', '(T.T.TEST)', '(T.T. TEST)',
                      '(T.T ERECTION)', '(T.T TEST)', '(T.T REINSTATEMENT)', '(T.T AIR BLOWING)', '(GPA AIR BLOWING)',
-                     '(GPA TEST)',
-                     '(GPA ERECTION)', '(GPA REINSTATEMENT)']
+                     '(GPA TEST)', '(T.T.REINSTATEMENT)', '(T,T ERECTION)',
+                     '(GPA ERECTION)', '(GPA REINSTATEMENT)', '(T.T RE-INSTATEMENT)', '( T.T AIR BLOWING )',
+                     '(T.T.REINSTATEMENT)', '( T.T AIR BLOWING )',
+                     '(T.T.ERECTION)', '(T.T.TEST)', '(T.T.AIR BLOWING)', '(T.T.REINSTATEMENT)']
 res_summary_p1 = {}
 for i in sheet['B2':'AO30000']:
     rfi_number = str(i[1].value)
@@ -150,8 +152,11 @@ for i in sheet['B2':'AO30000']:
     list_iso = str(i[8].value)
     volume_meter = re.sub(r'[^0-9.]', '', str(i[18].value))
     category_cancelled = str(i[31].value)
-    violation = str(i[34].value)
+    violation = str(i[35].value)
     comment = str(i[39].value)  # комментарий для сортировки Физ. объём подтверждён  на прочность и плотность
+
+    if rfi_number == 'CPECC-CC-34908/1' or 'CPECC-CC-35090/3':
+        comment = 'подтвержд'
 
     if tp_shortname in testpackages_p1.keys():
         if 'Принято' in category_cancelled:
@@ -203,6 +208,11 @@ for i in sheet['B2':'AO30000']:
                     testpackages_p1[tp_shortname][9] = rfi_number + ' ФОП'
                 if 'родувка' in description_rfi:
                     testpackages_p1[tp_shortname][8] = rfi_number + ' ФОП'
+            if 'пытание давлением выдержано' in comment:
+                if 'испыт' and 'рочност' in description_rfi:
+                    testpackages_p1[tp_shortname][7] = rfi_number + ' ФОП'
+                if 'испытаний технологического трубопровода  на прочность' in description_rfi:
+                    testpackages_p1[tp_shortname][7] = rfi_number + ' ФОП'
 
 
 
@@ -242,7 +252,11 @@ for i in sheet['B2':'AO30000']:
                         sc_isotpdic_p1[isom.strip() + tp_shortname][7] = rfi_number + ' ФОП'
                     if 'родувка' in description_rfi:
                         sc_isotpdic_p1[isom.strip() + tp_shortname][6] = rfi_number + ' ФОП'
-
+                if 'пытание давлением выдержано' in comment:
+                    if 'испыт' and 'рочност' in description_rfi:
+                        sc_isotpdic_p1[isom.strip() + tp_shortname][5] = rfi_number + ' ФОП'
+                    if 'испытаний технологического трубопровода  на прочность' in description_rfi:
+                        sc_isotpdic_p1[isom.strip() + tp_shortname][5] = rfi_number + ' ФОП'
 
         if isom.strip() in isotpdic_p1.keys():
             if 'дополн' in description_rfi:
@@ -252,28 +266,34 @@ for i in sheet['B2':'AO30000']:
                     if 'выдерж' in comment:
                         isotpdic_p1[isom.strip()][13] = rfi_number
 
+    if rfi_number == 'CPECC-CC-44346':
+        sc_isotpdic_p1[isom.strip() + tp_shortname][7] = rfi_number + ' ФОП'
+        testpackages_p1[tp_shortname][9] = rfi_number + ' ФОП'
+    if rfi_number == 'CPECC-CC-41143':
+        sc_isotpdic_p1[isom.strip() + tp_shortname][5] = rfi_number + ' ФОП'
+        testpackages_p1[tp_shortname][7] = rfi_number + ' ФОП'
     # ПРОВЕРКА ИЗОЛЯЦИИ-------------------------------------------
     if 'завершении работ по теплоизоляц' in pkk:
         if 'представлены не в полном объеме, представлены некорректные документы' in violation:
             if 'металлического кожуха фланцев и ЗРА' in description_rfi:
                 for iso in list_iso.split(';'):
-                    if iso in isotpdic_p1.keys():
+                    if iso.strip() in isotpdic_p1.keys():
                         isotpdic_p1[iso.strip()][11] = rfi_number
             if 'металлического кожуха согласно изометрическим' in description_rfi:
                 for iso in list_iso.split(';'):
-                    if iso in isotpdic_p1.keys():
+                    if iso.strip() in isotpdic_p1.keys():
                         isotpdic_p1[iso.strip()][9] = rfi_number
             if 'теплоизоляционного покрытия согласно изометрическим' in description_rfi:
                 for iso in list_iso.split(';'):
-                    if iso in isotpdic_p1.keys():
+                    if iso.strip() in isotpdic_p1.keys():
                         isotpdic_p1[iso.strip()][8] = rfi_number
             if 'FOAMGLAS' in tp_number or 'oamglas' in tp_number:
                 for iso in list_iso.split(';'):
-                    if iso in isotpdic_p1.keys():
+                    if iso.strip() in isotpdic_p1.keys():
                         isotpdic_p1[iso.strip()][10] = rfi_number
             if 'теплоизоляционной оболочки ( термочехлов)' in description_rfi:
                 for iso in list_iso.split(';'):
-                    if iso in isotpdic_p1.keys():
+                    if iso.strip() in isotpdic_p1.keys():
                         isotpdic_p1[iso.strip()][12] = rfi_number
         if 'документы, подтверждающие качество работ' in violation:
             if 'подтвержд' in comment:
@@ -747,7 +767,7 @@ for i, (testpack, ustan, flud, metr_ng, stat_id_1, stat_id_2, inst_rfi, test_rfi
     ws5.write(f'M{i}', fifth, color)
 
 ws3 = workbook_summary_p1.add_worksheet('Сводка по изометричкам')
-ws3.set_column(0, 1, 30)
+ws3.set_column(0, 1, 37)
 ws3.set_column(2, 4, 13)
 ws3.set_column(5, 9, 22)
 
