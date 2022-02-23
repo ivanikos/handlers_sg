@@ -30,180 +30,179 @@ for i in sheet_sputniks['A3':'Q2797']:
             sputnik_dic[str(i[4].value)][5] = str(i[14].value).strip()
 
 
-
-
-
-
-df = pd.read_excel('Журнал заявок 1 фаза + спутники.xlsx')
+df = pd.read_excel('Журнал заявок общий.xlsx')
 df = df.sort_values(by='Дата назначения инспекции / Date of scheduled inspection', ascending=True)
-df.to_excel('Журнал заявок 1 фаза + спутники.xlsx',index=0)
+df.to_excel('Журнал заявок общий.xlsx',index=0)
 
 
 
-wb_tracing = xl.load_workbook('Журнал заявок 1 фаза + спутники.xlsx')
+wb_tracing = xl.load_workbook('Журнал заявок общий.xlsx')
 sheet_tracing = wb_tracing['Sheet1']
-for i in sheet_tracing['B2':'AO25000']:
-    rfi_number = str(i[1].value)
-    description_rfi = str(i[16].value)
-    name_insp = str(i[26].value)
-    list_iso = str(i[8].value)
-    volume_meter = re.sub(r'[^0-9.]', '', str(i[18].value))
-    category_cancelled = str(i[31].value)
-    comment = str(i[39].value) #комментарий для сортировки Физ. объём подтверждён  на прочность и плотность
-    violation = str(i[35].value)
+for i in sheet_tracing['B2':'AO250000']:
+    if i[0].value:
+        rfi_number = str(i[1].value)
+        description_rfi = str(i[16].value)
+        name_insp = str(i[26].value)
+        list_iso = str(i[8].value)
+        volume_meter = re.sub(r'[^0-9.]', '', str(i[18].value))
+        category_cancelled = str(i[31].value)
+        comment = str(i[39].value) #комментарий для сортировки Физ. объём подтверждён  на прочность и плотность
+        violation = str(i[35].value)
 
-    list_drawing = re.findall(r'0055-CPC-GGC-4\.\d\.\d\.\d\d\.\d\d\d-\w\w\d-ID-\d\d\d\d', description_rfi)
-    list_drawing_wrong = re.findall(r'0055-CPC-GGC-4\.\d\.\d\.\d\d\.\d\d\d-\w\w\d-ID-A-\d\d\d\d', description_rfi)
+        list_drawing = re.findall(r'0055-CPC-GGC-4\.\d\.\d\.\d\d\.\d\d\d-\w\w\d-ID-\d\d\d\d', description_rfi)
+        list_drawing_wrong = re.findall(r'0055-CPC-GGC-4\.\d\.\d\.\d\d\.\d\d\d-\w\w\d-ID-A-\d\d\d\d', description_rfi)
 
-    list_short_draw = re.findall(r'\d-\d\d-HWSM-\d\d\d-\d\d/\d-\d\d-HWSM-\d\d\d-\d\d|\d-\d\d-HWSM-\d\d\d-\d\d', description_rfi.replace(' ', '').strip())
+        list_short_draw = re.findall(r'\d-\d\d-HWSM-\d\d\d-\d\d/\d-\d\d-HWSM-\d\d\d-\d\d|\d-\d\d-HWSM-\d\d\d-\d\d', description_rfi.replace(' ', '').strip())
 
-    if 'испытаний теплоспут' in description_rfi:
-        if 'документы, подтверждающие' in violation or 'представлены не в полном объеме' in violation:
-            fop = ''
-            if 'Не принято' == category_cancelled:
-                fop = ' ФОП'
-            if list_short_draw:
-                for l in list_short_draw:
-                    if l in short_draw_sput.keys():
-                        sputnik_dic[short_draw_sput[l]][5] = rfi_number + fop
-            if list_drawing_wrong:
-                for z in list_drawing_wrong:
-                    try:
-                        d_s = z.replace('-A', '')
-                        sputnik_dic[d_s][5] = rfi_number + fop
-                    except:
-                        pass
-            if list_drawing:
-                for z in list_drawing:
-                    if z in sputnik_dic.keys():
-                        sputnik_dic[z][5] = rfi_number + fop
-            for z in list_iso.split(';'):
-                if z.strip() in short_draw_sput.keys():
-                    sputnik_dic[short_draw_sput[z.strip()]][5] = rfi_number + fop
-    if 'испытаний на теплоспутн' in description_rfi:
-        if 'документы, подтверждающие' in violation or 'представлены не в полном объеме' in violation:
-            fop = ''
-            if 'Не принято' == category_cancelled:
-                fop = ' ФОП'
-            if list_short_draw:
-                for l in list_short_draw:
-                    if l in short_draw_sput.keys():
-                        sputnik_dic[short_draw_sput[l]][5] = rfi_number + fop
-            if list_drawing_wrong:
-                for z in list_drawing_wrong:
-                    try:
-                        d_s = z.replace('-A', '')
-                        sputnik_dic[d_s][5] = rfi_number + fop
-                    except:
-                        pass
-            if list_drawing:
-                for z in list_drawing:
-                    if z in sputnik_dic.keys():
-                        sputnik_dic[z][5] = rfi_number + fop
-            for z in list_iso.split(';'):
-                if z.strip() in short_draw_sput.keys():
-                    sputnik_dic[short_draw_sput[z.strip()]][5] = rfi_number + fop
-    if 'онтаж теплоспутника технологич' in description_rfi:
-        if 'подтвержд' in comment:
-            fop = ''
-            if 'Не принято' == category_cancelled:
-                fop = ' ФОП'
-            if list_short_draw:
-                for l in list_short_draw:
-                    if l in short_draw_sput.keys():
-                        sputnik_dic[short_draw_sput[l]][4] = rfi_number + fop
-            if list_drawing_wrong:
-                for z in list_drawing_wrong:
-                    try:
-                        d_s = z.replace('-A', '')
-                        sputnik_dic[d_s][4] = rfi_number + fop
-                    except:
-                        pass
-            if list_drawing:
-                for z in list_drawing:
-                    if z in sputnik_dic.keys():
-                        sputnik_dic[z][4] = rfi_number + fop
-            for z in list_iso.split(';'):
-                if z.strip() in short_draw_sput.keys():
-                    sputnik_dic[short_draw_sput[z.strip()]][4] = rfi_number + fop
-    if 'Продувка теплоспутника' in description_rfi:
-        if 'Не предоставлены документы' in violation:
-            fop = ''
-            if 'Не принято' == category_cancelled:
-                fop = ' ФОП'
-            if list_short_draw:
-                for l in list_short_draw:
-                    if l in short_draw_sput.keys():
-                        sputnik_dic[short_draw_sput[l]][6] = rfi_number + fop
-            if list_drawing_wrong:
-                for z in list_drawing_wrong:
-                    try:
-                        d_s = z.replace('-A', '')
-                        sputnik_dic[d_s][6] = rfi_number + fop
-                    except:
-                        pass
-            if list_drawing:
-                for z in list_drawing:
-                    if z in sputnik_dic.keys():
-                        sputnik_dic[z][6] = rfi_number + fop
-            for z in list_iso.split(';'):
-                if z.strip() in short_draw_sput.keys():
-                    sputnik_dic[short_draw_sput[z.strip()]][6] = rfi_number + fop
-    if 'покрытия теплоспутник' in description_rfi:
-        if 'Не предоставлены документы' in violation:
-            fop = ''
-            if 'Не принято' == category_cancelled:
-                fop = ' ФОП'
-            if list_short_draw:
-                for l in list_short_draw:
-                    if l in short_draw_sput.keys():
-                        sputnik_dic[short_draw_sput[l]][7] = rfi_number + fop
-            if list_drawing_wrong:
-                for z in list_drawing_wrong:
-                    try:
-                        d_s = z.replace('-A', '')
-                        sputnik_dic[d_s][7] = rfi_number + fop
-                    except:
-                        pass
-            if list_drawing:
-                for z in list_drawing:
-                    if z in sputnik_dic.keys():
-                        sputnik_dic[z][7] = rfi_number + fop
-            for z in list_iso.split(';'):
-                if z.strip() in short_draw_sput.keys():
-                    sputnik_dic[short_draw_sput[z.strip()]][7] = rfi_number + fop
-    if 'кожуха теплоспутник' in description_rfi:
-        if 'Не предоставлены документы' in violation:
-            fop = ''
-            if 'Не принято' == category_cancelled:
-                fop = ' ФОП'
-            if list_short_draw:
-                for l in list_short_draw:
-                    if l in short_draw_sput.keys():
-                        sputnik_dic[short_draw_sput[l]][8] = rfi_number + fop
-            if list_drawing_wrong:
-                for z in list_drawing_wrong:
-                    try:
-                        d_s = z.replace('-A', '')
-                        sputnik_dic[d_s][8] = rfi_number + fop
-                    except:
-                        pass
-            if list_drawing:
-                for z in list_drawing:
-                    if z in sputnik_dic.keys():
-                        sputnik_dic[z][8] = rfi_number + fop
-            for z in list_iso.split(';'):
-                if z.strip() in short_draw_sput.keys():
-                    sputnik_dic[short_draw_sput[z.strip()]][8] = rfi_number + fop
+        if 'испытаний теплоспут' in description_rfi:
+            if 'документы, подтверждающие' in violation or 'представлены не в полном объеме' in violation:
+                fop = ''
+                if 'Не принято' == category_cancelled:
+                    fop = ' ФОП'
+                if list_short_draw:
+                    for l in list_short_draw:
+                        if l in short_draw_sput.keys():
+                            sputnik_dic[short_draw_sput[l]][5] = rfi_number + fop
+                if list_drawing_wrong:
+                    for z in list_drawing_wrong:
+                        try:
+                            d_s = z.replace('-A', '')
+                            sputnik_dic[d_s][5] = rfi_number + fop
+                        except:
+                            pass
+                if list_drawing:
+                    for z in list_drawing:
+                        if z in sputnik_dic.keys():
+                            sputnik_dic[z][5] = rfi_number + fop
+                for z in list_iso.split(';'):
+                    if z.strip() in short_draw_sput.keys():
+                        sputnik_dic[short_draw_sput[z.strip()]][5] = rfi_number + fop
+        if 'испытаний на теплоспутн' in description_rfi:
+            if 'документы, подтверждающие' in violation or 'представлены не в полном объеме' in violation:
+                fop = ''
+                if 'Не принято' == category_cancelled:
+                    fop = ' ФОП'
+                if list_short_draw:
+                    for l in list_short_draw:
+                        if l in short_draw_sput.keys():
+                            sputnik_dic[short_draw_sput[l]][5] = rfi_number + fop
+                if list_drawing_wrong:
+                    for z in list_drawing_wrong:
+                        try:
+                            d_s = z.replace('-A', '')
+                            sputnik_dic[d_s][5] = rfi_number + fop
+                        except:
+                            pass
+                if list_drawing:
+                    for z in list_drawing:
+                        if z in sputnik_dic.keys():
+                            sputnik_dic[z][5] = rfi_number + fop
+                for z in list_iso.split(';'):
+                    if z.strip() in short_draw_sput.keys():
+                        sputnik_dic[short_draw_sput[z.strip()]][5] = rfi_number + fop
+        if 'онтаж теплоспутника технологич' in description_rfi:
+            if 'подтвержд' in comment:
+                fop = ''
+                if 'Не принято' == category_cancelled:
+                    fop = ' ФОП'
+                if list_short_draw:
+                    for l in list_short_draw:
+                        if l in short_draw_sput.keys():
+                            sputnik_dic[short_draw_sput[l]][4] = rfi_number + fop
+                if list_drawing_wrong:
+                    for z in list_drawing_wrong:
+                        try:
+                            d_s = z.replace('-A', '')
+                            sputnik_dic[d_s][4] = rfi_number + fop
+                        except:
+                            pass
+                if list_drawing:
+                    for z in list_drawing:
+                        if z in sputnik_dic.keys():
+                            sputnik_dic[z][4] = rfi_number + fop
+                for z in list_iso.split(';'):
+                    if z.strip() in short_draw_sput.keys():
+                        sputnik_dic[short_draw_sput[z.strip()]][4] = rfi_number + fop
+        if 'Продувка теплоспутника' in description_rfi:
+            if 'Не предоставлены документы' in violation:
+                fop = ''
+                if 'Не принято' == category_cancelled:
+                    fop = ' ФОП'
+                if list_short_draw:
+                    for l in list_short_draw:
+                        if l in short_draw_sput.keys():
+                            sputnik_dic[short_draw_sput[l]][6] = rfi_number + fop
+                if list_drawing_wrong:
+                    for z in list_drawing_wrong:
+                        try:
+                            d_s = z.replace('-A', '')
+                            sputnik_dic[d_s][6] = rfi_number + fop
+                        except:
+                            pass
+                if list_drawing:
+                    for z in list_drawing:
+                        if z in sputnik_dic.keys():
+                            sputnik_dic[z][6] = rfi_number + fop
+                for z in list_iso.split(';'):
+                    if z.strip() in short_draw_sput.keys():
+                        sputnik_dic[short_draw_sput[z.strip()]][6] = rfi_number + fop
+        if 'покрытия теплоспутник' in description_rfi:
+            if 'Не предоставлены документы' in violation:
+                fop = ''
+                if 'Не принято' == category_cancelled:
+                    fop = ' ФОП'
+                if list_short_draw:
+                    for l in list_short_draw:
+                        if l in short_draw_sput.keys():
+                            sputnik_dic[short_draw_sput[l]][7] = rfi_number + fop
+                if list_drawing_wrong:
+                    for z in list_drawing_wrong:
+                        try:
+                            d_s = z.replace('-A', '')
+                            sputnik_dic[d_s][7] = rfi_number + fop
+                        except:
+                            pass
+                if list_drawing:
+                    for z in list_drawing:
+                        if z in sputnik_dic.keys():
+                            sputnik_dic[z][7] = rfi_number + fop
+                for z in list_iso.split(';'):
+                    if z.strip() in short_draw_sput.keys():
+                        sputnik_dic[short_draw_sput[z.strip()]][7] = rfi_number + fop
+        if 'кожуха теплоспутник' in description_rfi:
+            if 'Не предоставлены документы' in violation:
+                fop = ''
+                if 'Не принято' == category_cancelled:
+                    fop = ' ФОП'
+                if list_short_draw:
+                    for l in list_short_draw:
+                        if l in short_draw_sput.keys():
+                            sputnik_dic[short_draw_sput[l]][8] = rfi_number + fop
+                if list_drawing_wrong:
+                    for z in list_drawing_wrong:
+                        try:
+                            d_s = z.replace('-A', '')
+                            sputnik_dic[d_s][8] = rfi_number + fop
+                        except:
+                            pass
+                if list_drawing:
+                    for z in list_drawing:
+                        if z in sputnik_dic.keys():
+                            sputnik_dic[z][8] = rfi_number + fop
+                for z in list_iso.split(';'):
+                    if z.strip() in short_draw_sput.keys():
+                        sputnik_dic[short_draw_sput[z.strip()]][8] = rfi_number + fop
 
-    if '64713' in rfi_number:
-        print(list_short_draw)
-        print(list_drawing_wrong)
-        print(violation)
-        print(list_drawing)
-        for p in list_drawing_wrong:
-            d_s = p.replace('-A', '')
-            print(d_s)
+        if '64713' in rfi_number:
+            print(list_short_draw)
+            print(list_drawing_wrong)
+            print(violation)
+            print(list_drawing)
+            for p in list_drawing_wrong:
+                d_s = p.replace('-A', '')
+                print(d_s)
+    else:
+        break
 
 
 

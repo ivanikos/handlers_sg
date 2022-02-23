@@ -9,26 +9,29 @@ import pandas as pd
 
 
 # Создание общего словаря ТП-------------------------------------------
-wb_phase1 = xl.load_workbook(r'C:\Users\ignatenkoia\PycharmProjects\GIT_PROJECTS\handlers_sg\БД ТП ФАЗА 1.xlsx')
+wb_phase1 = xl.load_workbook(r'C:\Users\ignatenkoia\PycharmProjects\GIT_PROJECTS\handlers_sg\БД ТП ФАЗА 1, 2.xlsx')
 sheet_TP_phase1 = wb_phase1['TP_PHASE1']
 sheet_iso_tp_phase1 = wb_phase1['ISO_PHASE1']
 
 testpackages_p1 = {}
 
-for l in sheet_TP_phase1['A3':'K2764']:
-    tp_number = ' '
-    tp_short_code_BD = str(l[0].value).strip()
-    title = str(l[2].value).strip()
-    fluid = str(l[3].value).strip()
-    category_tp = str(l[4].value)
-    erection_rfi = ' ' + str(l[5].value).strip()
-    test_rfi = ' ' + str(l[6].value).strip()
-    airb_rfi = ' ' + str(l[7].value).strip()
-    reinst_rfi = ' ' + str(l[8].value).strip()
-    length = round(float(str(l[10].value)), 3)
+for l in sheet_TP_phase1['A3':'K5000']:
+    if l[0].value:
+        tp_number = ' '
+        tp_short_code_BD = str(l[0].value).strip()
+        title = str(l[2].value).strip()
+        fluid = str(l[3].value).strip()
+        category_tp = str(l[4].value)
+        erection_rfi = ' ' + str(l[5].value).strip()
+        test_rfi = ' ' + str(l[6].value).strip()
+        airb_rfi = ' ' + str(l[7].value).strip()
+        reinst_rfi = ' ' + str(l[8].value).strip()
+        length = round(float(str(l[10].value)), 3)
 
-    testpackages_p1[tp_short_code_BD] = [title, fluid, category_tp, length, '', '', erection_rfi, test_rfi, airb_rfi,
-                                         reinst_rfi, tp_number]
+        testpackages_p1[tp_short_code_BD] = [title, fluid, category_tp, length, '', '', erection_rfi, test_rfi, airb_rfi,
+                                             reinst_rfi, tp_number]
+    else:
+        break
 
 print(f'В словаре {len(testpackages_p1.keys())}  ТП.')
 
@@ -36,39 +39,42 @@ isotpdic_p1 = {}
 sc_isotpdic_p1 = {}
 
 for i in sheet_iso_tp_phase1['A3':'S17651']:
-    sc_iso_tp = str(i[3].value).strip() + str(i[0].value).strip()
-    isometric = str(i[3].value).strip()
-    testpack = str(i[0].value).strip()
-    isolength = round(float(str(i[8].value)), 3)
-    title_iso = str(i[4].value).strip()
-    type_insulation = str(i[9].value).strip()
-    try:
-        area_insulation_tt_zra = round(float(i[10].value), 3)
-    except:
-        area_insulation_tt_zra = str(i[10].value).strip()
-    try:
-        area_ins_zra = round(float(i[11].value), 3)
-    except:
-        area_ins_zra = str(i[11].value).strip()
-    try:
-        count_ins_zra = round(float(i[12].value), 3)
-    except:
-        count_ins_zra = str(i[12].value).strip()
-    try:
-        area_insulation_tt = round(float(i[13].value), 3)
-    except:
-        area_insulation_tt = str(i[13].value).strip()
+    if i[0].value:
+        sc_iso_tp = str(i[3].value).strip() + str(i[0].value).strip()
+        isometric = str(i[3].value).strip()
+        testpack = str(i[0].value).strip()
+        isolength = round(float(str(i[8].value)), 3)
+        title_iso = str(i[4].value).strip()
+        type_insulation = str(i[9].value).strip()
+        try:
+            area_insulation_tt_zra = round(float(i[10].value), 3)
+        except:
+            area_insulation_tt_zra = str(i[10].value).strip()
+        try:
+            area_ins_zra = round(float(i[11].value), 3)
+        except:
+            area_ins_zra = str(i[11].value).strip()
+        try:
+            count_ins_zra = round(float(i[12].value), 3)
+        except:
+            count_ins_zra = str(i[12].value).strip()
+        try:
+            area_insulation_tt = round(float(i[13].value), 3)
+        except:
+            area_insulation_tt = str(i[13].value).strip()
 
-    rfi_min_vata_tt = ' ' + str(i[14].value).strip()
-    rfi_metall_tt = ' ' + str(i[15].value).strip()
-    rfi_foamglass_tt = ' ' + str(i[16].value).strip()
-    rfi_metall_box = ' ' + str(i[17].value).strip()
-    rfi_therm_cover = ' ' + str(i[18].value).strip()
+        rfi_min_vata_tt = ' ' + str(i[14].value).strip()
+        rfi_metall_tt = ' ' + str(i[15].value).strip()
+        rfi_foamglass_tt = ' ' + str(i[16].value).strip()
+        rfi_metall_box = ' ' + str(i[17].value).strip()
+        rfi_therm_cover = ' ' + str(i[18].value).strip()
 
-    isotpdic_p1[isometric] = [testpack, isolength, title_iso, type_insulation, area_insulation_tt, area_ins_zra,
-                              count_ins_zra, area_insulation_tt_zra, rfi_min_vata_tt, rfi_metall_tt, rfi_foamglass_tt,
-                              rfi_metall_box, rfi_therm_cover, '']
-    sc_isotpdic_p1[sc_iso_tp] = [isometric, testpack, isolength, title_iso, '', '', '', '']
+        isotpdic_p1[isometric] = [testpack, isolength, title_iso, type_insulation, area_insulation_tt, area_ins_zra,
+                                  count_ins_zra, area_insulation_tt_zra, rfi_min_vata_tt, rfi_metall_tt, rfi_foamglass_tt,
+                                  rfi_metall_box, rfi_therm_cover, '']
+        sc_isotpdic_p1[sc_iso_tp] = [isometric, testpack, isolength, title_iso, '', '', '', '']
+    else:
+        break
 
 wb_phase1.close()
 print(f'Уникальных изометрий - {len(sc_isotpdic_p1.keys())} \n '
@@ -82,18 +88,21 @@ wb_id = xl.load_workbook('Хронология движения ИД ТТ 1 Фаза.xlsx')
 sheet_id = wb_id['ХРОНОЛОГИЯ']
 
 status_id_p1 = {}
-for i in sheet_id['C2':'L3191']:
-    number_of_testpack = str(i[0].value).strip()
-    date_prov_string = str(i[8].value)
-    try:
-        critical_comment = str(i[9].value)
-    except:
-        critical_comment = 'Не проверен'
-    stat_crit = 'КРИТИКА'
-    if 'нет' in critical_comment:
-        stat_crit = 'ok'
+for i in sheet_id['C2':'L5000']:
+    if i[0].value:
+        number_of_testpack = str(i[0].value).strip()
+        date_prov_string = str(i[8].value)
+        try:
+            critical_comment = str(i[9].value)
+        except:
+            critical_comment = 'Не проверен'
+        stat_crit = 'КРИТИКА'
+        if 'нет' in critical_comment:
+            stat_crit = 'ok'
 
-    status_id_p1[number_of_testpack] = [date_prov_string, stat_crit]
+        status_id_p1[number_of_testpack] = [date_prov_string, stat_crit]
+    else:
+        break
 print(len(status_id_p1.keys()))
 
 for key in testpackages_p1.keys():
@@ -111,9 +120,9 @@ print('Добавил информацию по Хронологии движения ИД в общий словарь')
 
 
 # Проверка Журнал заявок АИС Р2 ФАЗА1-------------------------------------
-df = pd.read_excel('Журнал заявок 1 фаза + спутники.xlsx')
+df = pd.read_excel('Журнал заявок общий.xlsx')
 df = df.sort_values(by='Дата назначения инспекции / Date of scheduled inspection', ascending=True)
-df.to_excel('Журнал заявок 1 фаза + спутники.xlsx', index=0)
+df.to_excel('Журнал заявок общий.xlsx', index=0)
 
 wb_journal_rfi_p1 = xl.load_workbook('Журнал заявок 1 фаза + спутники.xlsx')
 sheet = wb_journal_rfi_p1['Sheet1']
@@ -127,196 +136,200 @@ replace_pattern_2 = ['(T.T. REINSTATEMENT)', '(T.T. AIR BLOWING)', '(AIR BLOWING
                      '(T.T.REINSTATEMENT)', '( T.T AIR BLOWING )',
                      '(T.T.ERECTION)', '(T.T.TEST)', '(T.T.AIR BLOWING)', '(T.T.REINSTATEMENT)']
 res_summary_p1 = {}
-for i in sheet['B2':'AO30000']:
-    rfi_number = str(i[1].value)
-    tp_number = str(i[2].value)
-    pkk = str(i[4].value)
-    tp_shortname = ''
-    tp_shortname_1 = ''
-    for l in replace_pattern_2:
-        if l in tp_number:
-            tp_shortname_1 = tp_number.replace(l, '').strip()
+for i in sheet['B2':'AO55000']:
+    if i[0].value:
+
+        rfi_number = str(i[1].value)
+        tp_number = str(i[2].value)
+        pkk = str(i[4].value)
+        tp_shortname = ''
+        tp_shortname_1 = ''
+        for l in replace_pattern_2:
+            if l in tp_number:
+                tp_shortname_1 = tp_number.replace(l, '').strip()
+            else:
+                pass
+        if '-HT' in tp_shortname_1:
+            tp_shortname = tp_shortname_1.replace('-HT', '')
+        elif '-PT' in tp_shortname_1:
+            tp_shortname = tp_shortname_1.replace('-PT', '')
+        elif '-VT' in tp_shortname_1:
+            tp_shortname = tp_shortname_1.replace('-VT', '')
         else:
-            pass
-    if '-HT' in tp_shortname_1:
-        tp_shortname = tp_shortname_1.replace('-HT', '')
-    elif '-PT' in tp_shortname_1:
-        tp_shortname = tp_shortname_1.replace('-PT', '')
-    elif '-VT' in tp_shortname_1:
-        tp_shortname = tp_shortname_1.replace('-VT', '')
-    else:
-        tp_shortname = tp_shortname_1
+            tp_shortname = tp_shortname_1
 
-    description_rfi = str(i[16].value)
-    name_insp = str(i[26].value)
-    list_iso = str(i[8].value)
-    volume_meter = re.sub(r'[^0-9.]', '', str(i[18].value))
-    category_cancelled = str(i[31].value)
-    violation = str(i[35].value)
-    comment = str(i[39].value)  # комментарий для сортировки Физ. объём подтверждён  на прочность и плотность
+        description_rfi = str(i[16].value)
+        name_insp = str(i[26].value)
+        list_iso = str(i[8].value)
+        volume_meter = re.sub(r'[^0-9.]', '', str(i[18].value))
+        category_cancelled = str(i[31].value)
+        violation = str(i[35].value)
+        comment = str(i[39].value)  # комментарий для сортировки Физ. объём подтверждён  на прочность и плотность
 
-    if rfi_number == 'CPECC-CC-34908/1' or 'CPECC-CC-35090/3':
-        comment = 'подтвержд'
+        if rfi_number == 'CPECC-CC-34908/1' or 'CPECC-CC-35090/3':
+            comment = 'подтвержд'
 
-    if tp_shortname in testpackages_p1.keys():
-        if 'Принято' in category_cancelled:
-            if 'сборки технологических трубопроводов ГПА' in description_rfi:
-                testpackages_p1[tp_shortname][9] = rfi_number
-            if 'онтаж технологического трубопровода ГПА' in description_rfi:
-                testpackages_p1[tp_shortname][6] = rfi_number
-            if 'испытаний технологического трубопровода ГПА' in description_rfi:
-                testpackages_p1[tp_shortname][7] = rfi_number
-            if 'Монтаж технологического трубопровода в рамках' in description_rfi:
-                testpackages_p1[tp_shortname][6] = rfi_number
-            if 'испыт' and 'рочност' in description_rfi:
-                testpackages_p1[tp_shortname][7] = rfi_number
-            if 'испытаний технологического трубопровода  на прочность' in description_rfi or 'Гидравлические испытания'\
-                    in description_rfi:
-                testpackages_p1[tp_shortname][7] = rfi_number
-            if 'сборки технологических трубопроводов в проект' in description_rfi:
-                testpackages_p1[tp_shortname][9] = rfi_number
-            if 'родувка' in description_rfi:
-                testpackages_p1[tp_shortname][8] = rfi_number
-        else:
-            if 'подтвержд' in comment:
-                if 'сборки технологических трубопроводов ГПА' in description_rfi:
-                    testpackages_p1[tp_shortname][9] = rfi_number + ' ФОП'
-                if 'онтаж технологического трубопровода ГПА' in description_rfi:
-                    testpackages_p1[tp_shortname][6] = rfi_number + ' ФОП'
-                if 'испытаний технологического трубопровода ГПА' in description_rfi:
-                    testpackages_p1[tp_shortname][7] = rfi_number + ' ФОП'
-                if 'Монтаж технологического трубопровода в рамках' in description_rfi:
-                    testpackages_p1[tp_shortname][6] = rfi_number + ' ФОП'
-                if 'испыт' and 'рочност' in description_rfi:
-                    testpackages_p1[tp_shortname][7] = rfi_number + ' ФОП'
-                if 'испытаний технологического трубопровода  на прочность' in description_rfi:
-                    testpackages_p1[tp_shortname][7] = rfi_number + ' ФОП'
-                if 'сборки технологических трубопроводов в проект' in description_rfi:
-                    testpackages_p1[tp_shortname][9] = rfi_number + ' ФОП'
-                if 'родувка' in description_rfi:
-                    testpackages_p1[tp_shortname][8] = rfi_number + ' ФОП'
-            if 'зафиксирован' in comment:
-                if 'испытаний технологического трубопровода ГПА' in description_rfi:
-                    testpackages_p1[tp_shortname][7] = rfi_number + ' ФОП'
-                if 'Монтаж технологического трубопровода в рамках' in description_rfi:
-                    testpackages_p1[tp_shortname][6] = rfi_number + ' ФОП'
-                if 'испыт' and 'рочност' in description_rfi:
-                    testpackages_p1[tp_shortname][7] = rfi_number + ' ФОП'
-                if 'испытаний технологического трубопровода  на прочность' in description_rfi:
-                    testpackages_p1[tp_shortname][7] = rfi_number + ' ФОП'
-                if 'сборки технологических трубопроводов в проект' in description_rfi:
-                    testpackages_p1[tp_shortname][9] = rfi_number + ' ФОП'
-                if 'родувка' in description_rfi:
-                    testpackages_p1[tp_shortname][8] = rfi_number + ' ФОП'
-            if 'пытание давлением выдержано' in comment:
-                if 'испыт' and 'рочност' in description_rfi:
-                    testpackages_p1[tp_shortname][7] = rfi_number + ' ФОП'
-                if 'испытаний технологического трубопровода  на прочность' in description_rfi:
-                    testpackages_p1[tp_shortname][7] = rfi_number + ' ФОП'
-
-
-
-    for isom in list_iso.split(';'):
-        if isom.strip() + tp_shortname in sc_isotpdic_p1.keys():
+        if tp_shortname in testpackages_p1.keys():
             if 'Принято' in category_cancelled:
+                if 'сборки технологических трубопроводов ГПА' in description_rfi:
+                    testpackages_p1[tp_shortname][9] = rfi_number
+                if 'онтаж технологического трубопровода ГПА' in description_rfi:
+                    testpackages_p1[tp_shortname][6] = rfi_number
+                if 'испытаний технологического трубопровода ГПА' in description_rfi:
+                    testpackages_p1[tp_shortname][7] = rfi_number
                 if 'Монтаж технологического трубопровода в рамках' in description_rfi:
-                    sc_isotpdic_p1[isom.strip() + tp_shortname][4] = rfi_number
+                    testpackages_p1[tp_shortname][6] = rfi_number
                 if 'испыт' and 'рочност' in description_rfi:
-                    sc_isotpdic_p1[isom.strip() + tp_shortname][5] = rfi_number
-                if 'испытаний технологического трубопровода  на прочность' in description_rfi:
-                    sc_isotpdic_p1[isom.strip() + tp_shortname][5] = rfi_number
+                    testpackages_p1[tp_shortname][7] = rfi_number
+                if 'испытаний технологического трубопровода  на прочность' in description_rfi or 'Гидравлические испытания'\
+                        in description_rfi:
+                    testpackages_p1[tp_shortname][7] = rfi_number
                 if 'сборки технологических трубопроводов в проект' in description_rfi:
-                    sc_isotpdic_p1[isom.strip() + tp_shortname][7] = rfi_number
+                    testpackages_p1[tp_shortname][9] = rfi_number
                 if 'родувка' in description_rfi:
-                    sc_isotpdic_p1[isom.strip() + tp_shortname][6] = rfi_number
+                    testpackages_p1[tp_shortname][8] = rfi_number
             else:
                 if 'подтвержд' in comment:
+                    if 'сборки технологических трубопроводов ГПА' in description_rfi:
+                        testpackages_p1[tp_shortname][9] = rfi_number + ' ФОП'
+                    if 'онтаж технологического трубопровода ГПА' in description_rfi:
+                        testpackages_p1[tp_shortname][6] = rfi_number + ' ФОП'
+                    if 'испытаний технологического трубопровода ГПА' in description_rfi:
+                        testpackages_p1[tp_shortname][7] = rfi_number + ' ФОП'
                     if 'Монтаж технологического трубопровода в рамках' in description_rfi:
-                        sc_isotpdic_p1[isom.strip() + tp_shortname][4] = rfi_number + ' ФОП'
+                        testpackages_p1[tp_shortname][6] = rfi_number + ' ФОП'
                     if 'испыт' and 'рочност' in description_rfi:
-                        sc_isotpdic_p1[isom.strip() + tp_shortname][5] = rfi_number + ' ФОП'
+                        testpackages_p1[tp_shortname][7] = rfi_number + ' ФОП'
                     if 'испытаний технологического трубопровода  на прочность' in description_rfi:
-                        sc_isotpdic_p1[isom.strip() + tp_shortname][5] = rfi_number + ' ФОП'
+                        testpackages_p1[tp_shortname][7] = rfi_number + ' ФОП'
                     if 'сборки технологических трубопроводов в проект' in description_rfi:
-                        sc_isotpdic_p1[isom.strip() + tp_shortname][7] = rfi_number + ' ФОП'
+                        testpackages_p1[tp_shortname][9] = rfi_number + ' ФОП'
                     if 'родувка' in description_rfi:
-                        sc_isotpdic_p1[isom.strip() + tp_shortname][6] = rfi_number + ' ФОП'
+                        testpackages_p1[tp_shortname][8] = rfi_number + ' ФОП'
                 if 'зафиксирован' in comment:
+                    if 'испытаний технологического трубопровода ГПА' in description_rfi:
+                        testpackages_p1[tp_shortname][7] = rfi_number + ' ФОП'
                     if 'Монтаж технологического трубопровода в рамках' in description_rfi:
-                        sc_isotpdic_p1[isom.strip() + tp_shortname][4] = rfi_number + ' ФОП'
+                        testpackages_p1[tp_shortname][6] = rfi_number + ' ФОП'
                     if 'испыт' and 'рочност' in description_rfi:
-                        sc_isotpdic_p1[isom.strip() + tp_shortname][5] = rfi_number + ' ФОП'
+                        testpackages_p1[tp_shortname][7] = rfi_number + ' ФОП'
                     if 'испытаний технологического трубопровода  на прочность' in description_rfi:
-                        sc_isotpdic_p1[isom.strip() + tp_shortname][5] = rfi_number + ' ФОП'
+                        testpackages_p1[tp_shortname][7] = rfi_number + ' ФОП'
                     if 'сборки технологических трубопроводов в проект' in description_rfi:
-                        sc_isotpdic_p1[isom.strip() + tp_shortname][7] = rfi_number + ' ФОП'
+                        testpackages_p1[tp_shortname][9] = rfi_number + ' ФОП'
                     if 'родувка' in description_rfi:
-                        sc_isotpdic_p1[isom.strip() + tp_shortname][6] = rfi_number + ' ФОП'
+                        testpackages_p1[tp_shortname][8] = rfi_number + ' ФОП'
                 if 'пытание давлением выдержано' in comment:
                     if 'испыт' and 'рочност' in description_rfi:
-                        sc_isotpdic_p1[isom.strip() + tp_shortname][5] = rfi_number + ' ФОП'
+                        testpackages_p1[tp_shortname][7] = rfi_number + ' ФОП'
                     if 'испытаний технологического трубопровода  на прочность' in description_rfi:
-                        sc_isotpdic_p1[isom.strip() + tp_shortname][5] = rfi_number + ' ФОП'
+                        testpackages_p1[tp_shortname][7] = rfi_number + ' ФОП'
 
-        if isom.strip() in isotpdic_p1.keys():
-            if 'дополн' in description_rfi:
+
+
+        for isom in list_iso.split(';'):
+            if isom.strip() + tp_shortname in sc_isotpdic_p1.keys():
                 if 'Принято' in category_cancelled:
-                    isotpdic_p1[isom.strip()][13] = rfi_number
+                    if 'Монтаж технологического трубопровода в рамках' in description_rfi:
+                        sc_isotpdic_p1[isom.strip() + tp_shortname][4] = rfi_number
+                    if 'испыт' and 'рочност' in description_rfi:
+                        sc_isotpdic_p1[isom.strip() + tp_shortname][5] = rfi_number
+                    if 'испытаний технологического трубопровода  на прочность' in description_rfi:
+                        sc_isotpdic_p1[isom.strip() + tp_shortname][5] = rfi_number
+                    if 'сборки технологических трубопроводов в проект' in description_rfi:
+                        sc_isotpdic_p1[isom.strip() + tp_shortname][7] = rfi_number
+                    if 'родувка' in description_rfi and 'еплоспутн' not in description_rfi:
+                        sc_isotpdic_p1[isom.strip() + tp_shortname][6] = rfi_number
                 else:
-                    if 'выдерж' in comment:
-                        isotpdic_p1[isom.strip()][13] = rfi_number
+                    if 'подтвержд' in comment:
+                        if 'Монтаж технологического трубопровода в рамках' in description_rfi:
+                            sc_isotpdic_p1[isom.strip() + tp_shortname][4] = rfi_number + ' ФОП'
+                        if 'испыт' and 'рочност' in description_rfi:
+                            sc_isotpdic_p1[isom.strip() + tp_shortname][5] = rfi_number + ' ФОП'
+                        if 'испытаний технологического трубопровода  на прочность' in description_rfi:
+                            sc_isotpdic_p1[isom.strip() + tp_shortname][5] = rfi_number + ' ФОП'
+                        if 'сборки технологических трубопроводов в проект' in description_rfi:
+                            sc_isotpdic_p1[isom.strip() + tp_shortname][7] = rfi_number + ' ФОП'
+                        if 'родувка' in description_rfi and 'еплоспутн' not in description_rfi:
+                            sc_isotpdic_p1[isom.strip() + tp_shortname][6] = rfi_number + ' ФОП'
+                    if 'зафиксирован' in comment:
+                        if 'Монтаж технологического трубопровода в рамках' in description_rfi:
+                            sc_isotpdic_p1[isom.strip() + tp_shortname][4] = rfi_number + ' ФОП'
+                        if 'испыт' and 'рочност' in description_rfi:
+                            sc_isotpdic_p1[isom.strip() + tp_shortname][5] = rfi_number + ' ФОП'
+                        if 'испытаний технологического трубопровода  на прочность' in description_rfi:
+                            sc_isotpdic_p1[isom.strip() + tp_shortname][5] = rfi_number + ' ФОП'
+                        if 'сборки технологических трубопроводов в проект' in description_rfi:
+                            sc_isotpdic_p1[isom.strip() + tp_shortname][7] = rfi_number + ' ФОП'
+                        if 'родувка' in description_rfi and 'еплоспутн' not in description_rfi:
+                            sc_isotpdic_p1[isom.strip() + tp_shortname][6] = rfi_number + ' ФОП'
+                    if 'пытание давлением выдержано' in comment:
+                        if 'испыт' and 'рочност' in description_rfi:
+                            sc_isotpdic_p1[isom.strip() + tp_shortname][5] = rfi_number + ' ФОП'
+                        if 'испытаний технологического трубопровода  на прочность' in description_rfi:
+                            sc_isotpdic_p1[isom.strip() + tp_shortname][5] = rfi_number + ' ФОП'
 
-    if rfi_number == 'CPECC-CC-44346':
-        sc_isotpdic_p1[isom.strip() + tp_shortname][7] = rfi_number + ' ФОП'
-        testpackages_p1[tp_shortname][9] = rfi_number + ' ФОП'
-    if rfi_number == 'CPECC-CC-41143':
-        sc_isotpdic_p1[isom.strip() + tp_shortname][5] = rfi_number + ' ФОП'
-        testpackages_p1[tp_shortname][7] = rfi_number + ' ФОП'
-    # ПРОВЕРКА ИЗОЛЯЦИИ-------------------------------------------
-    if 'завершении работ по теплоизоляц' in pkk:
-        if 'представлены не в полном объеме, представлены некорректные документы' in violation:
-            if 'металлического кожуха фланцев и ЗРА' in description_rfi:
-                for iso in list_iso.split(';'):
-                    if iso.strip() in isotpdic_p1.keys():
-                        isotpdic_p1[iso.strip()][11] = rfi_number
-            if 'металлического кожуха согласно изометрическим' in description_rfi:
-                for iso in list_iso.split(';'):
-                    if iso.strip() in isotpdic_p1.keys():
-                        isotpdic_p1[iso.strip()][9] = rfi_number
-            if 'теплоизоляционного покрытия согласно изометрическим' in description_rfi:
-                for iso in list_iso.split(';'):
-                    if iso.strip() in isotpdic_p1.keys():
-                        isotpdic_p1[iso.strip()][8] = rfi_number
-            if 'FOAMGLAS' in tp_number or 'oamglas' in tp_number:
-                for iso in list_iso.split(';'):
-                    if iso.strip() in isotpdic_p1.keys():
-                        isotpdic_p1[iso.strip()][10] = rfi_number
-            if 'теплоизоляционной оболочки ( термочехлов)' in description_rfi:
-                for iso in list_iso.split(';'):
-                    if iso.strip() in isotpdic_p1.keys():
-                        isotpdic_p1[iso.strip()][12] = rfi_number
-        if 'документы, подтверждающие качество работ' in violation:
-            if 'подтвержд' in comment:
-                if 'теплоизоляционной оболочки ( термочехлов)' in description_rfi:
-                    for iso in list_iso.split(';'):
-                        if iso in isotpdic_p1.keys():
-                            isotpdic_p1[iso.strip()][12] = rfi_number
+            if isom.strip() in isotpdic_p1.keys():
+                if 'дополн' in description_rfi:
+                    if 'Принято' in category_cancelled:
+                        isotpdic_p1[isom.strip()][13] = rfi_number
+                    else:
+                        if 'выдерж' in comment:
+                            isotpdic_p1[isom.strip()][13] = rfi_number
+
+        if rfi_number == 'CPECC-CC-44346':
+            sc_isotpdic_p1[isom.strip() + tp_shortname][7] = rfi_number + ' ФОП'
+            testpackages_p1[tp_shortname][9] = rfi_number + ' ФОП'
+        if rfi_number == 'CPECC-CC-41143':
+            sc_isotpdic_p1[isom.strip() + tp_shortname][5] = rfi_number + ' ФОП'
+            testpackages_p1[tp_shortname][7] = rfi_number + ' ФОП'
+        # ПРОВЕРКА ИЗОЛЯЦИИ-------------------------------------------
+        if 'завершении работ по теплоизоляц' in pkk:
+            if 'представлены не в полном объеме, представлены некорректные документы' in violation:
                 if 'металлического кожуха фланцев и ЗРА' in description_rfi:
                     for iso in list_iso.split(';'):
-                        if iso in isotpdic_p1.keys():
+                        if iso.strip() in isotpdic_p1.keys():
                             isotpdic_p1[iso.strip()][11] = rfi_number
                 if 'металлического кожуха согласно изометрическим' in description_rfi:
                     for iso in list_iso.split(';'):
-                        if iso in isotpdic_p1.keys():
+                        if iso.strip() in isotpdic_p1.keys():
                             isotpdic_p1[iso.strip()][9] = rfi_number
                 if 'теплоизоляционного покрытия согласно изометрическим' in description_rfi:
                     for iso in list_iso.split(';'):
-                        if iso in isotpdic_p1.keys():
+                        if iso.strip() in isotpdic_p1.keys():
                             isotpdic_p1[iso.strip()][8] = rfi_number
                 if 'FOAMGLAS' in tp_number or 'oamglas' in tp_number:
                     for iso in list_iso.split(';'):
-                        if iso in isotpdic_p1.keys():
+                        if iso.strip() in isotpdic_p1.keys():
                             isotpdic_p1[iso.strip()][10] = rfi_number
+                if 'теплоизоляционной оболочки ( термочехлов)' in description_rfi:
+                    for iso in list_iso.split(';'):
+                        if iso.strip() in isotpdic_p1.keys():
+                            isotpdic_p1[iso.strip()][12] = rfi_number
+            if 'документы, подтверждающие качество работ' in violation:
+                if 'подтвержд' in comment:
+                    if 'теплоизоляционной оболочки ( термочехлов)' in description_rfi:
+                        for iso in list_iso.split(';'):
+                            if iso in isotpdic_p1.keys():
+                                isotpdic_p1[iso.strip()][12] = rfi_number
+                    if 'металлического кожуха фланцев и ЗРА' in description_rfi:
+                        for iso in list_iso.split(';'):
+                            if iso in isotpdic_p1.keys():
+                                isotpdic_p1[iso.strip()][11] = rfi_number
+                    if 'металлического кожуха согласно изометрическим' in description_rfi:
+                        for iso in list_iso.split(';'):
+                            if iso in isotpdic_p1.keys():
+                                isotpdic_p1[iso.strip()][9] = rfi_number
+                    if 'теплоизоляционного покрытия согласно изометрическим' in description_rfi:
+                        for iso in list_iso.split(';'):
+                            if iso in isotpdic_p1.keys():
+                                isotpdic_p1[iso.strip()][8] = rfi_number
+                    if 'FOAMGLAS' in tp_number or 'oamglas' in tp_number:
+                        for iso in list_iso.split(';'):
+                            if iso in isotpdic_p1.keys():
+                                isotpdic_p1[iso.strip()][10] = rfi_number
+    else:
+        break
 
 # ------------------------------------------------------------
 
