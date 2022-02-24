@@ -124,7 +124,7 @@ df = pd.read_excel('Журнал заявок общий.xlsx')
 df = df.sort_values(by='Дата назначения инспекции / Date of scheduled inspection', ascending=True)
 df.to_excel('Журнал заявок общий.xlsx', index=0)
 
-wb_journal_rfi_p1 = xl.load_workbook('Журнал заявок 1 фаза + спутники.xlsx')
+wb_journal_rfi_p1 = xl.load_workbook('Журнал заявок общий.xlsx')
 sheet = wb_journal_rfi_p1['Sheet1']
 
 replace_pattern_1 = ['-HT', '-VT', '-PT']
@@ -136,9 +136,8 @@ replace_pattern_2 = ['(T.T. REINSTATEMENT)', '(T.T. AIR BLOWING)', '(AIR BLOWING
                      '(T.T.REINSTATEMENT)', '( T.T AIR BLOWING )',
                      '(T.T.ERECTION)', '(T.T.TEST)', '(T.T.AIR BLOWING)', '(T.T.REINSTATEMENT)']
 res_summary_p1 = {}
-for i in sheet['B2':'AO55000']:
+for i in sheet['B2':'AO550000']:
     if i[0].value:
-
         rfi_number = str(i[1].value)
         tp_number = str(i[2].value)
         pkk = str(i[4].value)
@@ -333,7 +332,7 @@ for i in sheet['B2':'AO55000']:
 
 # ------------------------------------------------------------
 
-print('Проверил Журнал заявок')
+print('Проверил Журнал заявок. Информация добавлена.')
 wb_journal_rfi_p1.close()
 # ------------------------------------------------------------------------
 # -Проверка на уведомления-------------------------
@@ -341,28 +340,28 @@ wb_ncr = xl.load_workbook('Реестр уведомлений.xlsx')
 sheet_ncr = wb_ncr['Предписания (Instructions)']
 iso_ncr = {}
 iso_ncr_p1 = {}
-for i in sheet_ncr['B4':'V4500']:
-    number_ncr = str(i[0].value)
-    mark_execution = str(i[16].value)
-    notification_items = str(i[1].value)
-    type_violation = str(i[5].value)
-    content_remarks = str(i[6].value).replace(' ', '')
-    content_remarks_iso = re.findall(r'\d-\d-\d-\d\d-\d\d\d-\s?\w*\+?-[0-9A-Z][0-9A-Z]-\d\d\d\d-\d\d\d',
-                                     content_remarks)
-    content_remarks_joints = re.findall(r'\s{1}[Ss]\s?\-?\d*.\d*|\s{1}F\s?\-?\d*.\d*', str(i[6].value))
-    joint_mark = []
-    for i in content_remarks_joints:
-        joint1 = i.replace(' ', '')
-        joint = joint1.replace('-', '')
-        joint_mark.append((re.sub(r'[\.\:\;]$', '', joint)).strip())
-    if 'Нет' in mark_execution:
-        if content_remarks_iso:
-            for l in content_remarks_iso:
-                iso_ncr_p1[l] = number_ncr
-                try:
-                    iso_ncr[isotpdic_p1[l][0]] = number_ncr
-                except:
-                    pass
+for i in sheet_ncr['B4':'V55000']:
+    if i[0].value:
+        number_ncr = str(i[0].value)
+        mark_execution = str(i[16].value)
+        notification_items = str(i[1].value)
+        type_violation = str(i[5].value)
+        content_remarks = str(i[6].value).replace(' ', '')
+        content_remarks_iso = re.findall(
+            r'\d-\d-\d-\d\d-\d\d\d-\w*-\d\w-\d\d\d\d-\d\d\d|\d-\d-\d-\d\d-\d\d\d-\w*-\d\d-\d\d\d\d-\d\d\d|\d-\d-\d-\d\d-\d\d\d-NHC3P\+-\d\d-\d\d\d\d-\d\d\d|'
+            r'\d-\d-\d-\d\d-\d\d\d-NHC3\+-\d\d-\d\d\d\d-\d\d\d|\d-\d-\d-\d\d-\d\d\d-NHC4P\+-\d\d-\d\d\d\d-\d\d\d|\d-\d-\d-\d\d-\d\d\d-NHC5\+-\d\d-\d\d\d\d-\d\d\d|'
+            r'\d-\d-\d-\d\d-\d\d\d-NHC4\+-\d\d-\d\d\d\d-\d\d\d',
+            content_remarks.replace(' ', '').replace('\n', '').replace('Р', 'P').replace('С', 'C').strip())
+        if 'Нет' in mark_execution:
+            if content_remarks_iso:
+                for l in content_remarks_iso:
+                    iso_ncr_p1[l] = number_ncr
+                    try:
+                        iso_ncr[isotpdic_p1[l][0]] = number_ncr
+                    except:
+                        pass
+    else:
+        break
 
 for key in testpackages_p1.keys():
     if key in iso_ncr.keys():

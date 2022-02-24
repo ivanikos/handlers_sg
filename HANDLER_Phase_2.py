@@ -165,7 +165,7 @@ replace_pattern_2 = ['(T.T. REINSTATEMENT)', '(T.T. AIR BLOWING)', '(AIR BLOWING
                      '(T.T RE-INSTATEMENT)', '( T.T AIR BLOWING )', '( T.T AIR BLOWING )',
                      '(T.T.ERECTION)', '(T.T.TEST)', '(T.T.AIR BLOWING)', '(T.T.REINSTATEMENT)']
 res_summary = {}
-for i in sheet['B2':'AO55000']:
+for i in sheet['B2':'AO550000']:
     if i[0].value:
         rfi_number = str(i[1].value)
         tp_number = str(i[2].value)
@@ -199,6 +199,8 @@ for i in sheet['B2':'AO55000']:
         if rfi_number == 'CPECC-CC-74252/2':
             tp_shortname = 'YMT-3-110-HP-702002-01B-10'
             testpackages[tp_shortname][11] = rfi_number
+        if rfi_number == 'CPECC-CC-77411':
+            comment = 'подтвержд'
 
         if tp_shortname in testpackages.keys():
             if 'Принято' in category_cancelled:
@@ -384,27 +386,28 @@ wb_ncr = xl.load_workbook('Реестр уведомлений.xlsx')
 sheet_ncr = wb_ncr['Предписания (Instructions)']
 iso_ncr = {}
 iso_ncr_iso = {}
-for i in sheet_ncr['B4':'V5500']:
-    number_ncr = str(i[0].value)
-    mark_execution = str(i[16].value)
-    notification_items = str(i[1].value)
-    type_violation = str(i[5].value)
-    content_remarks = str(i[6].value).replace(' ', '')
-    content_remarks_iso = re.findall(
-            r'\d-\d-\d-\d\d-\d\d\d-\w*-\d\w-\d\d\d\d-\d\d\d|\d-\d-\d-\d\d-\d\d\d-\w*-\d\d-\d\d\d\d-\d\d\d|\d-\d-\d-\d\d-\d\d\d-NHC3P\+-\d\d-\d\d\d\d-\d\d\d|'
-            r'\d-\d-\d-\d\d-\d\d\d-NHC3\+-\d\d-\d\d\d\d-\d\d\d|\d-\d-\d-\d\d-\d\d\d-NHC4P\+-\d\d-\d\d\d\d-\d\d\d|\d-\d-\d-\d\d-\d\d\d-NHC5\+-\d\d-\d\d\d\d-\d\d\d|'
-            r'\d-\d-\d-\d\d-\d\d\d-NHC4\+-\d\d-\d\d\d\d-\d\d\d',
-            content_remarks.replace(' ', '').replace('\n', '').replace('Р', 'P').replace('С', 'C').strip())
-
-    if 'Нет' in mark_execution:
-        if content_remarks_iso:
-            for l in content_remarks_iso:
-                try:
-                    iso_ncr_iso[l] = number_ncr
-                    iso_ncr[isotpdic[l][0]] = number_ncr
-                except:
-                    pass
-
+for i in sheet_ncr['B4':'V55000']:
+    if i[0].value:
+        number_ncr = str(i[0].value)
+        mark_execution = str(i[16].value)
+        notification_items = str(i[1].value)
+        type_violation = str(i[5].value)
+        content_remarks = str(i[6].value).replace(' ', '')
+        content_remarks_iso = re.findall(
+                r'\d-\d-\d-\d\d-\d\d\d-\w*-\d\w-\d\d\d\d-\d\d\d|\d-\d-\d-\d\d-\d\d\d-\w*-\d\d-\d\d\d\d-\d\d\d|\d-\d-\d-\d\d-\d\d\d-NHC3P\+-\d\d-\d\d\d\d-\d\d\d|'
+                r'\d-\d-\d-\d\d-\d\d\d-NHC3\+-\d\d-\d\d\d\d-\d\d\d|\d-\d-\d-\d\d-\d\d\d-NHC4P\+-\d\d-\d\d\d\d-\d\d\d|\d-\d-\d-\d\d-\d\d\d-NHC5\+-\d\d-\d\d\d\d-\d\d\d|'
+                r'\d-\d-\d-\d\d-\d\d\d-NHC4\+-\d\d-\d\d\d\d-\d\d\d',
+                content_remarks.replace(' ', '').replace('\n', '').replace('Р', 'P').replace('С', 'C').strip())
+        if 'Нет' in mark_execution:
+            if content_remarks_iso:
+                for l in content_remarks_iso:
+                    try:
+                        iso_ncr_iso[l] = number_ncr
+                        iso_ncr[isotpdic[l][0]] = number_ncr
+                    except:
+                        pass
+    else:
+        break
 for key in testpackages.keys():
     if key in iso_ncr.keys():
         testpackages[key].append(iso_ncr[key])
@@ -1041,7 +1044,7 @@ for key in isotpdic.keys():
 
 #Добавление сводки по МОПам-----------------
 
-wb_mops = xl.load_workbook('MOP-Isometrick-TP_new.xlsx')
+wb_mops = xl.load_workbook(r'C:\Users\ignatenkoia\PycharmProjects\GIT_PROJECTS\handlers_sg\БД ТП ФАЗА 1, 2.xlsx')
 sheet_mops = wb_mops['Лист2']
 mops_summary_dic = {}
 mops_dic = {}

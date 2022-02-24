@@ -18,13 +18,15 @@ sorting_journal.to_excel('Журнал P2 .xlsx')
 wb_sg = xl.load_workbook('Журнал P2 .xlsx')
 sheet_sg = wb_sg['Sheet1']
 sg_rt_dic = {}
-for k in sheet_sg['H2':'X24000']:
-    iso_number_sg = str(k[0].value).strip()
-    joint_number_sg = str(k[5].value).strip()
-    joint_status_rw = str(k[6].value).strip()
-    xr_res_sg = str(k[16].value)
-    sg_rt_dic[iso_number_sg+joint_number_sg+joint_status_rw] = [iso_number_sg, joint_number_sg, xr_res_sg]
-
+for k in sheet_sg['H2':'X240000']:
+    if k[0].value:
+        iso_number_sg = str(k[0].value).strip()
+        joint_number_sg = str(k[5].value).strip()
+        joint_status_rw = str(k[6].value).strip()
+        xr_res_sg = str(k[16].value)
+        sg_rt_dic[iso_number_sg+joint_number_sg+joint_status_rw] = [iso_number_sg, joint_number_sg, xr_res_sg]
+    else:
+        break
 print('сг RT закончил')
 wb_sg.close()
 #----------------------------------------------------
@@ -41,12 +43,14 @@ wb_ut_sg = xl.load_workbook('Журнал УЗК труба.xlsx')
 sheet_ut_sg = wb_ut_sg['Sheet1']
 
 sg_ut_dic = {}
-for i in sheet_ut_sg['E3':'P3000']:
-    iso_number_ut = str(i[0].value).strip()
-    joint_number_ut = str(i[4].value).strip()
-    ut_res_sg = str(i[11].value).strip()
-    sg_ut_dic[iso_number_ut+joint_number_ut] = [iso_number_ut, joint_number_ut, ut_res_sg]
-
+for i in sheet_ut_sg['E3':'P300000']:
+    if i[0].value:
+        iso_number_ut = str(i[0].value).strip()
+        joint_number_ut = str(i[4].value).strip()
+        ut_res_sg = str(i[11].value).strip()
+        sg_ut_dic[iso_number_ut+joint_number_ut] = [iso_number_ut, joint_number_ut, ut_res_sg]
+    else:
+        break
 
 print('сг UT закончил')
 wb_ut_sg.close()
@@ -56,19 +60,22 @@ wb_ut_sg.close()
 wb_WL = xl.load_workbook('WeldLog.xlsx')
 sheet = wb_WL['WELDLOG']
 wl_dic = {}
-for i in sheet['D7':'CI100000']:
-    line_number = str(i[0].value).strip()
-    iso_number = str(i[3].value).strip()
-    control_percent = str(i[5].value)
-    joint_number = str(i[9].value).strip() + str(i[10].value).strip()
-    ut_number = str(i[27].value)
-    ut_res = str(i[28].value)
-    xr_number = str(i[30].value)
-    xr_res = str(i[31].value)
-    tp_short_code = str(i[83].value).strip()
+for i in sheet['D7':'CI200000']:
+    if i[0].value:
+        line_number = str(i[0].value).strip()
+        iso_number = str(i[3].value).strip()
+        control_percent = str(i[5].value)
+        joint_number = str(i[9].value).strip() + str(i[10].value).strip()
+        ut_number = str(i[27].value)
+        ut_res = str(i[28].value)
+        xr_number = str(i[30].value)
+        xr_res = str(i[31].value)
+        tp_short_code = str(i[83].value).strip()
 
-    wl_dic[iso_number+joint_number] = [tp_short_code, iso_number, joint_number, control_percent, ut_number, ut_res,
-                                       xr_number, xr_res, '']
+        wl_dic[iso_number+joint_number] = [tp_short_code, iso_number, joint_number, control_percent, ut_number, ut_res,
+                                           xr_number, xr_res, '']
+    else:
+        break
 
 print('WL закончил')
 

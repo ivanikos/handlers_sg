@@ -10,7 +10,7 @@ import pandas as pd
 
 wb_ncr = xl.load_workbook('Реестр уведомлений.xlsx')
 sheet_ncr = wb_ncr['Предписания (Instructions)']
-open_iso_ncr = []
+open_iso_ncr = [['ISOMEtric', 'number NCR', 'пункт', 'Отметка о закрытии']]
 open_ncr = [['Изометрия', 'стык', 'номер ncr', 'пункт', 'отметка о закрытии', 'сцеп изо+стык']]
 for i in sheet_ncr['B4':'V5500']:
     number_ncr = str(i[0].value)
@@ -22,13 +22,11 @@ for i in sheet_ncr['B4':'V5500']:
     content_remarks_joints = re.findall(r'\s{1}[Ss]\s?\-?\d*.\d*|\s{1}F\s?\-?\d*.\d*', str(i[6].value))
 
     if 'ЗАО'in content_remarks:
-
         isometrics_1 = re.findall(
             r'\d-\d-\d-\d\d-\d\d\d-\w*-\d\w-\d\d\d\d-\d\d\d|\d-\d-\d-\d\d-\d\d\d-\w*-\d\d-\d\d\d\d-\d\d\d|\d-\d-\d-\d\d-\d\d\d-NHC3P\+-\d\d-\d\d\d\d-\d\d\d|'
             r'\d-\d-\d-\d\d-\d\d\d-NHC3\+-\d\d-\d\d\d\d-\d\d\d|\d-\d-\d-\d\d-\d\d\d-NHC4P\+-\d\d-\d\d\d\d-\d\d\d|\d-\d-\d-\d\d-\d\d\d-NHC5\+-\d\d-\d\d\d\d-\d\d\d|'
             r'\d-\d-\d-\d\d-\d\d\d-NHC4\+-\d\d-\d\d\d\d-\d\d\d',
             content_remarks.replace(' ', '').replace('\n', '').replace('Р', 'P').replace('С', 'C').strip())
-
         for i in isometrics_1:
             content_remarks = content_remarks.replace(i, '')
 
@@ -64,12 +62,21 @@ for i in sheet_ncr['B4':'V5500']:
                 for l in joints_list:
                     open_ncr.append([i, l, number_ncr, notification_items, mark_execution, i + l])
 
-for i in open_ncr:
+    isometrics_1 = re.findall(
+        r'\d-\d-\d-\d\d-\d\d\d-\w*-\d\w-\d\d\d\d-\d\d\d|\d-\d-\d-\d\d-\d\d\d-\w*-\d\d-\d\d\d\d-\d\d\d|\d-\d-\d-\d\d-\d\d\d-NHC3P\+-\d\d-\d\d\d\d-\d\d\d|'
+        r'\d-\d-\d-\d\d-\d\d\d-NHC3\+-\d\d-\d\d\d\d-\d\d\d|\d-\d-\d-\d\d-\d\d\d-NHC4P\+-\d\d-\d\d\d\d-\d\d\d|\d-\d-\d-\d\d-\d\d\d-NHC5\+-\d\d-\d\d\d\d-\d\d\d|'
+        r'\d-\d-\d-\d\d-\d\d\d-NHC4\+-\d\d-\d\d\d\d-\d\d\d',
+        content_remarks.replace(' ', '').replace('\n', '').replace('Р', 'P').replace('С', 'C').strip())
+    if isometrics_1:
+        for i in isometrics_1:
+            open_iso_ncr.append([i, number_ncr, notification_items, mark_execution])
+
+for i in open_iso_ncr:
     print(i)
 
 
 workbook_ncr = xlsxwriter.Workbook(f'Сводка по уведомлениям на {datetime.datetime.now().strftime("%d.%m.%Y")}.xlsx')
-ws5 = workbook_ncr.add_worksheet('уведомления')
+ws5 = workbook_ncr.add_worksheet('уведомления дубль')
 ws5.set_column(0, 0, 33)
 ws5.set_column(1, 4, 15)
 ws5.set_column(5, 5, 37)
@@ -81,6 +88,20 @@ for i, (testpack, joint_marks, ustan, status, exec, scep) in enumerate(open_ncr,
     ws5.write(f'D{i}', status)
     ws5.write(f'E{i}', exec)
     ws5.write(f'F{i}', scep)
+
+
+
+ws6 = workbook_ncr.add_worksheet('уведомления все')
+ws6.set_column(0, 0, 33)
+ws6.set_column(1, 4, 15)
+ws6.set_column(5, 5, 37)
+ws6.autofilter('A1:J5000')
+for i, (testpack, joint_marks, ustan, status) in enumerate(open_iso_ncr, start=1):
+    ws6.write(f'A{i}', testpack)
+    ws6.write(f'B{i}', joint_marks)
+    ws6.write(f'C{i}', ustan)
+    ws6.write(f'D{i}', status)
+
 workbook_ncr.close()
 
 

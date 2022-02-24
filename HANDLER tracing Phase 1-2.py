@@ -5,7 +5,7 @@ from dateutil import parser
 import datetime
 import pandas as pd
 
-wb_sputniks = xl.load_workbook('Спутники по РД.xlsx')
+wb_sputniks = xl.load_workbook(r'C:\Users\ignatenkoia\PycharmProjects\GIT_PROJECTS\handlers_sg\БД ТП ФАЗА 1, 2.xlsx')
 sheet_sputniks = wb_sputniks['5.8']
 
 sputnik_dic = {}
