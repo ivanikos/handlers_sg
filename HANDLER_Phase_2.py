@@ -150,7 +150,7 @@ for key in testpackages.keys():
 
 #Проверка Журнал заявок АИС Р2 ФАЗА2-------------------------------------
 df = pd.read_excel('Журнал заявок общий.xlsx')
-df = df.sort_values(by='Дата назначения инспекции / Date of scheduled inspection', ascending=True)
+df = df.sort_values(by='Дата подачи / Date of submission', ascending=True)
 df.to_excel('Журнал заявок общий.xlsx',index=0)
 
 wb_journal_rfi = xl.load_workbook('Журнал заявок общий.xlsx')
@@ -860,7 +860,9 @@ empty_str = [' * ', ' * ', ' * ', '  *  ', '  *  ', '  *  ', '  *  ', '  ', '  '
 n_list_3_110.append(ost_list_3_110)
 n_list_3_110.append(empty_str)
 
-for z in n_list_3_110_a:
+
+# установка 3-110 А и В сданы полностью
+"""for z in n_list_3_110_a:
     n_list_3_110.append(z)
 
 
@@ -921,7 +923,7 @@ ost_list_3_110_b = ['', 'Остаток:', '', '', ITOG_list_b[2] - ITOG_list_b[4], ITO
                     ITOG_list_b[2] - ITOG_list_b[8], ITOG_list_b[3] - ITOG_list_b[9], ITOG_list_b[2] - ITOG_list_b[10],
                     ITOG_list_b[3] - ITOG_list_b[11], '', '', ITOG_list_b[14]-ITOG_list_b[15], '']
 n_list_3_110.append(ost_list_3_110_b)
-n_list_3_110.append(empty_str)
+n_list_3_110.append(empty_str)"""
 
 
 for key in n_dic_3_30.keys():
