@@ -63,13 +63,14 @@ element.location_once_scrolled_into_view
 # Выбор статус инспекции СК
 
 time.sleep(1)
-driver.find_element_by_xpath('//div[@data-value="12"]').click()
+driver.find_element(By.XPATH, f"/html/body/*/*/span[contains(text(), 'СК: Не принято')]").click()
+# driver.find_element_by_xpath('//div[@data-value="12"]').click() /html/body/div[5]/div[21]/span
 time.sleep(1)
-driver.find_element_by_xpath('//div[@data-value="17"]').click()
+driver.find_element(By.XPATH, f"/html/body/*/*/span[contains(text(), 'СК: Принято с замечаниями')]").click()
 time.sleep(1)
 driver.find_element_by_xpath('//div[@data-value="18"]').click()
-
 time.sleep(1)
+
 date_box = driver.find_element_by_id('C8zl006::content').clear()
 driver.find_element_by_id('C8zl006::content').click()
 

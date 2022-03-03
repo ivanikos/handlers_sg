@@ -1046,7 +1046,7 @@ for key in isotpdic.keys():
 
 #Добавление сводки по МОПам-----------------
 
-wb_mops = xl.load_workbook(r'C:\Users\ignatenkoia\PycharmProjects\GIT_PROJECTS\handlers_sg\БД ТП ФАЗА 1, 2.xlsx')
+"""wb_mops = xl.load_workbook(r'C:\\Users\ignatenkoia\PycharmProjects\GIT_PROJECTS\handlers_sg\БД ТП ФАЗА 1, 2.xlsx')
 sheet_mops = wb_mops['Лист2']
 mops_summary_dic = {}
 mops_dic = {}
@@ -1115,7 +1115,7 @@ for i in mops_summary_a:
 mops_SUM.append(delimiter_string)
 for i in mops_summary_b:
     mops_SUM.append(i)
-mops_SUM.append(delimiter_string)
+mops_SUM.append(delimiter_string)"""
 
 #Список для листа повторяющихся изометрий
 double_iso_summary_table = [['Изометрия', 'Тестпакет', 'Длина', 'Установка', 'RFI ERECTION', 'RFI TEST', 'RFI AIRBLOWING',
@@ -1189,7 +1189,7 @@ for i, (one, two, three, four, five, six, seven, eight, nine, ten, eleven, twelv
 #ws0.set_column('O:P', None, None, {'hidden': True})
 
 #-----------------------------------ЗАПИСЬ МОПов------------
-ws12 = workbook_summary.add_worksheet('Сводка МОПы')
+"""ws12 = workbook_summary.add_worksheet('Сводка МОПы')
 ws12.set_column(0, 0, 16)
 ws12.set_column(1, 1, 32)
 ws12.set_column(2, 2, 25)
@@ -1251,7 +1251,7 @@ for i, (one, two, three, four, five, six) in enumerate(mops_detail_summary, star
     ws13.write(f'D{i}', four, color)
     ws13.write(f'E{i}', five, color)
     ws13.write(f'F{i}', six, color)
-
+"""
 #---------------------------------------------------------
 
 
