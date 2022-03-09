@@ -73,6 +73,11 @@ for i in sheet_iso_tp_phase1['A3':'S17651']:
                                   count_ins_zra, area_insulation_tt_zra, rfi_min_vata_tt, rfi_metall_tt, rfi_foamglass_tt,
                                   rfi_metall_box, rfi_therm_cover, '']
         sc_isotpdic_p1[sc_iso_tp] = [isometric, testpack, isolength, title_iso, '', '', '', '']
+    #     добавляем изоляцию
+
+
+
+
     else:
         break
 
@@ -167,6 +172,9 @@ for i in sheet['B2':'AO550000']:
 
         if rfi_number == 'CPECC-CC-34908/1' or 'CPECC-CC-35090/3':
             comment = 'подтвержд'
+
+        if rfi_number == 'CPECC-CC-57416':
+            print(category_cancelled, '\n', comment, '\n', description_rfi)
 
         if tp_shortname in testpackages_p1.keys():
             if 'Принято' in category_cancelled:
