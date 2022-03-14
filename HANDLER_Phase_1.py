@@ -176,6 +176,14 @@ for i in sheet['B2':'AO550000']:
         if rfi_number == 'CPECC-CC-57416':
             print(category_cancelled, '\n', comment, '\n', description_rfi)
 
+        if rfi_number == 'CPECC-CC-75972' or 'CPECC-CC-75972':
+            violation = 'Не предоставлены документы, подтверждающие качество работ'
+
+        bad_rfi = ['CPECC-CC-69815', 'CPECC-CC-71385', 'CPECC-CC-71460', 'CPECC-CC-72230', 'CPECC-CC-72229',
+                   'CPECC-CC-72262', 'CPECC-CC-72263', 'CPECC-CC-72342', 'CPECC-CC-74919']
+        if rfi_number in bad_rfi:
+            violation = 'bad rfi'
+
         if tp_shortname in testpackages_p1.keys():
             if 'Принято' in category_cancelled:
                 if 'сборки технологических трубопроводов ГПА' in description_rfi:
@@ -292,7 +300,7 @@ for i in sheet['B2':'AO550000']:
             testpackages_p1[tp_shortname][7] = rfi_number + ' ФОП'
         # ПРОВЕРКА ИЗОЛЯЦИИ-------------------------------------------
         if 'завершении работ по теплоизоляц' in pkk:
-            if 'представлены не в полном объеме, представлены некорректные документы' in violation:
+            if 'представлены не в полном объеме, представлены некорректные документы' or 'Не предоставлены документы, подтверждающие качество работ' in violation:
                 if 'металлического кожуха фланцев и ЗРА' in description_rfi:
                     for iso in list_iso.split(';'):
                         if iso.strip() in isotpdic_p1.keys():
