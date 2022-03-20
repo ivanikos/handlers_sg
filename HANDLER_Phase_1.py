@@ -196,6 +196,7 @@ for i in sheet['B2':'AO550000']:
                     testpackages_p1[tp_shortname][6] = rfi_number
                 if 'испыт' and 'рочност' in description_rfi:
                     testpackages_p1[tp_shortname][7] = rfi_number
+
                 if 'испытаний технологического трубопровода  на прочность' in description_rfi or 'Гидравлические испытания'\
                         in description_rfi:
                     testpackages_p1[tp_shortname][7] = rfi_number

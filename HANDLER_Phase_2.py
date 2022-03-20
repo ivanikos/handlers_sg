@@ -214,6 +214,8 @@ for i in sheet['B2':'AO550000']:
                     testpackages[tp_shortname][9] = rfi_number
                 if 'испытаний на прочность и плотность' in description_rfi:
                     testpackages[tp_shortname][10] = rfi_number
+                if 'испытаний технологического трубопровода на прочность' in description_rfi:
+                    testpackages[tp_shortname][10] = rfi_number
                 if 'испытаний технологического трубопровода  на прочность' in description_rfi:
                     testpackages[tp_shortname][10] = rfi_number
                 if 'сборки технологических трубопроводов в проект' in description_rfi:
@@ -232,6 +234,8 @@ for i in sheet['B2':'AO550000']:
                         testpackages[tp_shortname][9] = rfi_number + ' ФОП'
                     if 'испытаний на прочность и плотность' in description_rfi:
                         testpackages[tp_shortname][10] = rfi_number + ' ФОП'
+                    if 'испытаний технологического трубопровода на прочность' in description_rfi:
+                        testpackages[tp_shortname][10] = rfi_number
                     if 'испытаний технологического трубопровода  на прочность' in description_rfi:
                         testpackages[tp_shortname][10] = rfi_number + ' ФОП'
                     if 'сборки технологических трубопроводов в проект' in description_rfi:
@@ -245,6 +249,8 @@ for i in sheet['B2':'AO550000']:
                         testpackages[tp_shortname][9] = rfi_number + ' ФОП'
                     if 'испытаний на прочность и плотность' in description_rfi:
                         testpackages[tp_shortname][10] = rfi_number + ' ФОП'
+                    if 'испытаний технологического трубопровода на прочность' in description_rfi:
+                        testpackages[tp_shortname][10] = rfi_number
                     if 'испытаний технологического трубопровода  на прочность' in description_rfi:
                         testpackages[tp_shortname][10] = rfi_number + ' ФОП'
                     if 'сборки технологических трубопроводов в проект' in description_rfi:
