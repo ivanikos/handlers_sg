@@ -12,7 +12,7 @@ with open('account_data.txt', 'r') as ad:
     ac_data = ad.readlines()
 
 
-driver = webdriver.Chrome(r"C:\Users\ignatenkoia\Documents\python\act_work\weldlog_summary\chromedriver.exe")
+driver = webdriver.Chrome(r"C:\Users\ignatenkoia\Documents\python\act_work\chromedriver.exe")
 driver.get(f'{ac_data[0].strip()}')
 
 
@@ -68,7 +68,7 @@ driver.find_element(By.XPATH, f"/html/body/*/*/span[contains(text(), 'СК: Не
 time.sleep(1)
 driver.find_element(By.XPATH, f"/html/body/*/*/span[contains(text(), 'СК: Принято с замечаниями')]").click()
 time.sleep(1)
-driver.find_element_by_xpath('//div[@data-value="37"]').click()
+driver.find_element_by_xpath('//div[@data-value="9"]').click()
 time.sleep(1)
 
 date_box = driver.find_element_by_id('C8zl006::content').clear()
@@ -140,3 +140,5 @@ for f in itog_files:
 print('Сохранил журналы куда нужно.')
 
 print(itog_files)
+
+

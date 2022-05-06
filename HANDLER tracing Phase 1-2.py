@@ -205,6 +205,18 @@ for i in sheet_tracing['B2':'AO250000']:
         break
 
 
+small_summary = [['Краткая справка', 'Общий объём, м.', 'Остаток монтажа, м.', 'Остаток испытаний, м.',
+                  'Остаток продувки, м.'],
+                 ['Unit 1-110', 0, 0, 0, 0],
+                 ['Unit 1-30', 0, 0, 0, 0],
+                 ['Unit 2-110', 0, 0, 0, 0],
+                 ['Unit 2-30', 0, 0, 0, 0],
+                 ['Unit 1-60', 0, 0, 0, 0],
+                 ['Unit 1-70', 0, 0, 0, 0],
+                 ['Unit 3-110', 0, 0, 0, 0],
+                 ['Unit 3-30', 0, 0, 0, 0],
+                 ['Unit 2-60', 0, 0, 0, 0],
+                 ['Unit 2-70', 0, 0, 0, 0]]
 
 summary_sputnik = [['Чертеж по ГОСТ', 'Чертеж', 'Установка', 'Титул', 'Длина', 'RFI  ERECTION', 'RFI TEST',
                     'RFI BLOWING', 'RFI ВАТА', 'RFI Металл']]
@@ -212,15 +224,92 @@ for key in sputnik_dic.keys():
     summary_sputnik.append([key, sputnik_dic[key][0], sputnik_dic[key][1], sputnik_dic[key][2], sputnik_dic[key][3],
                             sputnik_dic[key][4], sputnik_dic[key][5], sputnik_dic[key][6], sputnik_dic[key][7],
                             sputnik_dic[key][8]])
+
+
+
+    if '1-110' in sputnik_dic[key][1]:
+        small_summary[1][1] += sputnik_dic[key][3]
+        if 'CPECC' not in sputnik_dic[key][4]:
+            small_summary[1][2] += sputnik_dic[key][3]
+        if 'CPECC' not in sputnik_dic[key][5]:
+            small_summary[1][3] += sputnik_dic[key][3]
+        if 'CPECC' not in sputnik_dic[key][6]:
+            small_summary[1][4] += sputnik_dic[key][3]
+    if '1-30' in sputnik_dic[key][1]:
+        small_summary[2][1] += sputnik_dic[key][3]
+        if 'CPECC' not in sputnik_dic[key][4]:
+            small_summary[2][2] += sputnik_dic[key][3]
+        if 'CPECC' not in sputnik_dic[key][5]:
+            small_summary[2][3] += sputnik_dic[key][3]
+        if 'CPECC' not in sputnik_dic[key][6]:
+            small_summary[2][4] += sputnik_dic[key][3]
+    if '2-110' in sputnik_dic[key][1]:
+        small_summary[3][1] += sputnik_dic[key][3]
+        if 'CPECC' not in sputnik_dic[key][4]:
+            small_summary[3][2] += sputnik_dic[key][3]
+        if 'CPECC' not in sputnik_dic[key][5]:
+            small_summary[3][3] += sputnik_dic[key][3]
+        if 'CPECC' not in sputnik_dic[key][6]:
+            small_summary[3][4] += sputnik_dic[key][3]
+    if '2-30' in sputnik_dic[key][1]:
+        small_summary[4][1] += sputnik_dic[key][3]
+        if 'CPECC' not in sputnik_dic[key][4]:
+            small_summary[4][2] += sputnik_dic[key][3]
+        if 'CPECC' not in sputnik_dic[key][5]:
+            small_summary[4][3] += sputnik_dic[key][3]
+        if 'CPECC' not in sputnik_dic[key][6]:
+            small_summary[4][4] += sputnik_dic[key][3]
+    if '1-60' in sputnik_dic[key][1]:
+        small_summary[5][1] += sputnik_dic[key][3]
+        if 'CPECC' not in sputnik_dic[key][4]:
+            small_summary[5][2] += sputnik_dic[key][3]
+        if 'CPECC' not in sputnik_dic[key][5]:
+            small_summary[5][3] += sputnik_dic[key][3]
+        if 'CPECC' not in sputnik_dic[key][6]:
+            small_summary[5][4] += sputnik_dic[key][3]
+    if '1-70' in sputnik_dic[key][1]:
+        small_summary[6][1] += sputnik_dic[key][3]
+        if 'CPECC' not in sputnik_dic[key][4]:
+            small_summary[6][2] += sputnik_dic[key][3]
+        if 'CPECC' not in sputnik_dic[key][5]:
+            small_summary[6][3] += sputnik_dic[key][3]
+        if 'CPECC' not in sputnik_dic[key][6]:
+            small_summary[6][4] += sputnik_dic[key][3]
+    if '3-110' in sputnik_dic[key][1]:
+        small_summary[7][1] += sputnik_dic[key][3]
+        if 'CPECC' not in sputnik_dic[key][4]:
+            small_summary[7][2] += sputnik_dic[key][3]
+        if 'CPECC' not in sputnik_dic[key][5]:
+            small_summary[7][3] += sputnik_dic[key][3]
+        if 'CPECC' not in sputnik_dic[key][6]:
+            small_summary[7][4] += sputnik_dic[key][3]
+    if '3-30' in sputnik_dic[key][1]:
+        small_summary[8][1] += sputnik_dic[key][3]
+        if 'CPECC' not in sputnik_dic[key][4]:
+            small_summary[8][2] += sputnik_dic[key][3]
+        if 'CPECC' not in sputnik_dic[key][5]:
+            small_summary[8][3] += sputnik_dic[key][3]
+        if 'CPECC' not in sputnik_dic[key][6]:
+            small_summary[8][4] += sputnik_dic[key][3]
+    if '2-60' in sputnik_dic[key][1]:
+        small_summary[9][1] += sputnik_dic[key][3]
+        if 'CPECC' not in sputnik_dic[key][4]:
+            small_summary[9][2] += sputnik_dic[key][3]
+        if 'CPECC' not in sputnik_dic[key][5]:
+            small_summary[9][3] += sputnik_dic[key][3]
+        if 'CPECC' not in sputnik_dic[key][6]:
+            small_summary[9][4] += sputnik_dic[key][3]
+    if '2-70' in sputnik_dic[key][1]:
+        small_summary[10][1] += sputnik_dic[key][3]
+        if 'CPECC' not in sputnik_dic[key][4]:
+            small_summary[10][2] += sputnik_dic[key][3]
+        if 'CPECC' not in sputnik_dic[key][5]:
+            small_summary[10][3] += sputnik_dic[key][3]
+        if 'CPECC' not in sputnik_dic[key][6]:
+            small_summary[10][4] += sputnik_dic[key][3]
     #print(key, sputnik_dic[key])
 
 workbook_summary_sputnik = xlsxwriter.Workbook(f'Сводка по 1, 2 ФАЗЕ теплоспутник {datetime.datetime.now().strftime("%d.%m.%Y")}.xlsx')
-
-ws11 = workbook_summary_sputnik.add_worksheet('Сводка по спутникам')
-ws11.set_column(0, 1, 38)
-ws11.set_column(2, 4, 12)
-ws11.set_column(5, 9, 22)
-ws11.autofilter('A1:J2000')
 
 cell_format_green = workbook_summary_sputnik.add_format()
 cell_format_green.set_bg_color('#98FB98')
@@ -230,6 +319,43 @@ cell_format_hat = workbook_summary_sputnik.add_format()
 cell_format_hat.set_bg_color('#F0E68C')
 cell_format_date = workbook_summary_sputnik.add_format()
 cell_format_date.set_font_size(font_size=14)
+
+ws0 = workbook_summary_sputnik.add_worksheet('Кратчайшая сводка')
+ws0.set_column(0, 0, 18)
+ws0.set_column(1, 1, 18)
+ws0.set_column(2, 5, 20)
+
+
+for i, (one, two, three, four, five) in enumerate(small_summary, start=1):
+    color_2 = cell_format_hat
+    color_2.set_bold('bold')
+    color_2.set_border(style=1)
+
+    if one == 'Краткая справка':
+        color = cell_format_hat
+        color.set_bold('bold')
+    else:
+        color = cell_format_blue
+    try:
+        color.set_border(style=1)
+        color.set_text_wrap(text_wrap=1)
+    except:
+        pass
+    ws0.write(f'A{i}', one, color_2)
+    ws0.write(f'B{i}', two, color)
+    ws0.write(f'C{i}', three, color)
+    ws0.write(f'D{i}', four, color)
+    ws0.write(f'E{i}', five, color)
+
+
+
+ws11 = workbook_summary_sputnik.add_worksheet('Сводка по спутникам')
+ws11.set_column(0, 1, 38)
+ws11.set_column(2, 4, 12)
+ws11.set_column(5, 9, 22)
+ws11.autofilter('A1:J2000')
+
+
 for i, (one, two, three, four, five, six, seven, eight, nine, ten) in enumerate(summary_sputnik, start=1):
     if one == 'Чертеж по ГОСТ':
         color = cell_format_hat
@@ -254,5 +380,10 @@ for i, (one, two, three, four, five, six, seven, eight, nine, ten) in enumerate(
     ws11.write(f'I{i}', nine, color)
     ws11.write(f'J{i}', ten, color)
 
+
+
 workbook_summary_sputnik.close()
+
+print('Done')
+
 print('Файл по спутникам создан.')

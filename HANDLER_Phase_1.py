@@ -6,7 +6,7 @@ import xlsxwriter
 from dateutil import parser
 import datetime
 import pandas as pd
-
+from playsound import playsound
 
 # Создание общего словаря ТП-------------------------------------------
 wb_phase1 = xl.load_workbook(r'C:\Users\ignatenkoia\PycharmProjects\GIT_PROJECTS\handlers_sg\БД ТП ФАЗА 1, 2.xlsx')
@@ -89,7 +89,7 @@ print('Общий словарь создан')
 
 
 # Добавление в словарь информации по движению ИД------------------------
-wb_id = xl.load_workbook('Хронология движения ИД ТТ 1 Фаза.xlsx')
+"""wb_id = xl.load_workbook('Хронология движения ИД ТТ 1 Фаза.xlsx')
 sheet_id = wb_id['ХРОНОЛОГИЯ']
 
 status_id_p1 = {}
@@ -108,19 +108,14 @@ for i in sheet_id['C2':'L5000']:
         status_id_p1[number_of_testpack] = [date_prov_string, stat_crit]
     else:
         break
-print(len(status_id_p1.keys()))
+print(len(status_id_p1.keys()))"""
 
 for key in testpackages_p1.keys():
-    a_1 = key.replace('YMT-', '')
-    tp_for_id = a_1.replace('-HP', '')
-    if tp_for_id in status_id_p1.keys():
-        testpackages_p1[key][4] = status_id_p1[tp_for_id][0]
-        testpackages_p1[key][5] = status_id_p1[tp_for_id][1]
-    else:
-        pass
+    testpackages_p1[key][4] = 'n/p'
+    testpackages_p1[key][5] = 'n/p'
 
-wb_id.close()
-print('Добавил информацию по Хронологии движения ИД в общий словарь')
+
+print('НЕ ! Добавил информацию по Хронологии движения ИД в общий словарь')
 # -------------------------------------------------------------------
 
 
@@ -170,8 +165,11 @@ for i in sheet['B2':'AO550000']:
         violation = str(i[35].value)
         comment = str(i[39].value)  # комментарий для сортировки Физ. объём подтверждён  на прочность и плотность
 
-        if rfi_number == 'CPECC-CC-34908/1' or 'CPECC-CC-35090/3':
-            comment = 'подтвержд'
+        if rfi_number == 'CPECC-CC-34908/1':
+            testpackages_p1[tp_shortname][6] = rfi_number + ' ФОП'
+        if rfi_number == 'CPECC-CC-35090/3':
+            testpackages_p1[tp_shortname][9] = rfi_number + ' ФОП'
+
 
         if rfi_number == 'CPECC-CC-57416':
             print(category_cancelled, '\n', comment, '\n', description_rfi)
@@ -180,7 +178,8 @@ for i in sheet['B2':'AO550000']:
             violation = 'Не предоставлены документы, подтверждающие качество работ'
 
         bad_rfi = ['CPECC-CC-69815', 'CPECC-CC-71385', 'CPECC-CC-71460', 'CPECC-CC-72230', 'CPECC-CC-72229',
-                   'CPECC-CC-72262', 'CPECC-CC-72263', 'CPECC-CC-72342', 'CPECC-CC-74919']
+                   'CPECC-CC-72262', 'CPECC-CC-72263', 'CPECC-CC-72342', 'CPECC-CC-74919', 'CPECC-CC-72759/1',
+                   'CPECC-CC-72095/1']
         if rfi_number in bad_rfi:
             violation = 'bad rfi'
 
@@ -206,12 +205,6 @@ for i in sheet['B2':'AO550000']:
                     testpackages_p1[tp_shortname][8] = rfi_number
             else:
                 if 'подтвержд' in comment:
-                    if 'сборки технологических трубопроводов ГПА' in description_rfi:
-                        testpackages_p1[tp_shortname][9] = rfi_number + ' ФОП'
-                    if 'онтаж технологического трубопровода ГПА' in description_rfi:
-                        testpackages_p1[tp_shortname][6] = rfi_number + ' ФОП'
-                    if 'испытаний технологического трубопровода ГПА' in description_rfi:
-                        testpackages_p1[tp_shortname][7] = rfi_number + ' ФОП'
                     if 'Монтаж технологического трубопровода в рамках' in description_rfi:
                         testpackages_p1[tp_shortname][6] = rfi_number + ' ФОП'
                     if 'испыт' and 'рочност' in description_rfi:
@@ -219,6 +212,8 @@ for i in sheet['B2':'AO550000']:
                     if 'испытаний технологического трубопровода  на прочность' in description_rfi:
                         testpackages_p1[tp_shortname][7] = rfi_number + ' ФОП'
                     if 'сборки технологических трубопроводов в проект' in description_rfi:
+                        testpackages_p1[tp_shortname][9] = rfi_number + ' ФОП'
+                    if 'сборки технологических трубопроводов в рамках' in description_rfi:
                         testpackages_p1[tp_shortname][9] = rfi_number + ' ФОП'
                     if 'родувка' in description_rfi:
                         testpackages_p1[tp_shortname][8] = rfi_number + ' ФОП'
@@ -233,6 +228,8 @@ for i in sheet['B2':'AO550000']:
                         testpackages_p1[tp_shortname][7] = rfi_number + ' ФОП'
                     if 'сборки технологических трубопроводов в проект' in description_rfi:
                         testpackages_p1[tp_shortname][9] = rfi_number + ' ФОП'
+                    if 'сборки технологических трубопроводов в рамках' in description_rfi:
+                        testpackages_p1[tp_shortname][9] = rfi_number + ' ФОП'
                     if 'родувка' in description_rfi:
                         testpackages_p1[tp_shortname][8] = rfi_number + ' ФОП'
                 if 'пытание давлением выдержано' in comment:
@@ -240,7 +237,6 @@ for i in sheet['B2':'AO550000']:
                         testpackages_p1[tp_shortname][7] = rfi_number + ' ФОП'
                     if 'испытаний технологического трубопровода  на прочность' in description_rfi:
                         testpackages_p1[tp_shortname][7] = rfi_number + ' ФОП'
-
 
 
         for isom in list_iso.split(';'):
@@ -254,6 +250,8 @@ for i in sheet['B2':'AO550000']:
                         sc_isotpdic_p1[isom.strip() + tp_shortname][5] = rfi_number
                     if 'сборки технологических трубопроводов в проект' in description_rfi:
                         sc_isotpdic_p1[isom.strip() + tp_shortname][7] = rfi_number
+                    if 'сборки технологических трубопроводов в рамках' in description_rfi:
+                        sc_isotpdic_p1[isom.strip() + tp_shortname][7] = rfi_number
                     if 'родувка' in description_rfi and 'еплоспутн' not in description_rfi:
                         sc_isotpdic_p1[isom.strip() + tp_shortname][6] = rfi_number
                 else:
@@ -266,6 +264,8 @@ for i in sheet['B2':'AO550000']:
                             sc_isotpdic_p1[isom.strip() + tp_shortname][5] = rfi_number + ' ФОП'
                         if 'сборки технологических трубопроводов в проект' in description_rfi:
                             sc_isotpdic_p1[isom.strip() + tp_shortname][7] = rfi_number + ' ФОП'
+                        if 'сборки технологических трубопроводов в рамках' in description_rfi:
+                            sc_isotpdic_p1[isom.strip() + tp_shortname][7] = rfi_number + ' ФОП'
                         if 'родувка' in description_rfi and 'еплоспутн' not in description_rfi:
                             sc_isotpdic_p1[isom.strip() + tp_shortname][6] = rfi_number + ' ФОП'
                     if 'зафиксирован' in comment:
@@ -276,6 +276,8 @@ for i in sheet['B2':'AO550000']:
                         if 'испытаний технологического трубопровода  на прочность' in description_rfi:
                             sc_isotpdic_p1[isom.strip() + tp_shortname][5] = rfi_number + ' ФОП'
                         if 'сборки технологических трубопроводов в проект' in description_rfi:
+                            sc_isotpdic_p1[isom.strip() + tp_shortname][7] = rfi_number + ' ФОП'
+                        if 'сборки технологических трубопроводов в рамках' in description_rfi:
                             sc_isotpdic_p1[isom.strip() + tp_shortname][7] = rfi_number + ' ФОП'
                         if 'родувка' in description_rfi and 'еплоспутн' not in description_rfi:
                             sc_isotpdic_p1[isom.strip() + tp_shortname][6] = rfi_number + ' ФОП'
@@ -296,9 +298,29 @@ for i in sheet['B2':'AO550000']:
         if rfi_number == 'CPECC-CC-44346':
             sc_isotpdic_p1[isom.strip() + tp_shortname][7] = rfi_number + ' ФОП'
             testpackages_p1[tp_shortname][9] = rfi_number + ' ФОП'
+
+        if rfi_number == 'CPECC-CC-59781/1':
+            sc_isotpdic_p1[isom.strip() + tp_shortname][5] = rfi_number + ' ФОП'
+        if rfi_number == 'CPECC-CC-34908/1':
+            sc_isotpdic_p1[isom.strip() + tp_shortname][5] = rfi_number + ' ФОП'
+        if rfi_number == 'CPECC-CC-39656':
+            sc_isotpdic_p1[isom.strip() + tp_shortname][5] = rfi_number + ' ФОП'
         if rfi_number == 'CPECC-CC-41143':
             sc_isotpdic_p1[isom.strip() + tp_shortname][5] = rfi_number + ' ФОП'
             testpackages_p1[tp_shortname][7] = rfi_number + ' ФОП'
+
+        fuck_1_60 = ['4-1-4-60-140-UWCH-82-1021-008', '4-1-4-60-140-UWCH-82-1021-007', '4-1-4-60-140-UWCH-82-1021-006',
+                     '4-1-4-60-140-UWCH-82-1021-005', '4-1-4-60-140-UWCH-82-1021-004', '4-1-4-60-140-UWCH-82-1021-003',
+                     '4-1-4-60-140-UWCH-82-1021-002', '4-1-4-60-140-UWCH-82-1021-001', '4-1-4-60-132-UWCH-82-1021-001',
+                     '4-1-4-60-140-UWCH-82-1021-009']
+        tepe = 'YMT-2-00-HP-822001-01-01'
+        for so in fuck_1_60:
+            sc_isotpdic_p1[so + tepe][5] = 'CPECC-CC-24518'
+            sc_isotpdic_p1[so + tepe][4] = 'CPECC-CC-24580'
+            sc_isotpdic_p1[so + tepe][6] = 'CPECC-CC-25025'
+            sc_isotpdic_p1[so + tepe][7] = 'CPECC-CC-30079'
+
+
         # ПРОВЕРКА ИЗОЛЯЦИИ-------------------------------------------
         if 'завершении работ по теплоизоляц' in pkk:
             if 'представлены не в полном объеме, представлены некорректные документы' or 'Не предоставлены документы, подтверждающие качество работ' in violation:
@@ -445,63 +467,65 @@ for key in isotpdic_p1.keys():
 # # ------------------------------------------------------------------
 
 
-n_dic_1_60 = {'NODRAH': ['Дренаж углеводородов', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-              'NHC4P+': ['Бутановая фракция', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-              'NHC3P+': ['Пропановая фракция', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-              'UFGAW': ['Факельный сброс в общую фак. систему', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-              'NHC5+': ['С5+ фракция', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-              'NHC3+': ['С3+ фракция', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-              'NHC4+': ['С4+ фракция', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-              'NHLGPT': ['Очищенная ШФЛУ', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-              'UNMP': ['Азот СД', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-              'UHG': ['Топливный газ', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-              'UNLP': ['Азот НД', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-              'UNHP': ['Азот ВД', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-              'WPCS': ['Подача Оборотная вода(В4)', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-              'WPCR': ['Возврат Оборотная вода(В5)', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-              'UWCH': ['Конденсат (Т8)', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-              'USLP': ['Пар НД', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-              'UAIN': ['Воздух КИП', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-              'UAPL': ['Технический воздух', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-              'UWSW': ['Техническая вода', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-              'HWSP': ['Теплофикационная вода, прямая (Т1)', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-              'HWRP': ['Теплофикационная вода, обратная (Т2)', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-              'OFSP': ['Некондиция', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-              'NOVENA': ['Сброс в атмосферу', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-              'NOWWA': ['Сточные воды', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-              'UWFF': ['Пожарная вода', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-              'UWPO': ['Питьевая вода', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-              'NHNGA': ['Природный газ', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-              'NHNGAD': ['Сухой природный газ', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-              'WMMI': ['Водометанольная смесь', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-              'UHD': ['Дизельное топливо', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-              'NHRGR': ['Газ регенерации, обратный', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-              'NHRGS': ['Газ регенерации, прямой', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-              'UWSU': ['Поверхностная вода', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-              'HYDV': ['Пары углеводородов', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+n_dic_1_60 = {
+    'UAIN': ['Воздух КИП', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    'UNMP': ['Азот СД', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    'UNLP': ['Азот НД', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    'USLP': ['Пар НД', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    'UWFF': ['Пожарная вода', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    'UFGAW': ['Факельный сброс в общую фак. систему', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    'UWCH': ['Конденсат (Т8)', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    'UHG': ['Топливный газ', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    'NHC3+': ['С3+ фракция', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    'NHC3P+': ['Пропановая фракция', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    'NHC4+': ['С4+ фракция', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    'NHC4P+': ['Бутановая фракция', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    'NHC5+': ['С5+ фракция', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    'NODRAH': ['Дренаж углеводородов', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    'OFSP': ['Некондиция', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    'WPCR': ['Возврат Оборотная вода(В5)', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    'WPCS': ['Подача Оборотная вода(В4)', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    'UWSW': ['Техническая вода', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    'NOWWA': ['Сточные воды', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    'UWSU': ['Поверхностная вода', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    'HYDV': ['Пары углеводородов', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    'NOVENA': ['Сброс в атмосферу', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    'UWPO': ['Питьевая вода', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    'NHLGPT': ['Очищенная ШФЛУ', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    'UNHP': ['Азот ВД', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    'UAPL': ['Технический воздух', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    'HWSP': ['Теплофикационная вода, прямая (Т1)', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    'HWRP': ['Теплофикационная вода, обратная (Т2)', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    'NHNGA': ['Природный газ', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    'NHNGAD': ['Сухой природный газ', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    'WMMI': ['Водометанольная смесь', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    'UHD': ['Дизельное топливо', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    'NHRGR': ['Газ регенерации, обратный', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    'NHRGS': ['Газ регенерации, прямой', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
               }
 
-n_dic_1_70 = {'NODRAH': ['Дренаж углеводородов', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-              'UAPL': ['Технический воздух', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-              'UHG': ['Топливный газ', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-              'UNLP': ['Азот НД', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-              'UNHP': ['Азот ВД', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-              'HWRP': ['Теплофикационная вода, обратная (Т2)', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-              'HWSP': ['Теплофикационная вода, прямая (Т1)', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-              'NHRGS': ['Газ регенерации, прямой', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-              'NHRGR': ['Газ регенерации, обратный', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-              'UWCH': ['Конденсат (Т8)', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-              'UHD': ['Дизельное топливо', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-              'NHLGPT': ['Очищенная ШФЛУ', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-              'UFGAW': ['Факельный сброс в общую фак. систему', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-              'NOVENA': ['Сброс в атмосферу', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-              'NHC3+': ['С3+ фракция', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-              'USLP': ['Пар НД', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-              'UAIN': ['Воздух КИП', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-              'UWSW': ['Техническая вода', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-              'UWFF': ['Пожарная вода', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-              'UHGAH': ['Топливный газ ВД', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-              'OFSP': ['Некондиция', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]}
+n_dic_1_70 = {
+    'UAIN': ['Воздух КИП', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    'UNHP': ['Азот ВД', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    'UNLP': ['Азот НД', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    'UWCH': ['Конденсат (Т8)', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    'USLP': ['Пар НД', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    'UWFF': ['Пожарная вода', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    'UFGAW': ['Факельный сброс в общую фак. систему', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    'NHRGS': ['Газ регенерации, прямой', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    'NHRGR': ['Газ регенерации, обратный', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    'UHG': ['Топливный газ', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    'HWRP': ['Теплофикационная вода, обратная (Т2)', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    'HWSP': ['Теплофикационная вода, прямая (Т1)', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    'UHGAH': ['Топливный газ ВД', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    'NHLGPT': ['Очищенная ШФЛУ', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    'NODRAH': ['Дренаж углеводородов', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    'UAPL': ['Технический воздух', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    'UWSW': ['Техническая вода', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    'NOVENA': ['Сброс в атмосферу', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    'UHD': ['Дизельное топливо', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    'NHC3+': ['С3+ фракция', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    'OFSP': ['Некондиция', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]}
 
 n_list_1_60 = [['', f'Статус по ТП 1-60 на {datetime.datetime.now().strftime("%d.%m.%Y")}', '', '', '', '',
                 '', '', '', '', '',
@@ -750,10 +774,10 @@ for i, (one, two, three, four, five, six, seven, eight, nine, ten, eleven, twelv
     ws0.write(f'N{i}', fourteen, color)
 
 ws5 = workbook_summary_p1.add_worksheet('Сводная информация')
-ws5.set_column(0, 1, 30)
-ws5.set_column(2, 6, 15)
-ws5.set_column(7, 12, 22)
-ws5.set_column(13, 15, 25)
+ws5.set_column(0, 0, 30)
+ws5.set_column(1, 4, 15)
+ws5.set_column(5, 9, 25)
+
 ws5.autofilter('A1:O5000')
 
 cell_format_ins = workbook_summary_p1.add_format()
@@ -782,27 +806,27 @@ for i, (testpack, ustan, flud, metr_ng, stat_id_1, stat_id_2, inst_rfi, test_rfi
         pass
 
     ws5.write(f'A{i}', testpack, color)
-    ws5.write(f'B{i}', ustan, color)
-    ws5.write(f'C{i}', flud, color)
-    ws5.write(f'D{i}', metr_ng, color)
-    ws5.write(f'E{i}', stat_id_1, color)
-    ws5.write(f'F{i}', stat_id_2, color)
-    ws5.write(f'G{i}', inst_rfi, color)
-    ws5.write(f'H{i}', test_rfi, color)
-    ws5.write(f'I{i}', elev, color)
-    ws5.write(f'J{i}', twelw, color)
-    ws5.write(f'K{i}', thirt, color)
-    ws5.write(f'L{i}', fourteen, color)
-    ws5.write(f'M{i}', fifth, color)
+    #ws5.write(f'B{i}', ustan, color)
+    ws5.write(f'B{i}', flud, color)
+    ws5.write(f'C{i}', metr_ng, color)
+    ws5.write(f'D{i}', stat_id_1, color)
+    ws5.write(f'E{i}', stat_id_2, color)
+    #ws5.write(f'F{i}', inst_rfi, color)
+    #ws5.write(f'G{i}', test_rfi, color)
+    ws5.write(f'F{i}', elev, color)
+    ws5.write(f'G{i}', twelw, color)
+    ws5.write(f'H{i}', thirt, color)
+    ws5.write(f'I{i}', fourteen, color)
+    ws5.write(f'J{i}', fifth, color)
 
 ws3 = workbook_summary_p1.add_worksheet('Сводка по изометричкам')
 ws3.set_column(0, 1, 37)
-ws3.set_column(2, 4, 13)
-ws3.set_column(5, 9, 22)
+ws3.set_column(2, 3, 13)
+ws3.set_column(4, 8, 22)
 
-ws3.set_column(10, 10, 13)
-ws3.set_column(11, 14, 15)
-ws3.set_column(15, 20, 22)
+ws3.set_column(9, 9, 13)
+ws3.set_column(10, 13, 15)
+ws3.set_column(14, 19, 22)
 ws3.autofilter('A1:T20000')
 
 for i, (testpack, ustan, flud, metr_ng, stat_id_1, stat_id_2, inst_rfi, test_rfi, elev, ten, odinn, twelve, thirteen, fourten,
@@ -838,23 +862,23 @@ fiveten, sixten, seventen, eighten, nineten, twenty, t_one) in enumerate(info_su
     ws3.write(f'B{i}', ustan, color)
     ws3.write(f'C{i}', flud, color)
     ws3.write(f'D{i}', metr_ng, color)
-    ws3.write(f'E{i}', stat_id_1, color)
-    ws3.write(f'F{i}', stat_id_2, color)
-    ws3.write(f'G{i}', inst_rfi, color)
-    ws3.write(f'H{i}', test_rfi, color)
-    ws3.write(f'I{i}', elev, color)
-    ws3.write(f'J{i}', ten, color)
-    ws3.write(f'K{i}', odinn, color_2)
-    ws3.write(f'L{i}', twelve, color_2)
-    ws3.write(f'M{i}', thirteen, color_2)
-    ws3.write(f'N{i}', fourten, color_2)
-    ws3.write(f'O{i}', fiveten, color_2)
-    ws3.write(f'P{i}', sixten, color_2)
-    ws3.write(f'Q{i}', seventen, color_2)
-    ws3.write(f'R{i}', eighten, color_2)
-    ws3.write(f'S{i}', nineten, color_2)
-    ws3.write(f'T{i}', twenty, color_2)
-    ws3.write(f'U{i}', t_one, color_2)
+    # ws3.write(f'E{i}', stat_id_1, color)
+    ws3.write(f'E{i}', stat_id_2, color)
+    ws3.write(f'F{i}', inst_rfi, color)
+    ws3.write(f'G{i}', test_rfi, color)
+    ws3.write(f'H{i}', elev, color)
+    ws3.write(f'I{i}', ten, color)
+    ws3.write(f'J{i}', odinn, color_2)
+    ws3.write(f'K{i}', twelve, color_2)
+    ws3.write(f'L{i}', thirteen, color_2)
+    ws3.write(f'M{i}', fourten, color_2)
+    ws3.write(f'N{i}', fiveten, color_2)
+    ws3.write(f'O{i}', sixten, color_2)
+    ws3.write(f'P{i}', seventen, color_2)
+    ws3.write(f'Q{i}', eighten, color_2)
+    ws3.write(f'R{i}', nineten, color_2)
+    ws3.write(f'S{i}', twenty, color_2)
+    ws3.write(f'T{i}', t_one, color_2)
 
 ws01 = workbook_summary_p1.add_worksheet('Double isometric')
 ws01.set_column(0, 0, 37)
@@ -899,3 +923,7 @@ for i, (one, two, three, four, five, six, seven, eight) in enumerate(double_iso_
 
 workbook_summary_p1.close()
 print('Создан итоговый файл')
+print('Прошёл ФАЗУ 1 \n\n -------')
+
+playsound('C:/Users/ignatenkoia/Downloads/9162978a91f59a5.mp3')
+
