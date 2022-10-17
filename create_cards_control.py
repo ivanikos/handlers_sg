@@ -3,7 +3,7 @@
 import os
 import img2pdf
 
-dir_name = r"C:\Users\ignatenkoia\Downloads\ИК ОК"
+dir_name = r"C:\Users\ignatenkoia\Desktop\Акты ВИК Игнатенко\ИК ОК"
 
 test = os.listdir(dir_name)
 

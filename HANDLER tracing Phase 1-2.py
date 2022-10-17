@@ -54,6 +54,124 @@ for i in sheet_tracing['B2':'AO250000']:
 
         list_short_draw = re.findall(r'\d-\d\d-HWSM-\d\d\d-\d\d/\d-\d\d-HWSM-\d\d\d-\d\d|\d-\d\d-HWSM-\d\d\d-\d\d', description_rfi.replace(' ', '').strip())
 
+
+        if 'Принято' in category_cancelled:
+            if 'испытаний теплоспут' in description_rfi:
+                if list_short_draw:
+                    for l in list_short_draw:
+                        if l in short_draw_sput.keys():
+                            sputnik_dic[short_draw_sput[l]][5] = rfi_number
+                if list_drawing_wrong:
+                    for z in list_drawing_wrong:
+                        try:
+                            d_s = z.replace('-A', '')
+                            sputnik_dic[d_s][5] = rfi_number
+                        except:
+                            pass
+                if list_drawing:
+                    for z in list_drawing:
+                        if z in sputnik_dic.keys():
+                            sputnik_dic[z][5] = rfi_number
+                for z in list_iso.split(';'):
+                    if z.strip() in short_draw_sput.keys():
+                        sputnik_dic[short_draw_sput[z.strip()]][5] = rfi_number
+            if 'испытаний на теплоспутн' in description_rfi:
+                if list_short_draw:
+                    for l in list_short_draw:
+                        if l in short_draw_sput.keys():
+                            sputnik_dic[short_draw_sput[l]][5] = rfi_number
+                if list_drawing_wrong:
+                    for z in list_drawing_wrong:
+                        try:
+                            d_s = z.replace('-A', '')
+                            sputnik_dic[d_s][5] = rfi_number
+                        except:
+                            pass
+                if list_drawing:
+                    for z in list_drawing:
+                        if z in sputnik_dic.keys():
+                            sputnik_dic[z][5] = rfi_number
+                for z in list_iso.split(';'):
+                    if z.strip() in short_draw_sput.keys():
+                        sputnik_dic[short_draw_sput[z.strip()]][5] = rfi_number
+            if 'онтаж теплоспутника технологич' in description_rfi:
+                if list_short_draw:
+                    for l in list_short_draw:
+                        if l in short_draw_sput.keys():
+                            sputnik_dic[short_draw_sput[l]][4] = rfi_number
+                if list_drawing_wrong:
+                    for z in list_drawing_wrong:
+                        try:
+                            d_s = z.replace('-A', '')
+                            sputnik_dic[d_s][4] = rfi_number
+                        except:
+                            pass
+                if list_drawing:
+                    for z in list_drawing:
+                        if z in sputnik_dic.keys():
+                            sputnik_dic[z][4] = rfi_number
+                for z in list_iso.split(';'):
+                    if z.strip() in short_draw_sput.keys():
+                        sputnik_dic[short_draw_sput[z.strip()]][4] = rfi_number
+            if 'Продувка теплоспутника' in description_rfi:
+                if list_short_draw:
+                    for l in list_short_draw:
+                        if l in short_draw_sput.keys():
+                            sputnik_dic[short_draw_sput[l]][6] = rfi_number
+                if list_drawing_wrong:
+                    for z in list_drawing_wrong:
+                        try:
+                            d_s = z.replace('-A', '')
+                            sputnik_dic[d_s][6] = rfi_number
+                        except:
+                            pass
+                if list_drawing:
+                    for z in list_drawing:
+                        if z in sputnik_dic.keys():
+                            sputnik_dic[z][6] = rfi_number
+                for z in list_iso.split(';'):
+                    if z.strip() in short_draw_sput.keys():
+                        sputnik_dic[short_draw_sput[z.strip()]][6] = rfi_number
+            if 'покрытия теплоспутник' in description_rfi:
+                if list_short_draw:
+                    for l in list_short_draw:
+                        if l in short_draw_sput.keys():
+                            sputnik_dic[short_draw_sput[l]][7] = rfi_number
+                if list_drawing_wrong:
+                    for z in list_drawing_wrong:
+                        try:
+                            d_s = z.replace('-A', '')
+                            sputnik_dic[d_s][7] = rfi_number
+                        except:
+                            pass
+                if list_drawing:
+                    for z in list_drawing:
+                        if z in sputnik_dic.keys():
+                            sputnik_dic[z][7] = rfi_number
+                for z in list_iso.split(';'):
+                    if z.strip() in short_draw_sput.keys():
+                        sputnik_dic[short_draw_sput[z.strip()]][7] = rfi_number
+            if 'кожуха теплоспутник' in description_rfi:
+                if list_short_draw:
+                    for l in list_short_draw:
+                        if l in short_draw_sput.keys():
+                            sputnik_dic[short_draw_sput[l]][8] = rfi_number
+                if list_drawing_wrong:
+                    for z in list_drawing_wrong:
+                        try:
+                            d_s = z.replace('-A', '')
+                            sputnik_dic[d_s][8] = rfi_number
+                        except:
+                            pass
+                if list_drawing:
+                    for z in list_drawing:
+                        if z in sputnik_dic.keys():
+                            sputnik_dic[z][8] = rfi_number
+                for z in list_iso.split(';'):
+                    if z.strip() in short_draw_sput.keys():
+                        sputnik_dic[short_draw_sput[z.strip()]][8] = rfi_number
+
+
         if 'испытаний теплоспут' in description_rfi:
             if 'документы, подтверждающие' in violation or 'представлены не в полном объеме' in violation:
                 fop = ''
@@ -193,14 +311,14 @@ for i in sheet_tracing['B2':'AO250000']:
                     if z.strip() in short_draw_sput.keys():
                         sputnik_dic[short_draw_sput[z.strip()]][8] = rfi_number + fop
 
-        if '64713' in rfi_number:
-            print(list_short_draw)
-            print(list_drawing_wrong)
-            print(violation)
-            print(list_drawing)
-            for p in list_drawing_wrong:
-                d_s = p.replace('-A', '')
-                print(d_s)
+        # if '64713' in rfi_number:
+        #     print(list_short_draw)
+        #     print(list_drawing_wrong)
+        #     print(violation)
+        #     print(list_drawing)
+        #     for p in list_drawing_wrong:
+        #         d_s = p.replace('-A', '')
+        #         print(d_s)
     else:
         break
 
