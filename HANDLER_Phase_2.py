@@ -66,72 +66,13 @@ print(f'Общий словарь создан. \n Уникальных изометрий - {len(isotpdic.keys())} '
       f'\n переходящих изометрий - {len(sc_isotpdic.keys()) - len(isotpdic.keys())}')
 # Общий словарь создан--------------------------------------------------
 
-# ТП_Хронология фаза 2
-# Добавление в словарь информации по движению ИД------------------------
-"""wb_id = xl.load_workbook('Хронология по ФАЗЕ 2.xlsx')
-sheet_id = wb_id['Статус_по ТП']
-
-status_id = {}
-for i in sheet_id['B2':'L2500']:
-    status_deliv = 'не поступил'
-    status_prov = 'не проверен'
-    comment_isp = 'не проверен'
-    if i[0].value:
-        number_of_testpack = str(i[0].value).strip()
-        date_prin_string = str(i[5].value)
-        date_prov_string = str(i[6].value)
-        critical_comment = int(str(i[10].value))
-        comment_isp = '-'
-        if critical_comment > 0:
-            comment_isp = 'КРИТИКА'
-        if date_prin_string != '00:00:00':
-            status_deliv = 'принят на проверку'
-        if date_prov_string != '00:00:00':
-            if critical_comment > 0:
-                comment_isp = 'КРИТИКА'
-            else:
-                comment_isp = 'ok'
-            status_prov = 'проверен'
-        status_id[number_of_testpack] = [status_deliv, status_prov, comment_isp]
-    else:
-        break"""
 
 for key in testpackages.keys():
     testpackages[key].append('n/p')
     testpackages[key].append('n/p')
     testpackages[key].append('n/p')
 
-# print(f'{len(status_id.keys())} тестпакетов на контроле ИСП')
 
-"""sheet_iso_id = wb_id['ТП_Хронология фаза 2']
-status_iso_id = {}
-for i in sheet_iso_id['G4':'N25000']:
-    if i[0].value:
-        isometric_id = str(i[0].value).strip()
-        stat_isometric_id = str(i[7].value).strip()
-        status_iso_id[isometric_id] = ' - '
-        if 'нет' in stat_isometric_id:
-            status_iso_id[isometric_id] = 'ok'
-        else:
-            status_iso_id[isometric_id] = 'КРИТИКА'
-    else:
-        break"""
-
-print('Информация из Хронологии движения ИД НЕ !добавлена.')
-# -------------------------------------------------------------------
-# ---Проверка на проведение АЭ --------------------------------------
-wb_ae = xl.load_workbook('Испытания АЭ P2.xlsx')
-sheet_ae = wb_ae['Трубопроводы Р2']
-tp_done_ae = {}
-for i in sheet_ae['C200':'G1000']:
-    try:
-        date_ae = str(i[0].value)[0:10]
-        tp_ae = str(i[2].value).strip()
-        tp_done_ae[tp_ae] = date_ae
-    except:
-        pass
-
-print('Информация о проведении АЭ добавлена.')
 # ------------------------------------------------------------
 for key in testpackages.keys():
     testpackages[key].append('')
@@ -516,7 +457,10 @@ n_dic_3_30 = {'UAIN': ['Воздух КИП', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
               'UWSW': ['Техническая вода', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
               'UWPO': ['Питьевая вода', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
               'UWSU': ['Поверхностная вода', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-              'NOWWA': ['Сточные воды', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]}
+              'NOWWA': ['Сточные воды', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+              'UHD': ['Дизельное топливо', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+              'OFSP': ['Некондиция', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+              'UNMP': ['Азот СД', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]}
 
 n_dic_2_60 = {'NODRAH': ['Дренаж углеводородов', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
               'NHC4P+': ['Бутановая фракция', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -584,19 +528,6 @@ info_summary_table_phase2 = [['Тестпакет', 'Установка', 'Среда', 'Категория', 'Д
                               'RFI ERECTION', 'RFI TEST', 'RFI AIR BLOWING', 'RFI REINSTATEMENT', 'Статус уведомлений',
                               'Статус проверки И.Д.', 'Акт испытаний', 'Акт продувки', 'Ремонтов (НГ)']]
 
-wb_ads = xl.load_workbook('adsorbers.xlsx')
-sheet_ads = wb_ads['ads']
-ads_list = []
-for i in sheet_ads['A1': 'A300']:
-    if i[0].value:
-        ads_list.append(str(i[0].value))
-    else:
-        break
-wb_ads.close()
-print('adsorbers ok')
-
-summary_table_adsorbers = [['Тестпакет', 'Установка', 'Среда', 'Категория', 'Длина',
-                            'RFI МОНТАЖ', 'RFI ИСПЫТАНИЯ', 'RFI ПРОДУВКА', 'RFI ОБРАТНАЯ СБОРКА']]
 
 for key in testpackages.keys():
     status_akt_id = testpackages[key][6]
@@ -615,13 +546,7 @@ for key in testpackages.keys():
     done_ae = 'Не проводился'
     if testpackages_ae[key] == 1:
         need_ae = 'Требуется'
-    if key in tp_done_ae.keys():
-        done_ae = tp_done_ae[key]
 
-    if key in ads_list:
-        summary_table_adsorbers.append(
-            [key, testpackages[key][0], testpackages[key][1], testpackages[key][2], testpackages[key][3],
-             testpackages[key][9], testpackages[key][10], testpackages[key][12], testpackages[key][11]])
 
     info_summary_table_phase2.append(
         [key, testpackages[key][0], testpackages[key][1], testpackages[key][2], testpackages[key][3],
@@ -654,8 +579,6 @@ for key in testpackages.keys():
                                                 n_dic_3_110[testpackages[key][1]][10]
         if testpackages_ae[key] == 1:
             n_dic_3_110[testpackages[key][1]][13] += 1
-            if key in tp_done_ae.keys():
-                n_dic_3_110[testpackages[key][1]][14] += 1
 
         if 'A' in key[20:23]:
             n_dic_3_110_a[testpackages[key][1]][1] += testpackages[key][3]
@@ -681,8 +604,7 @@ for key in testpackages.keys():
                                                       n_dic_3_110_a[testpackages[key][1]][10]
             if testpackages_ae[key] == 1:
                 n_dic_3_110_a[testpackages[key][1]][13] += 1
-                if key in tp_done_ae.keys():
-                    n_dic_3_110_a[testpackages[key][1]][14] += 1
+
         if 'B' in key[20:23]:
             n_dic_3_110_b[testpackages[key][1]][1] += testpackages[key][3]
             n_dic_3_110_b[testpackages[key][1]][2] += 1
@@ -707,8 +629,7 @@ for key in testpackages.keys():
                                                       n_dic_3_110_b[testpackages[key][1]][10]
             if testpackages_ae[key] == 1:
                 n_dic_3_110_b[testpackages[key][1]][13] += 1
-                if key in tp_done_ae.keys():
-                    n_dic_3_110_b[testpackages[key][1]][14] += 1
+
     if testpackages[key][0] == '3-30':
         n_dic_3_30[testpackages[key][1]][1] += testpackages[key][3]
         n_dic_3_30[testpackages[key][1]][2] += 1
@@ -735,8 +656,7 @@ for key in testpackages.keys():
                                                n_dic_3_30[testpackages[key][1]][10]
         if testpackages_ae[key] == 1:
             n_dic_3_30[testpackages[key][1]][13] += 1
-            if key in tp_done_ae.keys():
-                n_dic_3_30[testpackages[key][1]][14] += 1
+
     if testpackages[key][0] == '2-60':
         n_dic_2_60[testpackages[key][1]][1] += testpackages[key][3]
         n_dic_2_60[testpackages[key][1]][2] += 1
@@ -763,8 +683,7 @@ for key in testpackages.keys():
                                                n_dic_2_60[testpackages[key][1]][10]
         if testpackages_ae[key] == 1:
             n_dic_2_60[testpackages[key][1]][13] += 1
-            if key in tp_done_ae.keys():
-                n_dic_2_60[testpackages[key][1]][14] += 1
+
     if testpackages[key][0] == '2-70':
         n_dic_2_70[testpackages[key][1]][1] += testpackages[key][3]
         n_dic_2_70[testpackages[key][1]][2] += 1
@@ -791,8 +710,7 @@ for key in testpackages.keys():
                                                n_dic_2_70[testpackages[key][1]][10]
         if testpackages_ae[key] == 1:
             n_dic_2_70[testpackages[key][1]][13] += 1
-            if key in tp_done_ae.keys():
-                n_dic_2_70[testpackages[key][1]][14] += 1
+
 
 n_list_3_110_a = [['', f'Статус по ТП 3-110 A на {datetime.datetime.now().strftime("%d.%m.%Y")}', '', '', '', '',
                    '', '', '', '', '',
@@ -1007,78 +925,6 @@ for key in isotpdic.keys():
          status_ncr_iso, isotpdic[key][10], isotpdic[key][11], isotpdic[key][12], isotpdic[key][6], isotpdic[key][7],
          isotpdic[key][8], isotpdic[key][9]])
 
-# Добавление сводки по МОПам-----------------
-
-"""wb_mops = xl.load_workbook(r'C:\\Users\ignatenkoia\PycharmProjects\GIT_PROJECTS\handlers_sg\БД ТП ФАЗА 1, 2.xlsx')
-sheet_mops = wb_mops['Лист2']
-mops_summary_dic = {}
-mops_dic = {}
-for i in sheet_mops['A2':'A2945']:
-    name_mop = str(i[0].value).strip()
-    mops_dic[name_mop] = []
-for i in sheet_mops['A2':'G2945']:
-    name_mop = str(i[0].value)
-    tp_for_mop = str(i[3].value)
-    machine, mop_short, descr_mop = '', '', ''
-    try:
-        machine = str(i[4].value)
-        mop_short = str(i[5].value)
-        descr_mop = str(i[6].value)
-    except:
-        pass
-
-    if 'YMT' in tp_for_mop:
-        mops_dic[name_mop].append(tp_for_mop)
-    if '3-110' in name_mop:
-        mops_summary_dic[name_mop] = [mop_short, name_mop, descr_mop, machine, 0, 0, 0, 0, 0, 0]
-    else:
-        pass
-
-mops_summary_a = [['', 'Сводка по MOP 3-110 "A" ', '', '', '', '',
-                 '', '', '', ''],
-                  ['MOP number', 'Контур ДИГ', 'Наименование системы', 'Установка', 'Всего ТП', 'Коструктив принят, ТП',
-                 'Испытания приняты, ТП', 'Продувка принята, ТП', 'ОС принята, ТП', 'Остаток ОС, ТП']]
-mops_summary_b = [['', 'Сводка по MOP 3-110 "B" ', '', '', '', '',
-                 '', '', '', ''],
-                  ['MOP number', 'Контур ДИГ', 'Наименование системы', 'Установка', 'Всего ТП', 'Коструктив принят, ТП',
-                 'Испытания приняты, ТП', 'Продувка принята, ТП', 'ОС принята, ТП', 'Остаток ОС, ТП']]
-delimiter_string = ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-']
-
-mops_detail_summary = [['Контур ДИГ', 'ТестПакет', 'Конструктив', 'Испытания', 'Продувка', 'ОС']]
-
-for key in mops_summary_dic.keys():
-    for tp in set(mops_dic[key]):
-        mops_detail_summary.append([key, tp, testpackages[tp][9], testpackages[tp][10], testpackages[tp][12], testpackages[tp][11]])
-        mops_summary_dic[key][4] += 1
-        if testpackages[tp][9]:
-            mops_summary_dic[key][5] += 1
-        if testpackages[tp][10]:
-            mops_summary_dic[key][6] += 1
-        if testpackages[tp][12]:
-            mops_summary_dic[key][7] += 1
-        if testpackages[tp][11]:
-            mops_summary_dic[key][8] += 1
-        mops_summary_dic[key][9] = mops_summary_dic[key][4] - mops_summary_dic[key][8]
-
-for key in mops_summary_dic.keys():
-    if mops_summary_dic[key][3] == '3-110A':
-        mops_summary_a.append([mops_summary_dic[key][0], mops_summary_dic[key][1], mops_summary_dic[key][2],
-                               mops_summary_dic[key][3], mops_summary_dic[key][4], mops_summary_dic[key][5],
-                                mops_summary_dic[key][6], mops_summary_dic[key][7], mops_summary_dic[key][8],
-                                mops_summary_dic[key][9]])
-    else:
-        mops_summary_b.append([mops_summary_dic[key][0], mops_summary_dic[key][1], mops_summary_dic[key][2],
-                               mops_summary_dic[key][3], mops_summary_dic[key][4], mops_summary_dic[key][5],
-                               mops_summary_dic[key][6], mops_summary_dic[key][7], mops_summary_dic[key][8],
-                               mops_summary_dic[key][9]])
-
-mops_SUM = []
-for i in mops_summary_a:
-    mops_SUM.append(i)
-mops_SUM.append(delimiter_string)
-for i in mops_summary_b:
-    mops_SUM.append(i)
-mops_SUM.append(delimiter_string)"""
 
 # Список для листа повторяющихся изометрий
 double_iso_summary_table = [
@@ -1152,101 +998,7 @@ for i, (one, two, three, four, five, six, seven, eight, nine, ten, eleven, twelv
 
 # ws0.set_column('O:P', None, None, {'hidden': True})
 
-# -----------------------------------ЗАПИСЬ МОПов------------
-"""ws12 = workbook_summary.add_worksheet('Сводка МОПы')
-ws12.set_column(0, 0, 16)
-ws12.set_column(1, 1, 32)
-ws12.set_column(2, 2, 25)
-ws12.set_column(3, 3, 10)
-ws12.set_column(5, 9, 12.5)
 
-
-for i, (one, two, three, four, five, six, seven, eight, nine, ten) in enumerate(mops_SUM, start=1):
-    if one == 'MOP number':
-        color = cell_format_hat
-        color.set_bold('bold')
-    elif 'Сводка' in two:
-        color = cell_format_hat
-        color.set_bold('bold')
-    elif ten == 0:
-        color = cell_format_green
-    else:
-        color = cell_format_blue
-    try:
-        color.set_border(style=1)
-        color.set_text_wrap(text_wrap=1)
-    except:
-        pass
-    ws12.write(f'A{i}', one, color)
-    ws12.write(f'B{i}', two, color)
-    ws12.write(f'C{i}', three, color)
-    ws12.write(f'D{i}', four, color)
-    ws12.write(f'E{i}', five, color)
-    ws12.write(f'F{i}', six, color)
-    ws12.write(f'G{i}', seven, color)
-    ws12.write(f'H{i}', eight, color)
-    ws12.write(f'I{i}', nine, color)
-    ws12.write(f'J{i}', ten, color)
-
-
-ws13 = workbook_summary.add_worksheet('МОПы подробно')
-
-ws13.set_column(0, 0, 32)
-ws13.set_column(1, 1, 32)
-ws13.set_column(2, 5, 22)
-
-ws13.autofilter('A1:F2000')
-for i, (one, two, three, four, five, six) in enumerate(mops_detail_summary, start=1):
-    if one == 'Контур ДИГ':
-        color = cell_format_hat
-        color.set_bold('bold')
-    elif six:
-        color = cell_format_green
-    else:
-        color = cell_format_blue
-    try:
-        color.set_border(style=1)
-        color.set_text_wrap(text_wrap=1)
-    except:
-        pass
-    ws13.write(f'A{i}', one, color)
-    ws13.write(f'B{i}', two, color)
-    ws13.write(f'C{i}', three, color)
-    ws13.write(f'D{i}', four, color)
-    ws13.write(f'E{i}', five, color)
-    ws13.write(f'F{i}', six, color)
-"""
-# ---------------------------------------------------------
-
-ws25 = workbook_summary.add_worksheet('Приоритет Адсорберы')
-ws25.set_column(0, 0, 30)
-ws25.set_column(1, 4, 15)
-ws25.set_column(5, 10, 22)
-
-ws25.autofilter('A1:S1682')
-for i, (one, two, three, four, five, six, seven, eight, nine) in enumerate(summary_table_adsorbers, start=1):
-    if nine == 'RFI ОБРАТНАЯ СБОРКА':
-        color = cell_format_hat
-        color.set_bold('bold')
-    elif nine:
-        color = cell_format_green
-    else:
-        color = cell_format_blue
-    try:
-        color.set_border(style=1)
-        color.set_text_wrap(text_wrap=1)
-    except:
-        pass
-
-    ws25.write(f'A{i}', one, color)
-    ws25.write(f'B{i}', two, color)
-    ws25.write(f'C{i}', three, color)
-    ws25.write(f'D{i}', four, color)
-    ws25.write(f'E{i}', five, color)
-    ws25.write(f'F{i}', six, color)
-    ws25.write(f'G{i}', seven, color)
-    ws25.write(f'H{i}', eight, color)
-    ws25.write(f'I{i}', nine, color)
 
 # ------------------------------------------------------------
 ws5 = workbook_summary.add_worksheet('Сводная информация по ТП')
@@ -1398,5 +1150,4 @@ workbook_summary.close()
 print('Итоговые файлы созданы.')
 print('Прошёл ФАЗУ 2 \n\n ---------')
 
-playsound('C:/Users/ignatenkoia/Downloads/9162978a91f59a5.mp3')
 
