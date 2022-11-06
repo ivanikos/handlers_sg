@@ -8,7 +8,9 @@ import datetime, time
 import pandas as pd
 
 
-file_isotp_db = r'C:\Users\ignatenkoia\Desktop\work\GIT_PROJECTS\handlers_sg\dbs\iso_tp_'
+file_isotp_db = r'C:\Users\vanik\PycharmProjects\handlers_sg'
+
+
 
 # Создание общего словаря ТП-------------------------------------------
 def update_phase2_dbs():

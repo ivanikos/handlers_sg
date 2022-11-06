@@ -111,16 +111,21 @@ driver.find_element(By.XPATH, '/html/body/div[1]/form/div[2]/div[2]/div/div[3]/d
 
 
 
-dir_files = r'C:\Users\ignatenkoia\Downloads\\'
-dir_destination = r'C:\Users\ignatenkoia\Desktop\work\GIT_PROJECTS\handlers_sg\\'
+# dir_files = r'C:\Users\ignatenkoia\Downloads\\'
+# dir_destination = r'C:\Users\ignatenkoia\Desktop\work\GIT_PROJECTS\handlers_sg\\'
+
+
+# home laptop
+dir_files = r'C:\Users\vanik\Downloads\\'
+dir_destination = r'C:\Users\vanik\PycharmProjects\handlers_sg\Сводки\\'
 
 
 def get_new_file():
     get_files = os.listdir(dir_files)
-    date_list = [[x, os.path.getctime(r'C:\Users\ignatenkoia\Downloads\\' + x)] for x in get_files]
+    date_list = [[x, os.path.getctime(dir_files + x)] for x in get_files]
     sort_date_list = sorted(date_list, key=lambda x: x[1], reverse=True)
     itog_file = sort_date_list[0][0]
-    date_last_file = os.path.getctime(r'C:\Users\ignatenkoia\Downloads\\' + sort_date_list[0][0])
+    date_last_file = os.path.getctime(dir_files + sort_date_list[0][0])
     tim = time.time() - date_last_file
     if sort_date_list[0][0][-1] == 'x':
         if tim > 10:
@@ -144,7 +149,7 @@ print('Выгрузил инспекции')
 
 get_files = os.listdir(dir_files)
 
-date_list = [[x, os.path.getctime(r'C:\Users\ignatenkoia\Downloads\\' + x)] for x in get_files]
+date_list = [[x, os.path.getctime(dir_files + x)] for x in get_files]
 sort_date_list = sorted(date_list, key=lambda x: x[1], reverse=True)
 
 itog_files = [sort_date_list[0][0], sort_date_list[1][0]]
