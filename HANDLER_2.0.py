@@ -10,8 +10,12 @@ file_db_isotp = 'iso_tp_db.csv'
 
 
 isotp_dic = {}
+tp_dic = {}
 with open(directory_dbs_files + file_db_isotp, 'r') as read_db:
     readed_db = csv.reader(read_db, delimiter=';')
 
     for row in readed_db:
+        isotp_dic[row[0]] = []
+        tp_dic[row[2]] = []
+
         print(row)
