@@ -5,8 +5,12 @@ import csv
 
 
 # home laptop
-file_isotp_db = r'C:\Users\vanik\PycharmProjects\handlers_sg\out_files_for_dbs\\'
-out_db_isotp_dir = r'C:\Users\vanik\PycharmProjects\handlers_sg\out_files_for_dbs\\'
+# file_isotp_db = r'C:\Users\vanik\PycharmProjects\handlers_sg\out_files_for_dbs\\'
+# out_db_isotp_dir = r'C:\Users\vanik\PycharmProjects\handlers_sg\out_files_for_dbs\\'
+
+# work laptop
+out_db_isotp_dir = r'C:\Users\ignatenkoia\Desktop\work\GIT_PROJECTS\handlers_sg\dbs\\'
+file_isotp_db = r'C:\Users\ignatenkoia\Desktop\work\GIT_PROJECTS\handlers_sg\out_files_for_dbs\\'
 
 
 # Создание файла .csv для дальнейшего использования-------------------------------------------
@@ -46,6 +50,7 @@ def update_isotp_dbs():
 
             rfi_insulation_mv = ''
             rfi_insulation_metall = ''
+            rfi_insulation_box = ''
 
             if i[18].value:
                 rfi_erection = str(i[18].value).strip()
@@ -60,10 +65,12 @@ def update_isotp_dbs():
                 rfi_insulation_mv = str(i[16].value).strip()
             if i[17].value:
                 rfi_insulation_metall = str(i[17].value).strip()
+            if i[22].value:
+                rfi_insulation_box = str(i[22].value).strip()
 
             isotp_db.append([iso_with_tp, isometric, testpackage, phase, line, title, unit, fluid, ggn_status,
                              iso_length, rfi_erection, rfi_test, rfi_airblowing, rfi_reinstatement,
-                             type_insulation, volume_insulation, rfi_insulation_mv, rfi_insulation_metall])
+                             type_insulation, volume_insulation, rfi_insulation_mv, rfi_insulation_metall, rfi_insulation_box])
 
     with open(out_db_isotp_dir + "iso_tp_db.csv", 'w', newline='') as writing_file:
             write_file = csv.writer(writing_file, delimiter=";")
