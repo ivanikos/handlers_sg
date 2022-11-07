@@ -24,7 +24,7 @@ def update_isotp_dbs():
     db_iso_tp = xl.load_workbook(file_isotp_db + "db_tp_p1,2,3_v2.0.xlsx")
     sheet_isotp = db_iso_tp['iso_tp_db']
 
-    for i in sheet_isotp['A5':'V1000000']:
+    for i in sheet_isotp['A5':'W1000000']:
         if i[0].value:
             iso_with_tp = str(i[0].value).strip()
             isometric = str(i[1].value).strip()
