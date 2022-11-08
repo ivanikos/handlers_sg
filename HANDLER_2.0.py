@@ -1,4 +1,8 @@
 import csv
+import openpyxl as xl
+import re
+import xlsxwriter
+import pandas as pd
 
 
 # home laptop
@@ -95,3 +99,49 @@ with open(directory_dbs_files + file_db_isotp, 'r') as read_db:
 
 for key in tp_dic.keys():
     print(key, tp_dic[key])
+
+
+
+# Проверка Журнал заявок АИС Р2 ФАЗА2-------------------------------------
+df = pd.read_excel('Журнал заявок общий.xlsx')
+df = df.sort_values(by='Дата подачи / Date of submission', ascending=True)
+df.to_excel('Журнал заявок общий.xlsx', index=0)
+
+wb_journal_rfi = xl.load_workbook('Журнал заявок общий.xlsx')
+sheet_journal_rfi = wb_journal_rfi['Sheet1']
+
+replace_pattern_1 = ['-HT', '-VT', '-PT']
+replace_pattern_2 = ['(T.T. REINSTATEMENT)', '(T.T. AIR BLOWING)', '(AIR BLOWING)', '(T.T AIR BLOWING',
+                     '(T.T. ERECTION)', '(T.T.TEST)', '(T.T. TEST)',
+                     '(T.T ERECTION)', '(T.T TEST)', '(T.T REINSTATEMENT)',
+                     '(T.T AIR BLOWING)', '(GPA AIR BLOWING)', '(GPA TEST)',
+                     '(GPA ERECTION)', '(GPA REINSTATEMENT)', '(T.T. REISTATEMENT)', '(T.T.REINSTATEMENT)',
+                     '(T.T RE-INSTATEMENT)', '( T.T AIR BLOWING )', '( T.T AIR BLOWING )',
+                     '(T.T.ERECTION)', '(T.T.TEST)', '(T.T.AIR BLOWING)', '(T.T.REINSTATEMENT)']
+
+res_summary = {} # ?????????
+
+for i in sheet_journal_rfi['B2':'AO550000']:
+    if i[0].value:
+        rfi_number = str(i[1].value)
+        tp_number = str(i[2].value)
+        pkk = str(i[4].value)
+
+        description_rfi = str(i[16].value)
+        violation = str(i[35].value)
+        name_insp = str(i[26].value)
+        list_iso = str(i[8].value)
+        volume_m = re.sub(r'[^0-9.]', '', str(i[18].value))
+        category_cancelled = str(i[31].value)
+        comment = str(i[39].value)
+
+        for typo in replace_pattern_2:
+            if typo in tp_number:
+                tp_number = tp_number.replace(typo, '').strip()
+
+        for typo in replace_pattern_1:
+            if typo in tp_number:
+                tp_number = tp_number.replace(typo, '').strip()
+
+
+
