@@ -6,10 +6,9 @@ import pandas as pd
 
 
 # home laptop
-# directory_dbs_files = r'C:\Users\vanik\PycharmProjects\handlers_sg\out_files_for_dbs\\'
-
+directory_dbs_files = r'C:\Users\vanik\PycharmProjects\handlers_sg\dbs\\'
 # work laptop
-directory_dbs_files = r'C:\Users\ignatenkoia\Desktop\work\GIT_PROJECTS\handlers_sg\dbs\\'
+# directory_dbs_files = r'C:\Users\ignatenkoia\Desktop\work\GIT_PROJECTS\handlers_sg\dbs\\'
 
 
 
@@ -97,8 +96,7 @@ with open(directory_dbs_files + file_db_isotp, 'r') as read_db:
         tp_dic[testpackage][8] = rfi_airblowing
         tp_dic[testpackage][9] = rfi_reinstatement
 
-for key in tp_dic.keys():
-    print(key, tp_dic[key])
+
 
 
 
