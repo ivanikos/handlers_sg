@@ -5,17 +5,16 @@ import csv
 
 
 # home laptop
-# file_isotp_db = r'C:\Users\vanik\PycharmProjects\handlers_sg\out_files_for_dbs\\'
-# out_db_isotp_dir = r'C:\Users\vanik\PycharmProjects\handlers_sg\out_files_for_dbs\\'
+file_isotp_db = r'C:\Users\vanik\PycharmProjects\handlers_sg\out_files_for_dbs\\'
+out_db_isotp_dir = r'C:\Users\vanik\PycharmProjects\handlers_sg\dbs\\'
 
 # work laptop
-out_db_isotp_dir = r'C:\Users\ignatenkoia\Desktop\work\GIT_PROJECTS\handlers_sg\dbs\\'
-file_isotp_db = r'C:\Users\ignatenkoia\Desktop\work\GIT_PROJECTS\handlers_sg\out_files_for_dbs\\'
+# out_db_isotp_dir = r'C:\Users\ignatenkoia\Desktop\work\GIT_PROJECTS\handlers_sg\dbs\\'
+# file_isotp_db = r'C:\Users\ignatenkoia\Desktop\work\GIT_PROJECTS\handlers_sg\out_files_for_dbs\\'
 
 
 # Создание файла .csv для дальнейшего использования-------------------------------------------
 isotp_db = []
-
 
 """
 Обновление БД ТП по всем фазам.
