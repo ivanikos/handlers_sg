@@ -171,10 +171,50 @@ for i in sheet_journal_rfi['B2':'AO550000']:
                     for isometric in list_iso:
                         if f'{isometric}-{tp_number}' in isotp_dic.keys():
                             isotp_dic[f'{isometric}-{tp_number}'][8] = rfi_number + " ФОП"
+            if 'зафиксирован' in comment:
+                if tp_number in tp_dic.keys():
+                    tp_dic[tp_number][6] = rfi_number + " ФОП"
+                if list_iso:
+                    for isometric in list_iso:
+                        if f'{isometric}-{tp_number}' in isotp_dic.keys():
+                            isotp_dic[f'{isometric}-{tp_number}'][8] = rfi_number + " ФОП"
 
 
 
-        if 'испытаний на прочность и плотность' in description_rfi:
+        if 'испытаний на прочность и плотность' in description_rfi or\
+                'испытаний технологического трубопровода  на прочность' in description_rfi or\
+                'испытаний технологического трубопровода на прочность' in description_rfi:
+
+            if 'Принято' == category_cancelled:
+                if tp_number in tp_dic.keys():
+                    tp_dic[tp_number][7] = rfi_number
+                if list_iso:
+                    for isometric in list_iso:
+                        if f'{isometric}-{tp_number}' in isotp_dic.keys():
+                            isotp_dic[f'{isometric}-{tp_number}'][9] = rfi_number
+            if 'Принято с замечаниями' == category_cancelled:
+                if tp_number in tp_dic.keys():
+                    tp_dic[tp_number][7] = rfi_number + " ПЗ"
+                if list_iso:
+                    for isometric in list_iso:
+                        if f'{isometric}-{tp_number}' in isotp_dic.keys():
+                            isotp_dic[f'{isometric}-{tp_number}'][9] = rfi_number + " ПЗ"
+            if 'подтвержд' in comment or 'подтвржд' in comment:
+                if tp_number in tp_dic.keys():
+                    tp_dic[tp_number][7] = rfi_number + " ФОП"
+                if list_iso:
+                    for isometric in list_iso:
+                        if f'{isometric}-{tp_number}' in isotp_dic.keys():
+                            isotp_dic[f'{isometric}-{tp_number}'][9] = rfi_number + " ФОП"
+            if 'зафиксирован' in comment:
+                if tp_number in tp_dic.keys():
+                    tp_dic[tp_number][7] = rfi_number + " ФОП"
+                if list_iso:
+                    for isometric in list_iso:
+                        if f'{isometric}-{tp_number}' in isotp_dic.keys():
+                            isotp_dic[f'{isometric}-{tp_number}'][9] = rfi_number + " ФОП"
+
+        if 'испыт' and 'рочност' in description_rfi:
             if 'Принято' == category_cancelled:
                 if tp_number in tp_dic.keys():
                     tp_dic[tp_number][7] = rfi_number
@@ -205,31 +245,85 @@ for i in sheet_journal_rfi['B2':'AO550000']:
                             isotp_dic[f'{isometric}-{tp_number}'][9] = rfi_number + " ФОП"
 
 
-        if 'испытаний технологического трубопровода  на прочность' in description_rfi:
-            pass
-        if 'испыт' and 'рочност' in description_rfi:
-            pass
-        if 'испытаний технологического трубопровода на прочность' in description_rfi:
-            pass
-
 
 
         if 'родувка' in description_rfi and 'еплоспутн' not in description_rfi:
-            pass
+            if 'Принято' == category_cancelled:
+                if tp_number in tp_dic.keys():
+                    tp_dic[tp_number][8] = rfi_number
+                if list_iso:
+                    for isometric in list_iso:
+                        if f'{isometric}-{tp_number}' in isotp_dic.keys():
+                            isotp_dic[f'{isometric}-{tp_number}'][10] = rfi_number
+            if 'Принято с замечаниями' == category_cancelled:
+                if tp_number in tp_dic.keys():
+                    tp_dic[tp_number][8] = rfi_number + " ПЗ"
+                if list_iso:
+                    for isometric in list_iso:
+                        if f'{isometric}-{tp_number}' in isotp_dic.keys():
+                            isotp_dic[f'{isometric}-{tp_number}'][10] = rfi_number + " ПЗ"
+            if 'подтвержд' in comment or 'подтвржд' in comment:
+                if tp_number in tp_dic.keys():
+                    tp_dic[tp_number][8] = rfi_number + " ФОП"
+                if list_iso:
+                    for isometric in list_iso:
+                        if f'{isometric}-{tp_number}' in isotp_dic.keys():
+                            isotp_dic[f'{isometric}-{tp_number}'][10] = rfi_number + " ФОП"
+            if 'зафиксирован' in comment:
+                if tp_number in tp_dic.keys():
+                    tp_dic[tp_number][8] = rfi_number + " ФОП"
+                if list_iso:
+                    for isometric in list_iso:
+                        if f'{isometric}-{tp_number}' in isotp_dic.keys():
+                            isotp_dic[f'{isometric}-{tp_number}'][10] = rfi_number + " ФОП"
 
-        if 'сборки технологических трубопроводов в проект' in description_rfi:
-            pass
-        if 'сборки технологических трубопроводов в рамках' in description_rfi:
-            pass
 
-        if 'дополнительных испытаний' in description_rfi:
-            pass
+
+        if 'сборки технологических трубопроводов в проект' in description_rfi or \
+                'сборки технологических трубопроводов в рамках' in description_rfi:
+
+            if 'Принято' == category_cancelled:
+                if tp_number in tp_dic.keys():
+                    tp_dic[tp_number][9] = rfi_number
+                if list_iso:
+                    for isometric in list_iso:
+                        if f'{isometric}-{tp_number}' in isotp_dic.keys():
+                            isotp_dic[f'{isometric}-{tp_number}'][11] = rfi_number
+            if 'Принято с замечаниями' == category_cancelled:
+                if tp_number in tp_dic.keys():
+                    tp_dic[tp_number][9] = rfi_number + " ПЗ"
+                if list_iso:
+                    for isometric in list_iso:
+                        if f'{isometric}-{tp_number}' in isotp_dic.keys():
+                            isotp_dic[f'{isometric}-{tp_number}'][11] = rfi_number + " ПЗ"
+            if 'подтвержд' in comment or 'подтвржд' in comment:
+                if tp_number in tp_dic.keys():
+                    tp_dic[tp_number][9] = rfi_number + " ФОП"
+                if list_iso:
+                    for isometric in list_iso:
+                        if f'{isometric}-{tp_number}' in isotp_dic.keys():
+                            isotp_dic[f'{isometric}-{tp_number}'][11] = rfi_number + " ФОП"
+            if 'зафиксирован' in comment:
+                if tp_number in tp_dic.keys():
+                    tp_dic[tp_number][9] = rfi_number + " ФОП"
+                if list_iso:
+                    for isometric in list_iso:
+                        if f'{isometric}-{tp_number}' in isotp_dic.keys():
+                            isotp_dic[f'{isometric}-{tp_number}'][11] = rfi_number + " ФОП"
+
+
         if 'дополн' in description_rfi:
             if 'Принято' in category_cancelled:
-                pass
+                if list_iso:
+                    for isometric in list_iso:
+                        iso_dic[isometric.strip()][3] = rfi_number
             else:
                 if 'выдерж' in comment:
-                    pass
+                    if list_iso:
+                        for isometric in list_iso:
+                            iso_dic[isometric.strip()][3] = rfi_number + "ФОП"
+
+
 
 
 
