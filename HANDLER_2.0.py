@@ -127,16 +127,16 @@ res_summary = {} # ?????????
 
 for i in sheet_journal_rfi['B2':'AO550000']:
     if i[0].value:
-        rfi_number = str(i[1].value)
-        tp_number = str(i[2].value)
-        pkk = str(i[4].value)
+        rfi_number = str(i[1].value).strip()
+        tp_number = str(i[2].value).strip()
+        pkk = str(i[4].value).strip()
 
         description_rfi = str(i[16].value)
         violation = str(i[35].value)
         name_insp = str(i[26].value)
         list_iso = str(i[8].value).split(';')
         volume_m = re.sub(r'[^0-9.]', '', str(i[18].value))
-        category_cancelled = str(i[31].value)
+        category_cancelled = str(i[31].value).strip()
         comment = str(i[39].value)
 
         for typo in replace_pattern_2:
@@ -150,13 +150,61 @@ for i in sheet_journal_rfi['B2':'AO550000']:
         print(tp_number)
 
         if 'Монтаж технологического трубопровода в рамках' in description_rfi:
-            if 'Принято' in category_cancelled:
+            if 'Принято' == category_cancelled:
+                if tp_number in tp_dic.keys():
+                    tp_dic[tp_number][6] = rfi_number
+                if list_iso:
+                    for isometric in list_iso:
+                        if f'{isometric}-{tp_number}' in isotp_dic.keys():
+                            isotp_dic[f'{isometric}-{tp_number}'][8] = rfi_number
+            if 'Принято с замечаниями' == category_cancelled:
+                if tp_number in tp_dic.keys():
+                    tp_dic[tp_number][6] = rfi_number + " ПЗ"
+                if list_iso:
+                    for isometric in list_iso:
+                        if f'{isometric}-{tp_number}' in isotp_dic.keys():
+                            isotp_dic[f'{isometric}-{tp_number}'][8] = rfi_number + " ПЗ"
+            if 'подтвержд' in comment or 'подтвржд' in comment:
+                if tp_number in tp_dic.keys():
+                    tp_dic[tp_number][6] = rfi_number + " ФОП"
+                if list_iso:
+                    for isometric in list_iso:
+                        if f'{isometric}-{tp_number}' in isotp_dic.keys():
+                            isotp_dic[f'{isometric}-{tp_number}'][8] = rfi_number + " ФОП"
 
-            pass
 
 
         if 'испытаний на прочность и плотность' in description_rfi:
-            pass
+            if 'Принято' == category_cancelled:
+                if tp_number in tp_dic.keys():
+                    tp_dic[tp_number][7] = rfi_number
+                if list_iso:
+                    for isometric in list_iso:
+                        if f'{isometric}-{tp_number}' in isotp_dic.keys():
+                            isotp_dic[f'{isometric}-{tp_number}'][9] = rfi_number
+            if 'Принято с замечаниями' == category_cancelled:
+                if tp_number in tp_dic.keys():
+                    tp_dic[tp_number][7] = rfi_number + " ПЗ"
+                if list_iso:
+                    for isometric in list_iso:
+                        if f'{isometric}-{tp_number}' in isotp_dic.keys():
+                            isotp_dic[f'{isometric}-{tp_number}'][9] = rfi_number + " ПЗ"
+            if 'подтвержд' in comment or 'подтвржд' in comment:
+                if tp_number in tp_dic.keys():
+                    tp_dic[tp_number][7] = rfi_number + " ФОП"
+                if list_iso:
+                    for isometric in list_iso:
+                        if f'{isometric}-{tp_number}' in isotp_dic.keys():
+                            isotp_dic[f'{isometric}-{tp_number}'][9] = rfi_number + " ФОП"
+            if 'зафиксирован' in comment:
+                if tp_number in tp_dic.keys():
+                    tp_dic[tp_number][7] = rfi_number + " ФОП"
+                if list_iso:
+                    for isometric in list_iso:
+                        if f'{isometric}-{tp_number}' in isotp_dic.keys():
+                            isotp_dic[f'{isometric}-{tp_number}'][9] = rfi_number + " ФОП"
+
+
         if 'испытаний технологического трубопровода  на прочность' in description_rfi:
             pass
         if 'испыт' and 'рочност' in description_rfi:
