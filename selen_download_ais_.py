@@ -111,13 +111,13 @@ driver.find_element(By.XPATH, '/html/body/div[1]/form/div[2]/div[2]/div/div[3]/d
 
 
 
-# dir_files = r'C:\Users\ignatenkoia\Downloads\\'
-# dir_destination = r'C:\Users\ignatenkoia\Desktop\work\GIT_PROJECTS\handlers_sg\\'
+dir_files = r'C:\Users\ignatenkoia\Downloads\\'
+dir_destination = r'C:\Users\ignatenkoia\Desktop\work\GIT_PROJECTS\handlers_sg\\'
 
 
 # home laptop
-dir_files = r'C:\Users\vanik\Downloads\\'
-dir_destination = r'C:\Users\vanik\PycharmProjects\handlers_sg\Сводки\\'
+# dir_files = r'C:\Users\vanik\Downloads\\'
+# dir_destination = r'C:\Users\vanik\PycharmProjects\handlers_sg\Сводки\\'
 
 
 def get_new_file():

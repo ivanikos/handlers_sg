@@ -185,12 +185,7 @@ for i in sheet['B2':'AO550000']:
 
         if tp_shortname in testpackages_p1.keys():
             if 'Принято' in category_cancelled:
-                if 'сборки технологических трубопроводов ГПА' in description_rfi:
-                    testpackages_p1[tp_shortname][9] = rfi_number
-                if 'онтаж технологического трубопровода ГПА' in description_rfi:
-                    testpackages_p1[tp_shortname][6] = rfi_number
-                if 'испытаний технологического трубопровода ГПА' in description_rfi:
-                    testpackages_p1[tp_shortname][7] = rfi_number
+
                 if 'Монтаж технологического трубопровода в рамках' in description_rfi:
                     testpackages_p1[tp_shortname][6] = rfi_number
                 if 'испыт' and 'рочност' in description_rfi:
