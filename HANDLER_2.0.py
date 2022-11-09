@@ -313,15 +313,11 @@ for i in sheet_journal_rfi['B2':'AO550000']:
 
 
         if 'дополн' in description_rfi:
-            if 'Принято' in category_cancelled:
+            if 'Принято' == category_cancelled:
                 if list_iso:
                     for isometric in list_iso:
                         iso_dic[isometric.strip()][3] = rfi_number
-            else:
-                if 'выдерж' in comment:
-                    if list_iso:
-                        for isometric in list_iso:
-                            iso_dic[isometric.strip()][3] = rfi_number + "ФОП"
+
 
 
 
