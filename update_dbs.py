@@ -9,8 +9,8 @@ file_isotp_db = r'C:\Users\vanik\PycharmProjects\handlers_sg\out_files_for_dbs\\
 out_db_isotp_dir = r'C:\Users\vanik\PycharmProjects\handlers_sg\dbs\\'
 
 # work laptop
-# out_db_isotp_dir = r'C:\Users\ignatenkoia\Desktop\work\GIT_PROJECTS\handlers_sg\dbs\\'
-# file_isotp_db = r'C:\Users\ignatenkoia\Desktop\work\GIT_PROJECTS\handlers_sg\out_files_for_dbs\\'
+# out_db_isotp_dir = r'C:\Users\ignatenkoia\Desktop\work\GIT_PROJECTS\handlers_sg\dbs'
+# file_isotp_db = r'C:\Users\ignatenkoia\Desktop\work\GIT_PROJECTS\handlers_sg\out_files_for_dbs'
 
 
 # Создание файла .csv для дальнейшего использования-------------------------------------------
@@ -20,7 +20,7 @@ isotp_db = []
 Обновление БД ТП по всем фазам.
 """
 def update_isotp_dbs():
-    db_iso_tp = xl.load_workbook(file_isotp_db + "db_tp_p1,2,3_v2.0.xlsx")
+    db_iso_tp = xl.load_workbook(file_isotp_db + "\\db_tp_p1,2,3_v2.0.xlsx")
     sheet_isotp = db_iso_tp['iso_tp_db']
 
     for i in sheet_isotp['A5':'W1000000']:

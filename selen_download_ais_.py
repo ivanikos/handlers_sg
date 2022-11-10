@@ -110,14 +110,14 @@ driver.find_element(By.XPATH, '/html/body/div[1]/form/div[2]/div[2]/div/div[3]/d
                               'div/div/div/div/div[1]/div[1]/table/tbody/tr/td[12]/div/a/div/i').click()
 
 
-
-dir_files = r'C:\Users\ignatenkoia\Downloads\\'
-dir_destination = r'C:\Users\ignatenkoia\Desktop\work\GIT_PROJECTS\handlers_sg\\'
+# work laptop
+# dir_files = r'C:\Users\ignatenkoia\Downloads\\'
+# dir_destination = r'C:\Users\ignatenkoia\Desktop\work\GIT_PROJECTS\handlers_sg\\'
 
 
 # home laptop
-# dir_files = r'C:\Users\vanik\Downloads\\'
-# dir_destination = r'C:\Users\vanik\PycharmProjects\handlers_sg\Сводки\\'
+dir_files = r'C:\Users\vanik\Downloads\\'
+dir_destination = r'C:\Users\vanik\PycharmProjects\handlers_sg\Сводки\\'
 
 
 def get_new_file():
