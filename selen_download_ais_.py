@@ -49,24 +49,23 @@ time.sleep(5)
 driver.find_element(By.XPATH, '//*[@id="C9mgv59_2::content"]').click()
 driver.find_element(By.XPATH, "//option[text()='предписания']").click()
 time.sleep(5)
-driver.find_element(By.XPATH, '/html/body/div[1]/form/div[2]/div[2]/div/div[3]/div/div/div[2]/div/div/'
-                              'div/div[2]/div/div/div/div[1]/div/div/div/div/div[1]/div[1]/table/tbody/'
-                              'tr/td[5]/div/a/div/i').click()
+driver.find_element(By.XPATH, '/html/body/div[1]/form/div[2]/div[2]/div/div[3]/div/div/div[2]/div/div/div/div[2]/'
+                              'div/div/div/div[1]/div/div/div/div/div[1]/div[1]/table/tbody/tr/td[5]/button/span').click()
 print('Выгрузил предписания')
 
 # Инспекции
 time.sleep(3)
 driver.find_element(By.XPATH, '/html/body/div[1]/form/div[2]/div[2]/div/div[3]/div/div/div[1]/div/a[4]').click()
-time.sleep(3)
+time.sleep(5)
 
 # driver.find_element_by_xpath('//div[@id="vb8d4u:2:cub9is"]').click()
 # time.sleep(13)
 
 driver.find_element(By.XPATH, '//button[@class="select_many_choice-list-button"]').click()
-time.sleep(3)
+time.sleep(5)
 driver.find_element(By.XPATH, '//div[@title="RFI"]').click()
 
-time.sleep(3)
+time.sleep(5)
 driver.find_element(By.XPATH, '//div[@id="hyj3sh_1"]').click()
 
 element = driver.find_element(By.XPATH, '//div[@data-value="35"]')
@@ -81,7 +80,7 @@ driver.find_element(By.XPATH, f"/html/body/*/*/span[contains(text(), 'СК: Не
 time.sleep(1)
 driver.find_element(By.XPATH, f"/html/body/*/*/span[contains(text(), 'СК: Принято с замечаниями')]").click()
 time.sleep(1)
-driver.find_element(By.XPATH, '/html/body/div[5]/div[46]/span').click()
+driver.find_element(By.XPATH, '/html/body/div[5]/div[54]').click()
 time.sleep(1)
 
 date_box = driver.find_element(By.ID, 'C8zl006::content').clear()
@@ -90,13 +89,18 @@ driver.find_element(By.ID, 'C8zl006::content').click()
 time.sleep(5)
 driver.find_element(By.XPATH, '//*[@id="k6gtgh_11"]/a/i').click()
 time.sleep(4)
-driver.find_element(By.XPATH, '/html/body/div[1]/form/div[2]/div[2]/div/div[3]/div/div/div[2]/div/div/div/div[2]/div/'
-                              'div[1]/div/div/div/div/div/div/table/tbody/tr/td/div/div[1]/div/div/div[2]/table/tbody/'
-                              'tr/td/table/tbody/tr/td/div[2]/div/div[1]').click()
+driver.find_element(By.XPATH, '/html/body/div[1]/form/div[2]/div[2]/div/div[3]/div/div/div[2]/div/'
+                              'div/div/div[1]/div/div/div/div/div[1]/div[1]/table/tbody/tr/td[21]/div/a').click()
+time.sleep(4)
+driver.find_element(By.XPATH, '/html/body/div[1]/form/div[2]/div[2]/div/div[3]/div/div/div[2]/div/'
+                              'div/div/div[2]/div/div[1]/div/div/div/div/div/div/table/tbody/tr/td/'
+                              'div/div[1]/div/div/div[2]/table/tbody/tr/td/table/tbody/tr/td/div[2]/div/'
+                              'div[1]/div[2]/button').click()
 time.sleep(1)
-driver.find_element(By.XPATH, '//div[@title="Антикоррозийная защита"]').click()
-time.sleep(1)
-element = driver.find_element(By.XPATH, '//div[@title="Технологические трубопроводы"]')
+driver.find_element(By.XPATH, '/html/body/div[6]/div[3]').click()
+
+time.sleep(4)
+element = driver.find_element(By.XPATH, '/html/body/div[6]/div[32]')
 element.location_once_scrolled_into_view
 
 time.sleep(1)
@@ -106,18 +110,18 @@ driver.find_element(By.XPATH, '/html/body/div[1]/form/div[2]/div[2]/div/div[3]/d
                               'div/div/div/div/div[1]/div[1]/table/tbody/tr/td[26]/div/a/i').click()
 time.sleep(5)
 # Выгрузка инспекций
-driver.find_element(By.XPATH, '/html/body/div[1]/form/div[2]/div[2]/div/div[3]/div/div/div[2]/div/div/div/div[1]/'
-                              'div/div/div/div/div[1]/div[1]/table/tbody/tr/td[12]/div/a/div/i').click()
+driver.find_element(By.XPATH, '/html/body/div[1]/form/div[2]/div[2]/div/div[3]/div/div/div[2]/div/div/'
+                              'div/div[1]/div/div/div/div/div[1]/div[1]/table/tbody/tr/td[16]/div/a').click()
 
 
 # work laptop
-# dir_files = r'C:\Users\ignatenkoia\Downloads\\'
-# dir_destination = r'C:\Users\ignatenkoia\Desktop\work\GIT_PROJECTS\handlers_sg\\'
+dir_files = r'C:\Users\ignatenkoia\Downloads\\'
+dir_destination = r'C:\Users\ignatenkoia\Desktop\work\GIT_PROJECTS\handlers_sg\\'
 
 
 # home laptop
-dir_files = r'C:\Users\vanik\Downloads\\'
-dir_destination = r'C:\Users\vanik\PycharmProjects\handlers_sg\Сводки\\'
+# dir_files = r'C:\Users\vanik\Downloads\\'
+# dir_destination = r'C:\Users\vanik\PycharmProjects\handlers_sg\Сводки\\'
 
 
 def get_new_file():

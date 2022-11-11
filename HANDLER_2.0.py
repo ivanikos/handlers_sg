@@ -7,10 +7,10 @@ import pandas as pd
 
 
 # home laptop
-directory_dbs_files = r'C:\Users\vanik\PycharmProjects\handlers_sg\dbs'
+# directory_dbs_files = r'C:\Users\vanik\PycharmProjects\handlers_sg\dbs'
 
 # work laptop
-# directory_dbs_files = r'C:\Users\ignatenkoia\Desktop\work\GIT_PROJECTS\handlers_sg\dbs'
+directory_dbs_files = r'C:\Users\ignatenkoia\Desktop\work\GIT_PROJECTS\handlers_sg\dbs'
 
 
 
@@ -151,7 +151,11 @@ for i in sheet_journal_rfi['B2':'AO550000']:
                 tp_number = tp_number.replace(typo, '').strip()
         tp_number = tp_number.strip()
 
+        rep_patt_for_iso = ['р.01', 'р.1', 'р.3', 'р.4', 'р.5', 'р.6', 'р.7', 'р.8', 'р.0', '\n']
 
+
+        if rfi_number == 'CPECC-CC-64685/1':
+            print(list_iso)
 
         if 'Монтаж технологического трубопровода в рамках' in description_rfi:
             if 'подтвержд' in comment or 'подтвржд' in comment:
@@ -159,29 +163,37 @@ for i in sheet_journal_rfi['B2':'AO550000']:
                     tp_dic[tp_number][6] = rfi_number + " ФОП"
                 if list_iso:
                     for isometric in list_iso:
-                        if f'{isometric.strip()}-{tp_number}' in isotp_dic.keys():
-                            isotp_dic[f'{isometric.strip()}-{tp_number}'][8] = rfi_number + " ФОП"
+                        for patt in rep_patt_for_iso:
+                            isometric = isometric.replace(patt, '')
+                            if f'{isometric.strip()}-{tp_number}' in isotp_dic.keys():
+                                isotp_dic[f'{isometric.strip()}-{tp_number}'][8] = rfi_number + " ФОП"
             if 'зафиксирова' in comment:
                 if tp_number in tp_dic.keys():
                     tp_dic[tp_number][6] = rfi_number + " ФОП"
                 if list_iso:
                     for isometric in list_iso:
-                        if f'{isometric.strip()}-{tp_number}' in isotp_dic.keys():
-                            isotp_dic[f'{isometric.strip()}-{tp_number}'][8] = rfi_number + " ФОП"
+                        for patt in rep_patt_for_iso:
+                            isometric = isometric.replace(patt, '')
+                            if f'{isometric.strip()}-{tp_number}' in isotp_dic.keys():
+                                isotp_dic[f'{isometric.strip()}-{tp_number}'][8] = rfi_number + " ФОП"
             if 'Принято' == category_cancelled:
                 if tp_number in tp_dic.keys():
                     tp_dic[tp_number][6] = rfi_number
                 if list_iso:
                     for isometric in list_iso:
-                        if f'{isometric.strip()}-{tp_number}' in isotp_dic.keys():
-                            isotp_dic[f'{isometric.strip()}-{tp_number}'][8] = rfi_number
+                        for patt in rep_patt_for_iso:
+                            isometric = isometric.replace(patt, '')
+                            if f'{isometric.strip()}-{tp_number}' in isotp_dic.keys():
+                                isotp_dic[f'{isometric.strip()}-{tp_number}'][8] = rfi_number
             if 'Принято с замечаниями' == category_cancelled:
                 if tp_number in tp_dic.keys():
                     tp_dic[tp_number][6] = rfi_number + " ПЗ"
                 if list_iso:
                     for isometric in list_iso:
-                        if f'{isometric.strip()}-{tp_number}' in isotp_dic.keys():
-                            isotp_dic[f'{isometric.strip()}-{tp_number}'][8] = rfi_number + " ПЗ"
+                        for patt in rep_patt_for_iso:
+                            isometric = isometric.replace(patt, '')
+                            if f'{isometric.strip()}-{tp_number}' in isotp_dic.keys():
+                                isotp_dic[f'{isometric.strip()}-{tp_number}'][8] = rfi_number + " ПЗ"
 
 
 
@@ -195,29 +207,37 @@ for i in sheet_journal_rfi['B2':'AO550000']:
                     tp_dic[tp_number][7] = rfi_number
                 if list_iso:
                     for isometric in list_iso:
-                        if f'{isometric.strip()}-{tp_number}' in isotp_dic.keys():
-                            isotp_dic[f'{isometric.strip()}-{tp_number}'][9] = rfi_number
+                        for patt in rep_patt_for_iso:
+                            isometric = isometric.replace(patt, '')
+                            if f'{isometric.strip()}-{tp_number}' in isotp_dic.keys():
+                                isotp_dic[f'{isometric.strip()}-{tp_number}'][9] = rfi_number
             if 'Принято с замечаниями' == category_cancelled:
                 if tp_number in tp_dic.keys():
                     tp_dic[tp_number][7] = rfi_number + " ПЗ"
                 if list_iso:
                     for isometric in list_iso:
-                        if f'{isometric.strip()}-{tp_number}' in isotp_dic.keys():
-                            isotp_dic[f'{isometric.strip()}-{tp_number}'][9] = rfi_number + " ПЗ"
+                        for patt in rep_patt_for_iso:
+                            isometric = isometric.replace(patt, '')
+                            if f'{isometric.strip()}-{tp_number}' in isotp_dic.keys():
+                                isotp_dic[f'{isometric.strip()}-{tp_number}'][9] = rfi_number + " ПЗ"
             if 'подтвержд' in comment or 'подтвржд' in comment:
                 if tp_number in tp_dic.keys():
                     tp_dic[tp_number][7] = rfi_number + " ФОП"
                 if list_iso:
                     for isometric in list_iso:
-                        if f'{isometric.strip()}-{tp_number}' in isotp_dic.keys():
-                            isotp_dic[f'{isometric.strip()}-{tp_number}'][9] = rfi_number + " ФОП"
+                        for patt in rep_patt_for_iso:
+                            isometric = isometric.replace(patt, '')
+                            if f'{isometric.strip()}-{tp_number}' in isotp_dic.keys():
+                                isotp_dic[f'{isometric.strip()}-{tp_number}'][9] = rfi_number + " ФОП"
             if 'зафиксирова' in comment:
                 if tp_number in tp_dic.keys():
                     tp_dic[tp_number][7] = rfi_number + " ФОП"
                 if list_iso:
                     for isometric in list_iso:
-                        if f'{isometric.strip()}-{tp_number}' in isotp_dic.keys():
-                            isotp_dic[f'{isometric.strip()}-{tp_number}'][9] = rfi_number + " ФОП"
+                        for patt in rep_patt_for_iso:
+                            isometric = isometric.replace(patt, '')
+                            if f'{isometric.strip()}-{tp_number}' in isotp_dic.keys():
+                                isotp_dic[f'{isometric.strip()}-{tp_number}'][9] = rfi_number + " ФОП"
 
         if 'испыт' and 'рочност' in description_rfi:
             if 'подтвержд' in comment or 'подтвржд' in comment:
@@ -225,29 +245,37 @@ for i in sheet_journal_rfi['B2':'AO550000']:
                     tp_dic[tp_number][7] = rfi_number + " ФОП"
                 if list_iso:
                     for isometric in list_iso:
-                        if f'{isometric}-{tp_number}' in isotp_dic.keys():
-                            isotp_dic[f'{isometric}-{tp_number}'][9] = rfi_number + " ФОП"
+                        for patt in rep_patt_for_iso:
+                            isometric = isometric.replace(patt, '')
+                            if f'{isometric}-{tp_number}' in isotp_dic.keys():
+                                isotp_dic[f'{isometric}-{tp_number}'][9] = rfi_number + " ФОП"
             if 'зафиксирова' in comment:
                 if tp_number in tp_dic.keys():
                     tp_dic[tp_number][7] = rfi_number + " ФОП"
                 if list_iso:
                     for isometric in list_iso:
-                        if f'{isometric}-{tp_number}' in isotp_dic.keys():
-                            isotp_dic[f'{isometric}-{tp_number}'][9] = rfi_number + " ФОП"
+                        for patt in rep_patt_for_iso:
+                            isometric = isometric.replace(patt, '')
+                            if f'{isometric}-{tp_number}' in isotp_dic.keys():
+                                isotp_dic[f'{isometric}-{tp_number}'][9] = rfi_number + " ФОП"
             if 'Принято' == category_cancelled:
                 if tp_number in tp_dic.keys():
                     tp_dic[tp_number][7] = rfi_number
                 if list_iso:
                     for isometric in list_iso:
-                        if f'{isometric}-{tp_number}' in isotp_dic.keys():
-                            isotp_dic[f'{isometric}-{tp_number}'][9] = rfi_number
+                        for patt in rep_patt_for_iso:
+                            isometric = isometric.replace(patt, '')
+                            if f'{isometric}-{tp_number}' in isotp_dic.keys():
+                                isotp_dic[f'{isometric}-{tp_number}'][9] = rfi_number
             if 'Принято с замечаниями' == category_cancelled:
                 if tp_number in tp_dic.keys():
                     tp_dic[tp_number][7] = rfi_number + " ПЗ"
                 if list_iso:
                     for isometric in list_iso:
-                        if f'{isometric}-{tp_number}' in isotp_dic.keys():
-                            isotp_dic[f'{isometric}-{tp_number}'][9] = rfi_number + " ПЗ"
+                        for patt in rep_patt_for_iso:
+                            isometric = isometric.replace(patt, '')
+                            if f'{isometric}-{tp_number}' in isotp_dic.keys():
+                                isotp_dic[f'{isometric}-{tp_number}'][9] = rfi_number + " ПЗ"
 
 
 
@@ -258,29 +286,37 @@ for i in sheet_journal_rfi['B2':'AO550000']:
                     tp_dic[tp_number][8] = rfi_number + " ФОП"
                 if list_iso:
                     for isometric in list_iso:
-                        if f'{isometric.strip()}-{tp_number}' in isotp_dic.keys():
-                            isotp_dic[f'{isometric.strip()}-{tp_number}'][10] = rfi_number + " ФОП"
+                        for patt in rep_patt_for_iso:
+                            isometric = isometric.replace(patt, '')
+                            if f'{isometric.strip()}-{tp_number}' in isotp_dic.keys():
+                                isotp_dic[f'{isometric.strip()}-{tp_number}'][10] = rfi_number + " ФОП"
             if 'зафиксирова' in comment:
                 if tp_number in tp_dic.keys():
                     tp_dic[tp_number][8] = rfi_number + " ФОП"
                 if list_iso:
                     for isometric in list_iso:
-                        if f'{isometric.strip()}-{tp_number}' in isotp_dic.keys():
-                            isotp_dic[f'{isometric.strip()}-{tp_number}'][10] = rfi_number + " ФОП"
+                        for patt in rep_patt_for_iso:
+                            isometric = isometric.replace(patt, '')
+                            if f'{isometric.strip()}-{tp_number}' in isotp_dic.keys():
+                                isotp_dic[f'{isometric.strip()}-{tp_number}'][10] = rfi_number + " ФОП"
             if 'Принято' == category_cancelled:
                 if tp_number in tp_dic.keys():
                     tp_dic[tp_number][8] = rfi_number
                 if list_iso:
                     for isometric in list_iso:
-                        if f'{isometric.strip()}-{tp_number}' in isotp_dic.keys():
-                            isotp_dic[f'{isometric.strip()}-{tp_number}'][10] = rfi_number
+                        for patt in rep_patt_for_iso:
+                            isometric = isometric.replace(patt, '')
+                            if f'{isometric.strip()}-{tp_number}' in isotp_dic.keys():
+                                isotp_dic[f'{isometric.strip()}-{tp_number}'][10] = rfi_number
             if 'Принято с замечаниями' == category_cancelled:
                 if tp_number in tp_dic.keys():
                     tp_dic[tp_number][8] = rfi_number + " ПЗ"
                 if list_iso:
                     for isometric in list_iso:
-                        if f'{isometric.strip()}-{tp_number}' in isotp_dic.keys():
-                            isotp_dic[f'{isometric.strip()}-{tp_number}'][10] = rfi_number + " ПЗ"
+                        for patt in rep_patt_for_iso:
+                            isometric = isometric.replace(patt, '')
+                            if f'{isometric.strip()}-{tp_number}' in isotp_dic.keys():
+                                isotp_dic[f'{isometric.strip()}-{tp_number}'][10] = rfi_number + " ПЗ"
 
 
 
@@ -292,29 +328,37 @@ for i in sheet_journal_rfi['B2':'AO550000']:
                     tp_dic[tp_number][9] = rfi_number + " ФОП"
                 if list_iso:
                     for isometric in list_iso:
-                        if f'{isometric.strip()}-{tp_number}' in isotp_dic.keys():
-                            isotp_dic[f'{isometric.strip()}-{tp_number}'][11] = rfi_number + " ФОП"
+                        for patt in rep_patt_for_iso:
+                            isometric = isometric.replace(patt, '')
+                            if f'{isometric.strip()}-{tp_number}' in isotp_dic.keys():
+                                isotp_dic[f'{isometric.strip()}-{tp_number}'][11] = rfi_number + " ФОП"
             if 'зафиксирова' in comment:
                 if tp_number in tp_dic.keys():
                     tp_dic[tp_number][9] = rfi_number + " ФОП"
                 if list_iso:
                     for isometric in list_iso:
-                        if f'{isometric.strip()}-{tp_number}' in isotp_dic.keys():
-                            isotp_dic[f'{isometric.strip()}-{tp_number}'][11] = rfi_number + " ФОП"
+                        for patt in rep_patt_for_iso:
+                            isometric = isometric.replace(patt, '')
+                            if f'{isometric.strip()}-{tp_number}' in isotp_dic.keys():
+                                isotp_dic[f'{isometric.strip()}-{tp_number}'][11] = rfi_number + " ФОП"
             if 'Принято' == category_cancelled:
                 if tp_number in tp_dic.keys():
                     tp_dic[tp_number][9] = rfi_number
                 if list_iso:
                     for isometric in list_iso:
-                        if f'{isometric.strip()}-{tp_number}' in isotp_dic.keys():
-                            isotp_dic[f'{isometric.strip()}-{tp_number}'][11] = rfi_number
+                        for patt in rep_patt_for_iso:
+                            isometric = isometric.replace(patt, '')
+                            if f'{isometric.strip()}-{tp_number}' in isotp_dic.keys():
+                                isotp_dic[f'{isometric.strip()}-{tp_number}'][11] = rfi_number
             if 'Принято с замечаниями' == category_cancelled:
                 if tp_number in tp_dic.keys():
                     tp_dic[tp_number][9] = rfi_number + " ПЗ"
                 if list_iso:
                     for isometric in list_iso:
-                        if f'{isometric.strip()}-{tp_number}' in isotp_dic.keys():
-                            isotp_dic[f'{isometric.strip()}-{tp_number}'][11] = rfi_number + " ПЗ"
+                        for patt in rep_patt_for_iso:
+                            isometric = isometric.replace(patt, '')
+                            if f'{isometric.strip()}-{tp_number}' in isotp_dic.keys():
+                                isotp_dic[f'{isometric.strip()}-{tp_number}'][11] = rfi_number + " ПЗ"
 
 
 
@@ -322,8 +366,10 @@ for i in sheet_journal_rfi['B2':'AO550000']:
             if 'Принято' == category_cancelled:
                 if list_iso:
                     for isometric in list_iso:
-                        if isometric.strip() in iso_dic.keys():
-                            iso_dic[isometric.strip()][3] = rfi_number
+                        for patt in rep_patt_for_iso:
+                            isometric = isometric.replace(patt, '')
+                            if isometric.strip() in iso_dic.keys():
+                                iso_dic[isometric.strip()][3] = rfi_number
 
 
         # ИЗОЛЯЦИЯ ПРОВЕРКА------------------------------ ТРУБА
@@ -334,14 +380,18 @@ for i in sheet_journal_rfi['B2':'AO550000']:
                 if 'крепежа и герметизации металлического кожуха согласно изометрическим' in description_rfi:
                     if list_iso:
                         for iso in list_iso:
-                            if iso.strip() in iso_dic.keys():
-                                iso_dic[iso.strip()][1] = rfi_number
+                            for patt in rep_patt_for_iso:
+                                iso = iso.replace(patt, '')
+                                if iso.strip() in iso_dic.keys():
+                                    iso_dic[iso.strip()][1] = rfi_number
 
                 if 'теплоизоляционного покрытия согласно изометрическим' in description_rfi:
                     if list_iso:
                         for iso in list_iso:
-                            if iso.strip() in iso_dic.keys():
-                                iso_dic[iso.strip()][0] = rfi_number
+                            for patt in rep_patt_for_iso:
+                                iso = iso.replace(patt, '')
+                                if iso.strip() in iso_dic.keys():
+                                    iso_dic[iso.strip()][0] = rfi_number
 
 
 
@@ -357,8 +407,10 @@ for i in sheet_journal_rfi['B2':'AO550000']:
 
                     if list_iso:
                         for iso in list_iso:
-                            if iso.strip() in iso_dic.keys():
-                                iso_dic[iso.strip()][2] = rfi_number
+                            for patt in rep_patt_for_iso:
+                                iso = iso.replace(patt, '')
+                                if iso.strip() in iso_dic.keys():
+                                    iso_dic[iso.strip()][2] = rfi_number
 
 
 
@@ -426,13 +478,15 @@ n_dic_4_30 = {'UAIN': ['Воздух КИП', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
               'UWSW': ['Техническая вода', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
               'UWPO': ['Питьевая вода', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
               'UWSU': ['Поверхностная вода', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-              'NOWWA': ['Сточные воды', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-              'UHD': ['Дизельное топливо', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-              'OFSP': ['Некондиция', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-              'UNMP': ['Азот СД', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]}
+              'NOWWA': ['Сточные воды', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]}
 
-n_dic_4_110 = {'HWBR': ['Вода котлового контура, обратная (Т21)', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-               'HWBS': ['Вода котлового контура, прямая (Т11)', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+              # 'UHD': ['Дизельное топливо', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+              # 'OFSP': ['Некондиция', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+              # 'UNMP': ['Азот СД', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]}
+
+n_dic_4_110 = {
+               #  'HWBR': ['Вода котлового контура, обратная (Т21)', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+               # 'HWBS': ['Вода котлового контура, прямая (Т11)', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
                'HWRP': ['Теплофикационная вода, обратная (Т2)', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
                'HWSP': ['Теплофикационная вода, прямая (Т1)', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
                'NHNGA': ['Природный газ', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -449,7 +503,7 @@ n_dic_4_110 = {'HWBR': ['Вода котлового контура, обрат�
                'UFGAW': ['Факельный сброс в общую фак. систему', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
                'UHG': ['Топливный газ', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
                'UHGAH': ['Топливный газ ВД', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-               'UHGAL': ['Топливный газ НД', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+               # 'UHGAL': ['Топливный газ НД', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
                'UNHP': ['Азот ВД', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
                'UNLP': ['Азот НД', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
                'USLP': ['Пар НД', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -470,7 +524,7 @@ n_dic_2_60 = {'NODRAH': ['Дренаж углеводородов', 0, 0, 0, 0, 
               'UNMP': ['Азот СД', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
               'UHG': ['Топливный газ', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
               'UNLP': ['Азот НД', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-              'UNHP': ['Азот ВД', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+              # 'UNHP': ['Азот ВД', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
               'WPCS': ['Подача Оборотная вода(В4)', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
               'WPCR': ['Возврат Оборотная вода(В5)', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
               'UWCH': ['Конденсат (Т8)', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -485,12 +539,12 @@ n_dic_2_60 = {'NODRAH': ['Дренаж углеводородов', 0, 0, 0, 0, 
               'NOWWA': ['Сточные воды', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
               'UWFF': ['Пожарная вода', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
               'UWPO': ['Питьевая вода', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-              'NHNGA': ['Природный газ', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-              'NHNGAD': ['Сухой природный газ', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-              'WMMI': ['Водометанольная смесь', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-              'UHD': ['Дизельное топливо', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-              'NHRGR': ['Газ регенерации, обратный', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-              'NHRGS': ['Газ регенерации, прямой', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+              # 'NHNGA': ['Природный газ', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+              # 'NHNGAD': ['Сухой природный газ', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+              # 'WMMI': ['Водометанольная смесь', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+              # 'UHD': ['Дизельное топливо', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+              # 'NHRGR': ['Газ регенерации, обратный', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+              # 'NHRGS': ['Газ регенерации, прямой', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
               'UWSU': ['Поверхностная вода', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
               'HYDV': ['Пары углеводородов', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
               }
@@ -534,7 +588,7 @@ n_dic_1_60 = {'NODRAH': ['Дренаж углеводородов', 0, 0, 0, 0, 
               'UNMP': ['Азот СД', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
               'UHG': ['Топливный газ', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
               'UNLP': ['Азот НД', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-              'UNHP': ['Азот ВД', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+              # 'UNHP': ['Азот ВД', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
               'WPCS': ['Подача Оборотная вода(В4)', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
               'WPCR': ['Возврат Оборотная вода(В5)', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
               'UWCH': ['Конденсат (Т8)', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -549,12 +603,12 @@ n_dic_1_60 = {'NODRAH': ['Дренаж углеводородов', 0, 0, 0, 0, 
               'NOWWA': ['Сточные воды', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
               'UWFF': ['Пожарная вода', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
               'UWPO': ['Питьевая вода', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-              'NHNGA': ['Природный газ', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-              'NHNGAD': ['Сухой природный газ', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-              'WMMI': ['Водометанольная смесь', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-              'UHD': ['Дизельное топливо', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-              'NHRGR': ['Газ регенерации, обратный', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-              'NHRGS': ['Газ регенерации, прямой', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+              # 'NHNGA': ['Природный газ', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+              # 'NHNGAD': ['Сухой природный газ', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+              # 'WMMI': ['Водометанольная смесь', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+              # 'UHD': ['Дизельное топливо', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+              # 'NHRGR': ['Газ регенерации, обратный', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+              # 'NHRGS': ['Газ регенерации, прямой', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
               'UWSU': ['Поверхностная вода', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
               'HYDV': ['Пары углеводородов', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
               }
@@ -619,9 +673,8 @@ n_dic_1_70 = {'NODRAH': ['Дренаж углеводородов', 0, 0, 0, 0, 
 #                            'RFI ERECTION', 'RFI TEST', 'RFI AIRBLOWING', 'RFI REINSTATEMENT', 'Статус уведомлений']]
 
 
-n_list_4_110 = [['', f'Статус по ТП 3-110 на {datetime.datetime.now().strftime("%d.%m.%Y")}', '', '', '', '',
-                 '', '', '', '', '',
-                 ''],
+n_list_4_110 = [['', f'Статус по ТП 4-110 на {datetime.datetime.now().strftime("%d.%m.%Y")}', '', '', '', '',
+                 '', '', '', '', '', ''],
                 ['Код среды', 'Наименование среды', 'По проекту, м.', 'Кол-во ТП', 'Принят монтаж, м.',
                  'Принят монтаж, ТП',
                  'Приняты испыт-я, м.', 'Приняты испыт-я, ТП', 'Принята продувка, м.', 'Принята продувка, ТП',
@@ -629,7 +682,7 @@ n_list_4_110 = [['', f'Статус по ТП 3-110 на {datetime.datetime.now(
                  'Принята ОС, ТП']]
 ITOG_list_4_110 = ['', 'Итого:', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 
-n_list_4_30 = [['', f'Статус по ТП 3-30 на {datetime.datetime.now().strftime("%d.%m.%Y")}', '', '', '', '',
+n_list_4_30 = [['', f'Статус по ТП 4-30 на {datetime.datetime.now().strftime("%d.%m.%Y")}', '', '', '', '',
                 '', '', '', '', '',
                 ''],
                ['Код среды', 'Наименование среды', 'По проекту, м.', 'Кол-во ТП', 'Принят монтаж, м.',
@@ -768,10 +821,10 @@ for tp in tp_dic.keys():
             if tp_dic[tp][6]:
                 n_dic_1_60[tp_dic[tp][3]][3] += tp_dic[tp][5]
                 n_dic_1_60[tp_dic[tp][3]][4] += 1
-            if tp_dic[tp][7]:
+            if tp_dic[tp][7] and tp_dic[tp][7] != 'Визуальный':
                 n_dic_1_60[tp_dic[tp][3]][5] += tp_dic[tp][5]
                 n_dic_1_60[tp_dic[tp][3]][6] += 1
-            if not tp_dic[tp][7] and tp_dic[tp][8]:
+            if tp_dic[tp][7] == 'Визуальный' and tp_dic[tp][8]:
                 n_dic_1_60[tp_dic[tp][3]][5] += tp_dic[tp][5]
                 n_dic_1_60[tp_dic[tp][3]][6] += 1
             if tp_dic[tp][8]:
@@ -789,10 +842,10 @@ for tp in tp_dic.keys():
             if tp_dic[tp][6]:
                 n_dic_1_70[tp_dic[tp][3]][3] += tp_dic[tp][5]
                 n_dic_1_70[tp_dic[tp][3]][4] += 1
-            if tp_dic[tp][7]:
+            if tp_dic[tp][7] and tp_dic[tp][7] != 'Визуальный':
                 n_dic_1_70[tp_dic[tp][3]][5] += tp_dic[tp][5]
                 n_dic_1_70[tp_dic[tp][3]][6] += 1
-            if not tp_dic[tp][7] and tp_dic[tp][8]:
+            if tp_dic[tp][7] == 'Визуальный' and tp_dic[tp][8]:
                 n_dic_1_70[tp_dic[tp][3]][5] += tp_dic[tp][5]
                 n_dic_1_70[tp_dic[tp][3]][6] += 1
             if tp_dic[tp][8]:
@@ -814,10 +867,10 @@ for tp in tp_dic.keys():
             if tp_dic[tp][6]:
                 n_dic_2_60[tp_dic[tp][3]][3] += tp_dic[tp][5]
                 n_dic_2_60[tp_dic[tp][3]][4] += 1
-            if tp_dic[tp][7]:
+            if tp_dic[tp][7] and tp_dic[tp][7] != 'Визуальный':
                 n_dic_2_60[tp_dic[tp][3]][5] += tp_dic[tp][5]
                 n_dic_2_60[tp_dic[tp][3]][6] += 1
-            if not tp_dic[tp][7] and tp_dic[tp][8]:
+            if tp_dic[tp][7] == 'Визуальный' and tp_dic[tp][8]:
                 n_dic_2_60[tp_dic[tp][3]][5] += tp_dic[tp][5]
                 n_dic_2_60[tp_dic[tp][3]][6] += 1
             if tp_dic[tp][8]:
@@ -834,10 +887,10 @@ for tp in tp_dic.keys():
             if tp_dic[tp][6]:
                 n_dic_2_70[tp_dic[tp][3]][3] += tp_dic[tp][5]
                 n_dic_2_70[tp_dic[tp][3]][4] += 1
-            if tp_dic[tp][7]:
+            if tp_dic[tp][7] and tp_dic[tp][7] != 'Визуальный':
                 n_dic_2_70[tp_dic[tp][3]][5] += tp_dic[tp][5]
                 n_dic_2_70[tp_dic[tp][3]][6] += 1
-            if not tp_dic[tp][7] and tp_dic[tp][8]:
+            if tp_dic[tp][7] == 'Визуальный' and tp_dic[tp][8]:
                 n_dic_2_70[tp_dic[tp][3]][5] += tp_dic[tp][5]
                 n_dic_2_70[tp_dic[tp][3]][6] += 1
             if tp_dic[tp][8]:
@@ -860,10 +913,10 @@ for tp in tp_dic.keys():
             if tp_dic[tp][6]:
                 n_dic_4_30[tp_dic[tp][3]][3] += tp_dic[tp][5]
                 n_dic_4_30[tp_dic[tp][3]][4] += 1
-            if tp_dic[tp][7]:
+            if tp_dic[tp][7] and tp_dic[tp][7] != 'Визуальный':
                 n_dic_4_30[tp_dic[tp][3]][5] += tp_dic[tp][5]
                 n_dic_4_30[tp_dic[tp][3]][6] += 1
-            if not tp_dic[tp][7] and tp_dic[tp][8]:
+            if tp_dic[tp][7] == 'Визуальный' and tp_dic[tp][8]:
                 n_dic_4_30[tp_dic[tp][3]][5] += tp_dic[tp][5]
                 n_dic_4_30[tp_dic[tp][3]][6] += 1
             if tp_dic[tp][8]:
@@ -880,10 +933,10 @@ for tp in tp_dic.keys():
             if tp_dic[tp][6]:
                 n_dic_4_110[tp_dic[tp][3]][3] += tp_dic[tp][5]
                 n_dic_4_110[tp_dic[tp][3]][4] += 1
-            if tp_dic[tp][7]:
+            if tp_dic[tp][7] and tp_dic[tp][7] != 'Визуальный':
                 n_dic_4_110[tp_dic[tp][3]][5] += tp_dic[tp][5]
                 n_dic_4_110[tp_dic[tp][3]][6] += 1
-            if not tp_dic[tp][7] and tp_dic[tp][8]:
+            if tp_dic[tp][7] == 'Визуальный' and tp_dic[tp][8]:
                 n_dic_4_110[tp_dic[tp][3]][5] += tp_dic[tp][5]
                 n_dic_4_110[tp_dic[tp][3]][6] += 1
             if tp_dic[tp][8]:
@@ -1062,31 +1115,31 @@ ws0.set_column(2, 2, 12)
 ws0.set_column(3, 3, 12)
 
 cell_format_green = workbook_summary.add_format()
-cell_format_green.set_bg_color('#2cb67d')
+cell_format_green.set_bg_color('#99FF99')
 cell_format_blue = workbook_summary.add_format()
-cell_format_blue.set_bg_color('#f3d2c1')
+cell_format_blue.set_bg_color('#99CCCC')
 cell_format_hat = workbook_summary.add_format()
-cell_format_hat.set_bg_color('#4f7299')
+cell_format_hat.set_bg_color('#FF9966')
 cell_format_date = workbook_summary.add_format()
 cell_format_date.set_font_size(font_size=14)
 for i, (one, two, three, four, five, six, seven, eight, nine, ten, eleven, twelve) in enumerate(summary_list_units, start=2):
-    # if fourteen == 0:
-    #     color = cell_format_green
-    if twelve == 'Принята ОС, ТП':
+
+    if two == 'Итого:' or 'Статус' in two or 'Наименование' in two or two == 'Остаток:':
         color = cell_format_hat
         color.set_bold('bold')
-        color.set_text_wrap(text_wrap=1)
-    # elif fourteen == '-':
-    #     color = cell_format_date
-    #     color.set_bold('bold')
-    if two == 'Итого:':
-        color = cell_format_hat
-        color.set_bold('bold')
-    elif two == 'Остаток:':
-        color = cell_format_hat
-        color.set_bold('bold')
+
     else:
-        color = cell_format_blue
+        try:
+            oos = float(str(four)) - float(str(twelve))
+
+            if oos == 0:
+                color = cell_format_green
+            else:
+                color = cell_format_blue
+        except Exception as e:
+            print(e)
+
+
     try:
         color.set_border(style=1)
         color.set_text_wrap(text_wrap=1)
@@ -1108,14 +1161,6 @@ for i, (one, two, three, four, five, six, seven, eight, nine, ten, eleven, twelv
 
 
 
-cell_format_green = workbook_summary.add_format()
-cell_format_green.set_bg_color('#2cb67d')
-cell_format_blue = workbook_summary.add_format()
-cell_format_blue.set_bg_color('#f3d2c1')
-cell_format_hat = workbook_summary.add_format()
-cell_format_hat.set_bg_color('#4f7299')
-cell_format_date = workbook_summary.add_format()
-cell_format_date.set_font_size(font_size=14)
 
 
 # -------------------------------------------------------------------------------------------------
