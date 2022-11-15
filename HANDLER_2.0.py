@@ -149,13 +149,15 @@ for i in sheet_journal_rfi['B2':'AO550000']:
         for typo in replace_pattern_1:
             if typo in tp_number:
                 tp_number = tp_number.replace(typo, '').strip()
+
+        if 'INTER' in tp_number:
+            tp_number = tp_number.replace('1-00', '').replace('2-00', '').replace('3-00', '').replace('4-00', '')
+
         tp_number = tp_number.strip()
 
         rep_patt_for_iso = ['р.01', 'р.1', 'р.3', 'р.4', 'р.5', 'р.6', 'р.7', 'р.8', 'р.0', '\n']
 
 
-        if rfi_number == 'CPECC-CC-64685/1':
-            print(list_iso)
 
         if 'Монтаж технологического трубопровода в рамках' in description_rfi:
             if 'подтвержд' in comment or 'подтвржд' in comment:
@@ -403,7 +405,11 @@ for i in sheet_journal_rfi['B2':'AO550000']:
                                                          'согласно изометрическим' in description_rfi or 'Проверка ' \
                          'качества смонтированного теплоизоляционного покрытия и металлического ' \
                              'кожуха металлических коробов, теплоизоляционной оболочки ' \
-                                     '( термочехлов) на фланцах' in description_rfi:
+                                     '( термочехлов) на фланцах' in description_rfi\
+                        or 'Проверка качества крепежа и герметизации металлического ' \
+                           'кожуха фланцев и ЗРА согласно изометрическим чертежам' in description_rfi\
+                        or 'Проверка качества крепежа и герметизации металлического' \
+                           ' кожуха фланцев и ЗРА согласно изометрическим чертежам' in description_rfi:
 
                     if list_iso:
                         for iso in list_iso:
@@ -739,7 +745,7 @@ for isotp in isotp_dic.keys():
     isotp_dic[isotp][18] = iso_dic[isotp_dic[isotp][1]][4]
 
 
-    if isotp_dic[isotp][19] == '1' and 'SUPER' not in isotp_dic[isotp][0] and 'INTERFACE' not in isotp_dic[isotp][0]:
+    if isotp_dic[isotp][19] == '1' and 'SUPER' not in isotp_dic[isotp][0]:
         summary_iso_tp_phase_1.append([isotp_dic[isotp][0], isotp_dic[isotp][1], isotp_dic[isotp][2],
                                        isotp_dic[isotp][3], isotp_dic[isotp][4], isotp_dic[isotp][5],
                                        isotp_dic[isotp][6], isotp_dic[isotp][7], isotp_dic[isotp][8],
@@ -750,7 +756,7 @@ for isotp in isotp_dic.keys():
                                        ])
 
 
-    if isotp_dic[isotp][19] == '2' and 'SUPER' not in isotp_dic[isotp][0] and 'INTERFACE' not in isotp_dic[isotp][0]:
+    if isotp_dic[isotp][19] == '2' and 'SUPER' not in isotp_dic[isotp][0]:
         summary_iso_tp_phase_2.append([isotp_dic[isotp][0], isotp_dic[isotp][1], isotp_dic[isotp][2],
                                        isotp_dic[isotp][3], isotp_dic[isotp][4], isotp_dic[isotp][5],
                                        isotp_dic[isotp][6], isotp_dic[isotp][7], isotp_dic[isotp][8],
@@ -760,7 +766,7 @@ for isotp in isotp_dic.keys():
                                        isotp_dic[isotp][18]
                                        ])
 
-    if isotp_dic[isotp][19] == '3' and 'SUPER' not in isotp_dic[isotp][0] and 'INTERFACE' not in isotp_dic[isotp][0]:
+    if isotp_dic[isotp][19] == '3' and 'SUPER' not in isotp_dic[isotp][0]:
         summary_iso_tp_phase_3.append([isotp_dic[isotp][0], isotp_dic[isotp][1], isotp_dic[isotp][2],
                                        isotp_dic[isotp][3], isotp_dic[isotp][4], isotp_dic[isotp][5],
                                        isotp_dic[isotp][6], isotp_dic[isotp][7], isotp_dic[isotp][8],
@@ -806,8 +812,13 @@ for isotp in isotp_dic.keys():
 #         tp_dic[testpackage][10] = ncr_status
 #         tp_dic[testpackage][11] = phase
 
-
+summary_tp_for_db_atom = []
 for tp in tp_dic.keys():
+
+    if 'SUPER' not in tp_dic[tp][0] and 'INTERFACE' not in tp_dic[tp][0]:
+        summary_tp_for_db_atom.append([tp_dic[tp][0], tp_dic[tp][1], tp_dic[tp][2], tp_dic[tp][3], tp_dic[tp][4],
+                                   tp_dic[tp][5], tp_dic[tp][6], tp_dic[tp][7], tp_dic[tp][8], tp_dic[tp][9],
+                                   tp_dic[tp][10]])
 
     if tp_dic[tp][11] == '1' and 'SUPER' not in tp_dic[tp][0] and 'INTERFACE' not in tp_dic[tp][0]:
         summary_tp_phase_1.append([tp_dic[tp][0], tp_dic[tp][1], tp_dic[tp][2], tp_dic[tp][3], tp_dic[tp][4],
@@ -1100,7 +1111,14 @@ summary_list_units.append(ost_list_4_30)
 summary_list_units.append(empty_str)
 
 
-
+"""
+Запись БД для работы скрипта atom-results
+"""
+with open(r'C:\Users\ignatenkoia\Desktop\work\GIT_PROJECTS\atom_results\dbs_templates\bd_tp_rfi.csv', 'w', newline='')\
+        as write_file:
+    writed_file = csv.writer(write_file, delimiter=";")
+    writed_file.writerows(summary_tp_for_db_atom)
+    print('БД для АТОМа создана')
 
 
 workbook_summary = xlsxwriter.Workbook(f'Сводка по ФАЗАМ на {datetime.datetime.now().strftime("%d.%m.%Y")}.xlsx')
