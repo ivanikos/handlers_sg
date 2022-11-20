@@ -7,10 +7,10 @@ import pandas as pd
 
 
 # home laptop
-# directory_dbs_files = r'C:\Users\vanik\PycharmProjects\handlers_sg\dbs'
+directory_dbs_files = r'C:\Users\vanik\PycharmProjects\handlers_sg\dbs'
 
 # work laptop
-directory_dbs_files = r'C:\Users\ignatenkoia\Desktop\work\GIT_PROJECTS\handlers_sg\dbs'
+# directory_dbs_files = r'C:\Users\ignatenkoia\Desktop\work\GIT_PROJECTS\handlers_sg\dbs'
 
 
 
@@ -1122,14 +1122,14 @@ summary_list_units.append(ost_list_4_30)
 summary_list_units.append(empty_str)
 
 
-"""
-Запись БД для работы скрипта atom-results
-"""
-with open(r'C:\Users\ignatenkoia\Desktop\work\GIT_PROJECTS\atom_results\dbs_templates\bd_tp_rfi.csv', 'w', newline='')\
-        as write_file:
-    writed_file = csv.writer(write_file, delimiter=";")
-    writed_file.writerows(summary_tp_for_db_atom)
-    print('БД для АТОМа создана')
+# """
+# Запись БД для работы скрипта atom-results
+# """
+# with open(r'C:\Users\ignatenkoia\Desktop\work\GIT_PROJECTS\atom_results\dbs_templates\bd_tp_rfi.csv', 'w', newline='')\
+#         as write_file:
+#     writed_file = csv.writer(write_file, delimiter=";")
+#     writed_file.writerows(summary_tp_for_db_atom)
+#     print('БД для АТОМа создана')
 
 
 workbook_summary = xlsxwriter.Workbook(f'Сводка по ФАЗАМ на {datetime.datetime.now().strftime("%d.%m.%Y")}.xlsx')
