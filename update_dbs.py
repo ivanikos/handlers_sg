@@ -1,12 +1,14 @@
 # -*- coding: cp1251 -*-
+import os
+
 import openpyxl as xl
 import csv
 
 
 
 # home laptop
-file_isotp_db = r'C:\Users\vanik\PycharmProjects\handlers_sg\out_files_for_dbs\\'
-out_db_isotp_dir = r'C:\Users\vanik\PycharmProjects\handlers_sg\dbs\\'
+file_isotp_db = os.getcwd() + '\\out_files_for_dbs\\'
+dbs_directory = os.getcwd() + '\\dbs\\'
 
 # work laptop
 # out_db_isotp_dir = r'C:\Users\ignatenkoia\Desktop\work\GIT_PROJECTS\handlers_sg\dbs\\'
@@ -71,12 +73,52 @@ def update_isotp_dbs():
                              iso_length, rfi_erection, rfi_test, rfi_airblowing, rfi_reinstatement,
                              type_insulation, volume_insulation, rfi_insulation_mv, rfi_insulation_metall, rfi_insulation_box])
 
-    with open(out_db_isotp_dir + "iso_tp_db.csv", 'w', newline='') as writing_file:
+    with open(dbs_directory + "iso_tp_db.csv", 'w', newline='') as writing_file:
             write_file = csv.writer(writing_file, delimiter=";")
             write_file.writerows(isotp_db)
 
     return print('БД ТП по фазам 1, 2, 3 успешно обновлена.')
 
 
+"""
+Обновление БД по спутникам
+"""
+def update_sputnik_db():
+    db_tracing_book = xl.load_workbook(file_isotp_db + "\\db_tracing_p1,2.xlsx")
+    sheet_tracing_db = db_tracing_book['tracing_db']
 
-update_isotp_dbs()
+    summary_tracing = []
+
+    for i in sheet_tracing_db['A3':'K1000000']:
+        if i[0].value:
+            area = str(i[1].value).strip()
+            circuit_number = str(i[3].value).strip()
+            drawing_number = str(i[6].value).strip()
+            value = float(str(i[7].value).strip().replace(',', '.'))
+            erection_rfi = ''
+            test_rfi = ''
+            blowing_rfi = ''
+
+            if i[8].value:
+                erection_rfi = str(i[8].value).strip() + " BD"
+            if i[9].value:
+                test_rfi = str(i[9].value).strip() + " BD"
+            if i[10].value:
+                blowing_rfi = str(i[10].value).strip() + " BD"
+
+            summary_tracing.append([drawing_number, circuit_number, area, value, erection_rfi, test_rfi, blowing_rfi])
+
+    with open(dbs_directory + "db_tracing.csv", "w", newline='') as write_file:
+        writed_file = csv.writer(write_file, delimiter=";")
+        writed_file.writerows(summary_tracing)
+
+    return print("DB по спутникам обновлена успешно.")
+
+
+
+
+
+
+
+# update_isotp_dbs()
+update_sputnik_db()
