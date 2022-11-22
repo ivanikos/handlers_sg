@@ -1,4 +1,6 @@
 import csv
+import os
+
 import openpyxl as xl
 import re
 import datetime
@@ -7,7 +9,7 @@ import pandas as pd
 
 
 # home laptop
-directory_dbs_files = r'C:\Users\vanik\PycharmProjects\handlers_sg\dbs'
+directory_dbs_files = os.getcwd() + "\\dbs"
 
 # work laptop
 # directory_dbs_files = r'C:\Users\ignatenkoia\Desktop\work\GIT_PROJECTS\handlers_sg\dbs'
