@@ -159,7 +159,8 @@ for i in sheet_journal_rfi['B2':'AO550000']:
 
         rep_patt_for_iso = ['р.01', 'р.1', 'р.3', 'р.4', 'р.5', 'р.6', 'р.7', 'р.8', 'р.0', '\n']
 
-
+        if '97011' in rfi_number:
+            description_rfi = description_rfi + 'крепежа и герметизации металлического кожуха согласно изометрическим'
 
         if 'Монтаж технологического трубопровода в рамках' in description_rfi:
             if 'подтвержд' in comment or 'подтвржд' in comment:
@@ -381,7 +382,8 @@ for i in sheet_journal_rfi['B2':'AO550000']:
             if 'представлены не в полном объеме, представлены некорректные документы' in violation or \
                     'документы, подтверждающие качество работ' in violation:
 
-                if 'крепежа и герметизации металлического кожуха согласно изометрическим' in description_rfi:
+                if 'крепежа и герметизации металлического кожуха согласно изометрическим' in description_rfi \
+                        or ' крепежа и герметизации металлического кожуха согласно изометрическим' in description_rfi:
                     if list_iso:
                         for iso in list_iso:
                             for patt in rep_patt_for_iso:
