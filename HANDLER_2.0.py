@@ -88,8 +88,10 @@ with open(directory_dbs_files + file_db_isotp, 'r') as read_db:
         rfi_ins_box = row[18].strip()
 
         isotp_dic[iso_with_tp] = [testpackage, isometric, line, title, unit, fluid, ggn_status, iso_length,
-                                  rfi_erection, rfi_test, rfi_airblowing, rfi_reinstatement, type_ins, volume_ins,
-                                  rfi_ins_cotton, rfi_ins_metall, rfi_ins_box, '', '', phase]
+                                  rfi_erection, rfi_test, rfi_airblowing,
+                                  rfi_reinstatement, type_ins, volume_ins,
+                                  rfi_ins_cotton, rfi_ins_metall, rfi_ins_box
+            , '', '', phase]
 
         tp_dic[testpackage][0] = testpackage
         tp_dic[testpackage][1] = title

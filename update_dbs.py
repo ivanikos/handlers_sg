@@ -120,5 +120,5 @@ def update_sputnik_db():
 
 
 
-# update_isotp_dbs()
-update_sputnik_db()
+update_isotp_dbs()
+# update_sputnik_db()
