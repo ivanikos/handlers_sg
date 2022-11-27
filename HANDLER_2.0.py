@@ -77,12 +77,15 @@ with open(directory_dbs_files + file_db_isotp, 'r') as read_db:
         fluid = row[7].strip()
         ggn_status = row[8].strip()
         iso_length = float(row[9].strip().replace(',', '.'))
+
         rfi_erection = row[10].strip()
         rfi_test = row[11].strip()
         rfi_airblowing = row[12].strip()
         rfi_reinstatement = row[13].strip()
+
         type_ins = row[14].strip()
         volume_ins = row[15].strip()
+
         rfi_ins_cotton = row[16].strip()
         rfi_ins_metall = row[17].strip()
         rfi_ins_box = row[18].strip()
@@ -110,7 +113,7 @@ with open(directory_dbs_files + file_db_isotp, 'r') as read_db:
 
 
 # Проверка Журнал заявок АИС Р2 ФАЗА 1, 2, 3-------------------------------------
-df = pd.read_excel('Журнал заявок общий.xlsx')
+df = pd.read_excel('Журнал заявок общий.xlsx', engine='openpyxl')
 df = df.sort_values(by='Дата подачи / Date of submission', ascending=True)
 df.to_excel('Журнал заявок общий.xlsx', index=0)
 
