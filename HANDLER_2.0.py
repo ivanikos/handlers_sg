@@ -78,17 +78,30 @@ with open(directory_dbs_files + file_db_isotp, 'r') as read_db:
         ggn_status = row[8].strip()
         iso_length = float(row[9].strip().replace(',', '.'))
 
-        rfi_erection = row[10].strip()
-        rfi_test = row[11].strip()
-        rfi_airblowing = row[12].strip()
-        rfi_reinstatement = row[13].strip()
+        rfi_erection, rfi_test, rfi_airblowing, rfi_reinstatement = '', '', '', ''
+
+
+        if row[10]:
+            rfi_erection = row[10].strip() + ' BD'
+        if row[11]:
+            rfi_test = row[11].strip() + ' BD'
+        if row[12]:
+            rfi_airblowing = row[12].strip() + ' BD'
+        if row[13]:
+            rfi_reinstatement = row[13].strip() + ' BD'
+
 
         type_ins = row[14].strip()
         volume_ins = row[15].strip()
 
-        rfi_ins_cotton = row[16].strip()
-        rfi_ins_metall = row[17].strip()
-        rfi_ins_box = row[18].strip()
+        rfi_ins_cotton, rfi_ins_metall, rfi_ins_box = '', '', ''
+
+        if row[16]:
+            rfi_ins_cotton = row[16].strip() + ' BD'
+        if row[17]:
+            rfi_ins_metall = row[17].strip() + ' BD'
+        if row[18]:
+            rfi_ins_box = row[18].strip() + ' BD'
 
         isotp_dic[iso_with_tp] = [testpackage, isometric, line, title, unit, fluid, ggn_status, iso_length,
                                   rfi_erection, rfi_test, rfi_airblowing,
@@ -148,6 +161,9 @@ for i in sheet_journal_rfi['B2':'AO550000']:
         comment = str(i[39].value)
 
         date_of_submissions = str(i[10].value)
+
+
+
 
         for typo in replace_pattern_2:
             if typo in tp_number:
