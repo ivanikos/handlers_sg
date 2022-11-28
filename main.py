@@ -12,4 +12,4 @@ def add(data_1, data_2):
 
 if __name__ == '__main__':
     eel.init('front')
-    eel.start('index.html', mode="chrome", size=(600, 400))
+    eel.start('index.html', mode="chrome", size=(700, 400))

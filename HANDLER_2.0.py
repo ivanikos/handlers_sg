@@ -144,12 +144,11 @@ replace_pattern_2 = ['(T.T. REINSTATEMENT)', '(T.T. AIR BLOWING)', '(AIR BLOWING
                      '(T.T RE-INSTATEMENT)', '( T.T AIR BLOWING )', '( T.T AIR BLOWING )', '(TT REINSTATEMENT)',
                      '(T.T.ERECTION)', '(T.T.TEST)', '(T.T.AIR BLOWING)', '(T.T.REINSTATEMENT)']
 
-res_summary = {} # ?????????
 
 for i in sheet_journal_rfi['B2':'AO550000']:
     if i[0].value:
         rfi_number = str(i[1].value).strip()
-        tp_number = str(i[2].value).strip()
+        tp_number = str(i[2].value).strip().replace('-HT', '').replace('-VT', '').replace('-PT', '')
         pkk = str(i[4].value).strip()
 
         description_rfi = str(i[16].value)
@@ -162,7 +161,14 @@ for i in sheet_journal_rfi['B2':'AO550000']:
 
         date_of_submissions = str(i[10].value)
 
-
+        re_tp = re.findall(
+            r'YMT-\d-\d\d\d-HP-\d\d\d\d\d\d-\d\d[A-Z]-\d\d[A-Z]|YMT-\d-\d\d\d-HP-\d\d\d\d\d\d-\d\d-\d\d[A-Z]|'
+            r'YMT-\d-\d\d\d-HP-\d\d\d\d\d\d-\d\d[A-Z]-\d\d|'
+            r'YMT-\d-\d\d-HP-\d\d\d\d\d\d-\d\d[A-Z]-\d\d[A-Z]|YMT-\d-\d\d-HP-\d\d\d\d\d\d-\d\d[A-Z]-\d\d|'
+            r'YMT-\d-\d\d-HP-\d\d\d\d\d\d-\d\d-\d\d[A-Z]|YMT-\d-\d\d-HP-\d\d\d\d\d\d-\d\d-\d\d|',
+            tp_number)
+        if re_tp:
+            tp_number = re_tp[0]
 
 
         for typo in replace_pattern_2:
