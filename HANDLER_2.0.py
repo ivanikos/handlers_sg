@@ -875,10 +875,10 @@ for tp in tp_dic.keys():
             if tp_dic[tp][6]:
                 n_dic_1_60[tp_dic[tp][3]][3] += tp_dic[tp][5]
                 n_dic_1_60[tp_dic[tp][3]][4] += 1
-            if tp_dic[tp][7] and tp_dic[tp][7] != 'Визуальный':
+            if tp_dic[tp][7] and tp_dic[tp][7] != 'Визуальный BD':
                 n_dic_1_60[tp_dic[tp][3]][5] += tp_dic[tp][5]
                 n_dic_1_60[tp_dic[tp][3]][6] += 1
-            if tp_dic[tp][7] == 'Визуальный' and tp_dic[tp][8]:
+            if tp_dic[tp][7] == 'Визуальный BD' and tp_dic[tp][8]:
                 n_dic_1_60[tp_dic[tp][3]][5] += tp_dic[tp][5]
                 n_dic_1_60[tp_dic[tp][3]][6] += 1
             if tp_dic[tp][8]:
@@ -896,10 +896,10 @@ for tp in tp_dic.keys():
             if tp_dic[tp][6]:
                 n_dic_1_70[tp_dic[tp][3]][3] += tp_dic[tp][5]
                 n_dic_1_70[tp_dic[tp][3]][4] += 1
-            if tp_dic[tp][7] and tp_dic[tp][7] != 'Визуальный':
+            if tp_dic[tp][7] and tp_dic[tp][7] != 'Визуальный BD':
                 n_dic_1_70[tp_dic[tp][3]][5] += tp_dic[tp][5]
                 n_dic_1_70[tp_dic[tp][3]][6] += 1
-            if tp_dic[tp][7] == 'Визуальный' and tp_dic[tp][8]:
+            if tp_dic[tp][7] == 'Визуальный BD' and tp_dic[tp][8]:
                 n_dic_1_70[tp_dic[tp][3]][5] += tp_dic[tp][5]
                 n_dic_1_70[tp_dic[tp][3]][6] += 1
             if tp_dic[tp][8]:
@@ -921,10 +921,10 @@ for tp in tp_dic.keys():
             if tp_dic[tp][6]:
                 n_dic_2_60[tp_dic[tp][3]][3] += tp_dic[tp][5]
                 n_dic_2_60[tp_dic[tp][3]][4] += 1
-            if tp_dic[tp][7] and tp_dic[tp][7] != 'Визуальный':
+            if tp_dic[tp][7] and tp_dic[tp][7] != 'Визуальный BD':
                 n_dic_2_60[tp_dic[tp][3]][5] += tp_dic[tp][5]
                 n_dic_2_60[tp_dic[tp][3]][6] += 1
-            if tp_dic[tp][7] == 'Визуальный' and tp_dic[tp][8]:
+            if tp_dic[tp][7] == 'Визуальный BD' and tp_dic[tp][8]:
                 n_dic_2_60[tp_dic[tp][3]][5] += tp_dic[tp][5]
                 n_dic_2_60[tp_dic[tp][3]][6] += 1
             if tp_dic[tp][8]:
@@ -941,10 +941,10 @@ for tp in tp_dic.keys():
             if tp_dic[tp][6]:
                 n_dic_2_70[tp_dic[tp][3]][3] += tp_dic[tp][5]
                 n_dic_2_70[tp_dic[tp][3]][4] += 1
-            if tp_dic[tp][7] and tp_dic[tp][7] != 'Визуальный':
+            if tp_dic[tp][7] and tp_dic[tp][7] != 'Визуальный BD':
                 n_dic_2_70[tp_dic[tp][3]][5] += tp_dic[tp][5]
                 n_dic_2_70[tp_dic[tp][3]][6] += 1
-            if tp_dic[tp][7] == 'Визуальный' and tp_dic[tp][8]:
+            if tp_dic[tp][7] == 'Визуальный BD' and tp_dic[tp][8]:
                 n_dic_2_70[tp_dic[tp][3]][5] += tp_dic[tp][5]
                 n_dic_2_70[tp_dic[tp][3]][6] += 1
             if tp_dic[tp][8]:
@@ -967,10 +967,10 @@ for tp in tp_dic.keys():
             if tp_dic[tp][6]:
                 n_dic_4_30[tp_dic[tp][3]][3] += tp_dic[tp][5]
                 n_dic_4_30[tp_dic[tp][3]][4] += 1
-            if tp_dic[tp][7] and tp_dic[tp][7] != 'Визуальный':
+            if tp_dic[tp][7] and tp_dic[tp][7] != 'Визуальный BD':
                 n_dic_4_30[tp_dic[tp][3]][5] += tp_dic[tp][5]
                 n_dic_4_30[tp_dic[tp][3]][6] += 1
-            if tp_dic[tp][7] == 'Визуальный' and tp_dic[tp][8]:
+            if tp_dic[tp][7] == 'Визуальный BD' and tp_dic[tp][8]:
                 n_dic_4_30[tp_dic[tp][3]][5] += tp_dic[tp][5]
                 n_dic_4_30[tp_dic[tp][3]][6] += 1
             if tp_dic[tp][8]:
@@ -987,10 +987,10 @@ for tp in tp_dic.keys():
             if tp_dic[tp][6]:
                 n_dic_4_110[tp_dic[tp][3]][3] += tp_dic[tp][5]
                 n_dic_4_110[tp_dic[tp][3]][4] += 1
-            if tp_dic[tp][7] and tp_dic[tp][7] != 'Визуальный':
+            if tp_dic[tp][7] and tp_dic[tp][7] != 'Визуальный BD':
                 n_dic_4_110[tp_dic[tp][3]][5] += tp_dic[tp][5]
                 n_dic_4_110[tp_dic[tp][3]][6] += 1
-            if tp_dic[tp][7] == 'Визуальный' and tp_dic[tp][8]:
+            if tp_dic[tp][7] == 'Визуальный BD' and tp_dic[tp][8]:
                 n_dic_4_110[tp_dic[tp][3]][5] += tp_dic[tp][5]
                 n_dic_4_110[tp_dic[tp][3]][6] += 1
             if tp_dic[tp][8]:
