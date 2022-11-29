@@ -1198,7 +1198,7 @@ for i, (one, two, three, four, five, six, seven, eight, nine, ten, eleven, twelv
             else:
                 color = cell_format_blue
         except Exception as e:
-            print(e)
+            pass
 
 
     try:
