@@ -354,7 +354,8 @@ for i in sheet_journal_rfi['B2':'AO550000']:
 
 
         if 'сборки технологических трубопроводов в проект' in description_rfi or \
-                'сборки технологических трубопроводов в рамках' in description_rfi:
+                'сборки технологических трубопроводов в рамках' in description_rfi or \
+                'обратной cборки в рамках тест' in description_rfi:
             if 'подтвержд' in comment or 'подтвржд' in comment:
                 if tp_number in tp_dic.keys():
                     tp_dic[tp_number][9] = rfi_number + " ФОП"
