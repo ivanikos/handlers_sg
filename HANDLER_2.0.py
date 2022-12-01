@@ -490,8 +490,10 @@ for i in sheet_ncr['B4':'V55000']:
             if content_remarks_iso:
                 for iso in content_remarks_iso:
                     try:
-                        iso_dic[iso][4] = number_ncr
-                        tp_dic[iso_dic[iso][5]][10] = number_ncr
+                        if number_ncr not in iso_dic[iso][4]:
+                            iso_dic[iso][4] += number_ncr + "/"
+                        if number_ncr not in tp_dic[iso_dic[iso][5]][10]:
+                            tp_dic[iso_dic[iso][5]][10] += number_ncr + "/"
                     except:
                         print(f'Не нашел в словаре изометрию {iso}')
     else:
