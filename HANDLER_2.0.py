@@ -179,8 +179,11 @@ for i in sheet_journal_rfi['B2':'AO550000']:
             if typo in tp_number:
                 tp_number = tp_number.replace(typo, '').strip()
 
-        if 'INTER' in tp_number:
+        if 'INTER' in str(i[2].value):
             tp_number = tp_number.replace('1-00', '').replace('2-00', '').replace('3-00', '').replace('4-00', '')
+            for temp in replace_pattern_2:
+                tp_number = tp_number.replace(temp, '')
+            tp_number = 'INTERFACE ISO'
 
         tp_number = tp_number.strip()
 
@@ -417,7 +420,7 @@ for i in sheet_journal_rfi['B2':'AO550000']:
                             for patt in rep_patt_for_iso:
                                 iso = iso.replace(patt, '')
                                 if iso.strip() in iso_dic.keys():
-                                    iso_dic[iso.strip()][1] = rfi_number
+                                    iso_dic[iso.strip()][1] = rfi_number + ' ФОП'
 
                 if 'теплоизоляционного покрытия согласно изометрическим' in description_rfi:
                     if list_iso:
@@ -425,7 +428,7 @@ for i in sheet_journal_rfi['B2':'AO550000']:
                             for patt in rep_patt_for_iso:
                                 iso = iso.replace(patt, '')
                                 if iso.strip() in iso_dic.keys():
-                                    iso_dic[iso.strip()][0] = rfi_number
+                                    iso_dic[iso.strip()][0] = rfi_number + ' ФОП'
 
 
 
@@ -459,7 +462,7 @@ for i in sheet_journal_rfi['B2':'AO550000']:
                             for patt in rep_patt_for_iso:
                                 iso = iso.replace(patt, '')
                                 if iso.strip() in iso_dic.keys():
-                                    iso_dic[iso.strip()][2] = rfi_number
+                                    iso_dic[iso.strip()][2] = rfi_number + ' ФОП'
 
 
 
