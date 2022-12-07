@@ -273,6 +273,15 @@ for i in sheet_journal_rfi['B2':'AO550000']:
                             isometric = isometric.replace(patt, '')
                             if f'{isometric.strip()}-{tp_number}' in isotp_dic.keys():
                                 isotp_dic[f'{isometric.strip()}-{tp_number}'][9] = rfi_number + " ФОП"
+            if 'выдерж' in comment:
+                if tp_number in tp_dic.keys():
+                    tp_dic[tp_number][7] = rfi_number + " ФОП"
+                if list_iso:
+                    for isometric in list_iso:
+                        for patt in rep_patt_for_iso:
+                            isometric = isometric.replace(patt, '')
+                            if f'{isometric.strip()}-{tp_number}' in isotp_dic.keys():
+                                isotp_dic[f'{isometric.strip()}-{tp_number}'][9] = rfi_number + " ФОП"
 
         if 'испыт' and 'рочност' in description_rfi:
             if 'подтвержд' in comment or 'подтвржд' in comment:
@@ -285,6 +294,15 @@ for i in sheet_journal_rfi['B2':'AO550000']:
                             if f'{isometric}-{tp_number}' in isotp_dic.keys():
                                 isotp_dic[f'{isometric}-{tp_number}'][9] = rfi_number + " ФОП"
             if 'зафиксирова' in comment:
+                if tp_number in tp_dic.keys():
+                    tp_dic[tp_number][7] = rfi_number + " ФОП"
+                if list_iso:
+                    for isometric in list_iso:
+                        for patt in rep_patt_for_iso:
+                            isometric = isometric.replace(patt, '')
+                            if f'{isometric}-{tp_number}' in isotp_dic.keys():
+                                isotp_dic[f'{isometric}-{tp_number}'][9] = rfi_number + " ФОП"
+            if 'выдерж' in comment:
                 if tp_number in tp_dic.keys():
                     tp_dic[tp_number][7] = rfi_number + " ФОП"
                 if list_iso:
