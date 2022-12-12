@@ -308,8 +308,8 @@ for i, (one, two, three, four, five, six, seven, eight, nine) in enumerate(summa
     if one == 'Чертеж по ГОСТ':
         color = cell_format_hat
         color.set_bold('bold')
-    # elif seven:
-    #     color = cell_format_green
+    elif 'CC' in seven:
+        color = cell_format_green
     else:
         color = cell_format_blue
     try:
