@@ -261,9 +261,9 @@ def check_rfi_journal(db_tracing: dict, short_db: dict):
 
 
 
-db_tracing = read_db()
-
-summary_tracing = check_rfi_journal(db_tracing[0], db_tracing[1])
+# db_tracing = read_db()
+#
+# summary_tracing = check_rfi_journal(db_tracing[0], db_tracing[1])
 
 
 # for key in summary_tracing.keys():
@@ -271,69 +271,74 @@ summary_tracing = check_rfi_journal(db_tracing[0], db_tracing[1])
 #           summary_tracing[key][4], summary_tracing[key][5])
 
 
+def create_summary_tracing():
+    db_tracing = read_db()
 
-summary_sputnik = [['Чертеж по ГОСТ', 'Чертеж', 'Установка', 'Длина', 'RFI  ERECTION', 'RFI TEST',
-                    'RFI BLOWING', 'RFI ВАТА', 'RFI Металл']]
-
-
-for key in summary_tracing.keys():
-    summary_sputnik.append([key, summary_tracing[key][0], summary_tracing[key][1], summary_tracing[key][2],
-                            summary_tracing[key][3], summary_tracing[key][4], summary_tracing[key][5],
-                            summary_tracing[key][6], summary_tracing[key][7]])
-
-"""
-Запись в файл сводки
-
-"""
-workbook_summary_sputnik = xlsxwriter.Workbook(f'Сводка по теплоспутникам по ФАЗАМ 1, 2, 3 на {datetime.datetime.now().strftime("%d.%m.%Y")}.xlsx')
-
-cell_format_green = workbook_summary_sputnik.add_format()
-cell_format_green.set_bg_color('#98FB98')
-cell_format_blue = workbook_summary_sputnik.add_format()
-cell_format_blue.set_bg_color('#B0E0E6')
-cell_format_hat = workbook_summary_sputnik.add_format()
-cell_format_hat.set_bg_color('#F0E68C')
-cell_format_date = workbook_summary_sputnik.add_format()
-cell_format_date.set_font_size(font_size=14)
+    summary_tracing = check_rfi_journal(db_tracing[0], db_tracing[1])
 
 
-ws11 = workbook_summary_sputnik.add_worksheet('Сводка по спутникам')
-ws11.set_column(0, 1, 38)
-ws11.set_column(2, 3, 12)
-ws11.set_column(4, 9, 22)
-ws11.autofilter('A1:J2000')
+    summary_sputnik = [['Чертеж по ГОСТ', 'Чертеж', 'Установка', 'Длина', 'RFI  ERECTION', 'RFI TEST',
+                        'RFI BLOWING', 'RFI ВАТА', 'RFI Металл']]
 
 
-for i, (one, two, three, four, five, six, seven, eight, nine) in enumerate(summary_sputnik, start=1):
-    if one == 'Чертеж по ГОСТ':
-        color = cell_format_hat
-        color.set_bold('bold')
-    elif 'CC' in seven:
-        color = cell_format_green
-    else:
-        color = cell_format_blue
-    try:
-        color.set_border(style=1)
-        color.set_text_wrap(text_wrap=1)
-    except:
-        pass
-    ws11.write(f'A{i}', one, color)
-    ws11.write(f'B{i}', two, color)
-    ws11.write(f'C{i}', three, color)
-    ws11.write(f'D{i}', four, color)
-    ws11.write(f'E{i}', five, color)
-    ws11.write(f'F{i}', six, color)
-    ws11.write(f'G{i}', seven, color)
-    ws11.write(f'H{i}', eight, color)
-    ws11.write(f'I{i}', nine, color)
-    # ws11.write(f'J{i}', ten, color)
+    for key in summary_tracing.keys():
+        summary_sputnik.append([key, summary_tracing[key][0], summary_tracing[key][1], summary_tracing[key][2],
+                                summary_tracing[key][3], summary_tracing[key][4], summary_tracing[key][5],
+                                summary_tracing[key][6], summary_tracing[key][7]])
+
+    """
+    Запись в файл сводки
+    
+    """
+    workbook_summary_sputnik = xlsxwriter.Workbook(f'Сводка по теплоспутникам по ФАЗАМ 1, 2, 3 на {datetime.datetime.now().strftime("%d.%m.%Y")}.xlsx')
+
+    cell_format_green = workbook_summary_sputnik.add_format()
+    cell_format_green.set_bg_color('#98FB98')
+    cell_format_blue = workbook_summary_sputnik.add_format()
+    cell_format_blue.set_bg_color('#B0E0E6')
+    cell_format_hat = workbook_summary_sputnik.add_format()
+    cell_format_hat.set_bg_color('#F0E68C')
+    cell_format_date = workbook_summary_sputnik.add_format()
+    cell_format_date.set_font_size(font_size=14)
+
+
+    ws11 = workbook_summary_sputnik.add_worksheet('Сводка по спутникам')
+    ws11.set_column(0, 1, 38)
+    ws11.set_column(2, 3, 12)
+    ws11.set_column(4, 9, 22)
+    ws11.autofilter('A1:J2000')
+
+
+    for i, (one, two, three, four, five, six, seven, eight, nine) in enumerate(summary_sputnik, start=1):
+        if one == 'Чертеж по ГОСТ':
+            color = cell_format_hat
+            color.set_bold('bold')
+        elif 'CC' in seven:
+            color = cell_format_green
+        else:
+            color = cell_format_blue
+        try:
+            color.set_border(style=1)
+            color.set_text_wrap(text_wrap=1)
+        except:
+            pass
+        ws11.write(f'A{i}', one, color)
+        ws11.write(f'B{i}', two, color)
+        ws11.write(f'C{i}', three, color)
+        ws11.write(f'D{i}', four, color)
+        ws11.write(f'E{i}', five, color)
+        ws11.write(f'F{i}', six, color)
+        ws11.write(f'G{i}', seven, color)
+        ws11.write(f'H{i}', eight, color)
+        ws11.write(f'I{i}', nine, color)
+        # ws11.write(f'J{i}', ten, color)
 
 
 
-workbook_summary_sputnik.close()
+    workbook_summary_sputnik.close()
 
-print('Done')
+    print('Done')
 
-print('Файл по спутникам создан.')
+    print('Файл по спутникам создан.')
 
 

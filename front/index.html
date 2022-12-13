@@ -98,12 +98,23 @@
 
 
 <script>
-let btn = document.querySelector("#create_btn");
+let btn = document.querySelector("#btn_create_summary");
         btn.addEventListener("click", sendData);
 
         async function sendData() {
-            await eel.create_akt(path_tp, path_akt);
+            await eel.start_handler();
         }
+let btn = document.querySelector("#btn_create_sum_tracing");
+        btn.addEventListener("click", sendData);
 
+        async function sendData() {
+            await eel.create_summary_tracing();
+        }
+let btn = document.querySelector("#btn_create_nkdk");
+        btn.addEventListener("click", sendData);
+
+        async function sendData() {
+            await eel.start_handler_nkdkd();
+        }
 
 </script>
