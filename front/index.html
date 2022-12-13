@@ -78,17 +78,17 @@
 <div class="start_button">
 
     <div>
-        <button type="button" class="btn btn-outline-info">Сформировать сводку по ФАЗАМ 1, 2, 3.</button>
+        <button type="button" id="btn_create_summary" class="btn btn-outline-info">Сформировать сводку по ФАЗАМ 1, 2, 3.</button>
     </div>
 
     <div>
         <br>
-        <button type="button" class="btn btn-outline-info">Сформировать сводку по теплоспутникам по ФАЗАМ 1, 2, 3.</button>
+        <button type="button" id="btn_create_sum_tracing" class="btn btn-outline-info">Сформировать сводку по теплоспутникам по ФАЗАМ 1, 2, 3.</button>
     </div>
 
     <div>
         <br>
-        <button type="button" class="btn btn-outline-info">Сформировать сводку по % НК и дублирующему НК.</button>
+        <button type="button" id="btn_create_nkdk" class="btn btn-outline-info">Сформировать сводку по % НК и дублирующему НК.</button>
     </div>
 
 </div>
@@ -98,50 +98,12 @@
 
 
 <script>
-formUploader = {
+let btn = document.querySelector("#create_btn");
+        btn.addEventListener("click", sendData);
 
-    prepareForm: function(form){
-
-        // Каждая значимая кнопка формы при клике должна создать одноименное hidden поле,
-        // чтобы на сервер передалась информация о том, какая кнопка была кликнута
-        var allFormFields = form.getElementsByTagName('input');
-        for (var i=0; i<allFormFields.length; i++){
-            if(allFormFields[i].type == 'submit' && allFormFields[i].name){
-                allFormFields[i].onclick = function(){
-                    formUploader.createHiddenField(this);
-                }
-            }
+        async function sendData() {
+            await eel.create_akt(path_tp, path_akt);
         }
 
-        // Визуализируем форму как отправляемую на сервер на событии onsubmit
-        // (в т.ч. делаем все кнопки неактивными)
-        form.onsubmit = function(){
-            formUploader.setFormLoading(form);
-        }
 
-        // Очищаем визуализацию формы (в т.ч. делаем все кнопки вновь активными)
-        // при уходе со страницы - по глобальному событию onunload
-        window.onunload = function(){
-            formUploader.clearFormLoading(form)
-        }
-    },
-
-    setFormLoading: function(form){
-        // Создаем визуализацию загрузки формы и делаем все кнопки неактивными
-        // disabled=true;
-    },
-
-    clearFormLoading: function(form){
-        // Очищаем форму от визуализации загрузки и возвращаем кнопки в активное состояние
-        // disabled=false;
-    },
-
-    createHiddenField: function(button){
-        var input = document.createElement('input');
-        input.type = 'hidden';
-        input.name = button.name;
-        input.value = button.value;
-        button.parentNode.insertBefore(input, button);
-    }
-}
 </script>
