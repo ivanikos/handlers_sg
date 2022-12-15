@@ -42,17 +42,6 @@ def create_ll_dic():
 
 
 
-# sorting_journal = pd.read_excel(journal_rt_sg)
-# sorting_journal = sorting_journal.sort_values(by='Дата РК', ascending=True)
-# sorting_journal.to_excel('Журнал P2.xlsx')
-#
-# sorting_journal = pd.read_excel(journal_ut_sg, sheet_name='P2')
-# sorting_journal = sorting_journal.sort_values('Дата УЗК', ascending=True)
-# sorting_journal.to_excel('Журнал УЗК.xlsx')
-#
-# print('Журналы НК СГ отсортированы.')
-
-
 def check_sg_journals():
     # Журнал РК
     sg_control_dic = {}
@@ -199,157 +188,157 @@ def check_wl_p2():
     print('WL_2 закончил')
     return line_check_p2
 
+def create_summary_nkdk():
+    lines_p1 = check_wl_p1()
+    tp_lines_p2 = check_wl_p2()
 
-lines_p1 = check_wl_p1()
-tp_lines_p2 = check_wl_p2()
+    for i in lines_p1.keys():
+        ll_dic = create_ll_dic()
+        status_sg = 'Недобор'
 
-for i in lines_p1.keys():
-    ll_dic = create_ll_dic()
-    status_sg = 'Недобор'
-
-    try:
-        line_control_percent = float(ll_dic[i][3])
-        sg_control_percent = float(ll_dic[i][3]) * 0.1
-
-
-        need_control_po = math.ceil(float(lines_p1[i][0]) * line_control_percent)
-        need_control_sg = math.ceil(float(lines_p1[i][0]) * sg_control_percent)
-
-        summ_control_po = lines_p1[i][1]
-        summ_control_sg = lines_p1[i][2]
-
-        if summ_control_sg >= need_control_sg:
-            status_sg = 'OK'
-
-        summary_WL_phase_1.append([i, line_control_percent, lines_p1[i][0], need_control_po, summ_control_po,
-                                   need_control_sg, summ_control_sg, status_sg])
-
-    except:
-        print(f'Не нашел в лайн-листе линию  {i}')
-
-for i in tp_lines_p2.keys():
-    ll_dic = create_ll_dic()
-    status_sg = 'Недобор'
-
-    line = i.split("/")[0]
-    testpackage_number = i.split("/")[1]
-    unit = tp_lines_p2[i][3]
-
-    try:
-        line_control_percent = float(ll_dic[line][3])
-        sg_control_percent = float(ll_dic[line][3]) * 0.1
-
-        need_control_po = math.ceil(float(tp_lines_p2[i][0]) * line_control_percent)
-        need_control_sg = math.ceil(float(tp_lines_p2[i][0]) * sg_control_percent)
-
-        summ_control_po = tp_lines_p2[i][1]
-        summ_control_sg = tp_lines_p2[i][2]
-
-        if summ_control_sg >= need_control_sg:
-            status_sg = 'OK'
-
-        summary_WL_phase_2.append([line, testpackage_number, unit, line_control_percent, tp_lines_p2[i][0],
-                                   need_control_po, summ_control_po,
-                                   need_control_sg, summ_control_sg, status_sg])
-    except:
-        print(f'Не нашел в лайн-листе линию  {i}')
-
-
-#Запись в файл выходных данных
-workbook_wl = xlsxwriter.Workbook(f'Сводка по %ДК СГ на  {dt.now().strftime("%d.%m.%Y")}.xlsx')
-ws = workbook_wl.add_worksheet('Phase_1')
-
-ws.set_column(0, 7, 13)
-ws.autofilter(f'A1:I500000')
-
-
-cell_format_green = workbook_wl.add_format()
-cell_format_green.set_bg_color('#99FF99')
-cell_format_blue = workbook_wl.add_format()
-cell_format_blue.set_bg_color('#99CCCC')
-cell_format_hat = workbook_wl.add_format()
-cell_format_hat.set_bg_color('#FF9966')
-
-for i, (short_tp, number_line, number_iso, number_joint, percent_control, number_ut, res_ut,
-        number_xr) in enumerate(summary_WL_phase_1, start=1):
-
-    if short_tp == 'Линия':
-        color = cell_format_hat
-        color.set_bold('bold')
-
-    else:
         try:
-            if number_xr == 'OK':
-                color = cell_format_green
-            else:
-                color = cell_format_blue
-        except Exception as e:
-            print(e)
+            line_control_percent = float(ll_dic[i][3])
+            sg_control_percent = float(ll_dic[i][3]) * 0.1
 
 
-    try:
-        color.set_border(style=1)
-        color.set_text_wrap(text_wrap=1)
-    except:
-        pass
+            need_control_po = math.ceil(float(lines_p1[i][0]) * line_control_percent)
+            need_control_sg = math.ceil(float(lines_p1[i][0]) * sg_control_percent)
 
-    ws.write(f'A{i}', short_tp, color)
-    ws.write(f'B{i}', number_line, color)
-    ws.write(f'C{i}', number_iso, color)
-    ws.write(f'D{i}', number_joint, color)
-    ws.write(f'E{i}', percent_control, color)
-    ws.write(f'F{i}', number_ut, color)
-    ws.write(f'G{i}', res_ut, color)
-    ws.write(f'H{i}', number_xr, color)
+            summ_control_po = lines_p1[i][1]
+            summ_control_sg = lines_p1[i][2]
 
-ws2 = workbook_wl.add_worksheet('Phase_2_3')
+            if summ_control_sg >= need_control_sg:
+                status_sg = 'OK'
 
-ws2.set_column(0, 0, 13)
-ws2.set_column(1, 1, 30)
-ws2.set_column(2, 9, 13)
+            summary_WL_phase_1.append([i, line_control_percent, lines_p1[i][0], need_control_po, summ_control_po,
+                                       need_control_sg, summ_control_sg, status_sg])
 
-ws2.autofilter(f'A1:J100000')
+        except:
+            print(f'Не нашел в лайн-листе линию  {i}')
 
-cell_form = workbook_wl.add_format()
-cell_form.set_text_wrap(text_wrap=1)
+    for i in tp_lines_p2.keys():
+        ll_dic = create_ll_dic()
+        status_sg = 'Недобор'
 
-for i, (short_tp, number_line, number_iso, number_joint, percent_control, number_ut, res_ut,
-        number_xr, nine, ten) in enumerate(summary_WL_phase_2, start=1):
+        line = i.split("/")[0]
+        testpackage_number = i.split("/")[1]
+        unit = tp_lines_p2[i][3]
 
-    if short_tp == 'Линия':
-        color = cell_format_hat
-        color.set_bold('bold')
-
-    else:
         try:
-            if ten == 'OK':
-                color = cell_format_green
-            else:
-                color = cell_format_blue
-        except Exception as e:
-            print(e)
+            line_control_percent = float(ll_dic[line][3])
+            sg_control_percent = float(ll_dic[line][3]) * 0.1
+
+            need_control_po = math.ceil(float(tp_lines_p2[i][0]) * line_control_percent)
+            need_control_sg = math.ceil(float(tp_lines_p2[i][0]) * sg_control_percent)
+
+            summ_control_po = tp_lines_p2[i][1]
+            summ_control_sg = tp_lines_p2[i][2]
+
+            if summ_control_sg >= need_control_sg:
+                status_sg = 'OK'
+
+            summary_WL_phase_2.append([line, testpackage_number, unit, line_control_percent, tp_lines_p2[i][0],
+                                       need_control_po, summ_control_po,
+                                       need_control_sg, summ_control_sg, status_sg])
+        except:
+            print(f'Не нашел в лайн-листе линию  {i}')
 
 
-    try:
-        color.set_border(style=1)
-        color.set_text_wrap(text_wrap=1)
-    except:
-        pass
+    #Запись в файл выходных данных
+    workbook_wl = xlsxwriter.Workbook(f'Сводка по %ДК СГ на  {dt.now().strftime("%d.%m.%Y")}.xlsx')
+    ws = workbook_wl.add_worksheet('Phase_1')
 
-    ws2.write(f'A{i}', short_tp, color)
-    ws2.write(f'B{i}', number_line, color)
-    ws2.write(f'C{i}', number_iso, color)
-    ws2.write(f'D{i}', number_joint, color)
-    ws2.write(f'E{i}', percent_control, color)
-    ws2.write(f'F{i}', number_ut, color)
-    ws2.write(f'G{i}', res_ut, color)
-    ws2.write(f'H{i}', number_xr, color)
-    ws2.write(f'I{i}', nine, color)
-    ws2.write(f'J{i}', ten, color)
+    ws.set_column(0, 7, 13)
+    ws.autofilter(f'A1:I500000')
 
 
-workbook_wl.close()
-print('Всё записал.')
+    cell_format_green = workbook_wl.add_format()
+    cell_format_green.set_bg_color('#99FF99')
+    cell_format_blue = workbook_wl.add_format()
+    cell_format_blue.set_bg_color('#99CCCC')
+    cell_format_hat = workbook_wl.add_format()
+    cell_format_hat.set_bg_color('#FF9966')
+
+    for i, (short_tp, number_line, number_iso, number_joint, percent_control, number_ut, res_ut,
+            number_xr) in enumerate(summary_WL_phase_1, start=1):
+
+        if short_tp == 'Линия':
+            color = cell_format_hat
+            color.set_bold('bold')
+
+        else:
+            try:
+                if number_xr == 'OK':
+                    color = cell_format_green
+                else:
+                    color = cell_format_blue
+            except Exception as e:
+                print(e)
+
+
+        try:
+            color.set_border(style=1)
+            color.set_text_wrap(text_wrap=1)
+        except:
+            pass
+
+        ws.write(f'A{i}', short_tp, color)
+        ws.write(f'B{i}', number_line, color)
+        ws.write(f'C{i}', number_iso, color)
+        ws.write(f'D{i}', number_joint, color)
+        ws.write(f'E{i}', percent_control, color)
+        ws.write(f'F{i}', number_ut, color)
+        ws.write(f'G{i}', res_ut, color)
+        ws.write(f'H{i}', number_xr, color)
+
+    ws2 = workbook_wl.add_worksheet('Phase_2_3')
+
+    ws2.set_column(0, 0, 13)
+    ws2.set_column(1, 1, 30)
+    ws2.set_column(2, 9, 13)
+
+    ws2.autofilter(f'A1:J100000')
+
+    cell_form = workbook_wl.add_format()
+    cell_form.set_text_wrap(text_wrap=1)
+
+    for i, (short_tp, number_line, number_iso, number_joint, percent_control, number_ut, res_ut,
+            number_xr, nine, ten) in enumerate(summary_WL_phase_2, start=1):
+
+        if short_tp == 'Линия':
+            color = cell_format_hat
+            color.set_bold('bold')
+
+        else:
+            try:
+                if ten == 'OK':
+                    color = cell_format_green
+                else:
+                    color = cell_format_blue
+            except Exception as e:
+                print(e)
+
+
+        try:
+            color.set_border(style=1)
+            color.set_text_wrap(text_wrap=1)
+        except:
+            pass
+
+        ws2.write(f'A{i}', short_tp, color)
+        ws2.write(f'B{i}', number_line, color)
+        ws2.write(f'C{i}', number_iso, color)
+        ws2.write(f'D{i}', number_joint, color)
+        ws2.write(f'E{i}', percent_control, color)
+        ws2.write(f'F{i}', number_ut, color)
+        ws2.write(f'G{i}', res_ut, color)
+        ws2.write(f'H{i}', number_xr, color)
+        ws2.write(f'I{i}', nine, color)
+        ws2.write(f'J{i}', ten, color)
+
+
+    workbook_wl.close()
+    print('Всё записал.')
 
 
 
