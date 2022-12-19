@@ -11,9 +11,6 @@ import pandas as pd
 # home laptop
 directory_dbs_files = os.getcwd() + "\\dbs"
 
-# work laptop
-# directory_dbs_files = r'C:\Users\ignatenkoia\Desktop\work\GIT_PROJECTS\handlers_sg\dbs'
-
 
 
 file_db_isotp = '\\iso_tp_db.csv'
