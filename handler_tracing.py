@@ -261,9 +261,9 @@ def check_rfi_journal(db_tracing: dict, short_db: dict):
 
 
 
-# db_tracing = read_db()
-#
-# summary_tracing = check_rfi_journal(db_tracing[0], db_tracing[1])
+db_tracing = read_db()
+
+summary_tracing = check_rfi_journal(db_tracing[0], db_tracing[1])
 
 
 # for key in summary_tracing.keys():
@@ -342,3 +342,4 @@ def create_summary_tracing():
     print('Файл по спутникам создан.')
 
 
+create_summary_tracing()
