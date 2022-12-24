@@ -48,7 +48,8 @@
         margin: 0 auto;
       }
       .form-label{
-        color: #fffffe;
+        color: #007bbc;
+        margin-left: 10px;
        }
        .start_button {
        float: none;
@@ -58,6 +59,41 @@
        }
        .img_logo {
        float: left;
+       }
+        .box {
+        background-color: #1f2429;
+        font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+        }
+      #path_akt {
+        padding: 10px;
+        margin: 10px;
+        background-color: #252e38;
+        color: #fff;
+        outline: 0;
+        border: 0;
+        border-bottom: 2px solid #2484f2;
+        font-size: 1em;
+        width: calc(100% - 20px);
+        box-sizing:border-box;
+        }
+      .form-control {
+            display: inline-block;
+        }
+
+        .test {
+        font-size: 18px;
+        color: #007bbc;
+        text-align: center;
+        font-family: Helvetica, sans-serif;
+        font-weight: lighter;
+       }
+
+       .output_inf {
+        float: none;
+        width: 100%;
+        text-align: center;
+        font-size: 10px;
+        padding-top: 25px;
        }
 
     </style>
@@ -70,10 +106,14 @@
 </div>
 
 
-<!--<div class="mb-3">-->
-<!--  <label for="formFile" class="form-label">Введите путь к директории тестпакета: </label>-->
-<!--  <input class="form-control" type="file" id="formFile" webkitdirectory = "true" directory>-->
-<!--</div>-->
+
+<div class="box" id="pathes">
+        <form action="#">
+            <label class="form-label">Введите путь куда сохранить сводку</label>
+            <input type="text" id="path_akt" placeholder="Введите путь куда сохранить сводку"
+                   value="C:\Users\IgnatenkoIA\Desktop\">
+        </form>
+</div>
 
 <div class="start_button">
 
@@ -93,28 +133,66 @@
 
 </div>
 
+<div class="output_inf" id="aperture">
+    <p class="test" id="test"></p>
+
+</div>
+
+
 </body>
 </html>
 
 
 <script>
-let btn = document.querySelector("#btn_create_summary");
-        btn.addEventListener("click", sendData);
+        document.getElementById("btn_create_summary").onclick = function sendData() {
+                $('#btn_create_summary').attr('disabled', true);
+                $('#btn_create_sum_tracing').attr('disabled', true);
+                $('#btn_create_nkdk').attr('disabled', true);
 
-        async function sendData() {
-            await eel.start_handler();
-        }
-let btn = document.querySelector("#btn_create_sum_tracing");
-        btn.addEventListener("click", sendData);
+                document.getElementById("test").innerHTML = '<img src="aperture_150.gif">';
 
-        async function sendData() {
-            await eel.create_summary_tracing();
-        }
-let btn = document.querySelector("#btn_create_nkdk");
-        btn.addEventListener("click", sendData);
+                let path_akt = document.querySelector("#path_akt").value;
 
-        async function sendData() {
-            await eel.start_handler_nkdkd();
-        }
+                eel.start_handler(path_akt)((res) => {
+                document.getElementById("test").innerHTML = res;
+
+                $('#btn_create_summary').attr('disabled', false);
+                $('#btn_create_sum_tracing').attr('disabled', false);
+                $('#btn_create_nkdk').attr('disabled', false);
+            })}
+
+        document.getElementById("btn_create_sum_tracing").onclick = function sendDataTrace() {
+                $('#btn_create_summary').attr('disabled', true);
+                $('#btn_create_sum_tracing').attr('disabled', true);
+                $('#btn_create_nkdk').attr('disabled', true);
+
+                document.getElementById("test").innerHTML = '<img src="aperture_150.gif">';
+
+                let path_akt = document.querySelector("#path_akt").value;
+
+                eel.start_handler_tracing(path_akt)((res) => {
+                document.getElementById("test").innerHTML = res;
+
+                $('#btn_create_summary').attr('disabled', false);
+                $('#btn_create_sum_tracing').attr('disabled', false);
+                $('#btn_create_nkdk').attr('disabled', false);
+            })}
+
+        document.getElementById("btn_create_nkdk").onclick = function sendDataNK() {
+                $('#btn_create_summary').attr('disabled', true);
+                $('#btn_create_sum_tracing').attr('disabled', true);
+                $('#btn_create_nkdk').attr('disabled', true);
+
+                document.getElementById("test").innerHTML = '<img src="aperture_150.gif">';
+
+                let path_akt = document.querySelector("#path_akt").value;
+
+                eel.start_handler_nkdkd(path_akt)((res) => {
+                document.getElementById("test").innerHTML = res;
+
+                $('#btn_create_summary').attr('disabled', false);
+                $('#btn_create_sum_tracing').attr('disabled', false);
+                $('#btn_create_nkdk').attr('disabled', false);
+            })}
 
 </script>

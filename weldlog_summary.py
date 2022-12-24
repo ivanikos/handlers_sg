@@ -4,10 +4,9 @@ import math
 import openpyxl as xl
 import xlsxwriter
 from datetime import datetime as dt
-import pandas as pd
 
 
-print('start')
+
 
 
 journal_folder = os.getcwd() + "\\out_files_for_dbs\\"
@@ -83,10 +82,11 @@ def check_sg_journals():
     return sg_control_dic
 
 
-check_sg_control = check_sg_journals()
+
 
 # Check WeldLog'а Phase 1-----------------
 def check_wl_p1():
+    check_sg_control = check_sg_journals()
     wb_WL = xl.load_workbook(wl_phase_1)
     sheet = wb_WL['WELDLOG']
 
@@ -131,6 +131,7 @@ def check_wl_p1():
 
 # Check WeldLog'а Phase 2-----------------
 def check_wl_p2():
+    check_sg_control = check_sg_journals()
     wb_WL = xl.load_workbook(wl_phase_23)
     sheet = wb_WL['WELDLOG']
 
@@ -188,7 +189,7 @@ def check_wl_p2():
     print('WL_2 закончил')
     return line_check_p2
 
-def create_summary_nkdk():
+def create_summary_nkdk(path):
     lines_p1 = check_wl_p1()
     tp_lines_p2 = check_wl_p2()
 
@@ -245,7 +246,7 @@ def create_summary_nkdk():
 
 
     #Запись в файл выходных данных
-    workbook_wl = xlsxwriter.Workbook(f'Сводка по %ДК СГ на  {dt.now().strftime("%d.%m.%Y")}.xlsx')
+    workbook_wl = xlsxwriter.Workbook(f'{path}Сводка по %ДК СГ на  {dt.now().strftime("%d.%m.%Y")}.xlsx')
     ws = workbook_wl.add_worksheet('Phase_1')
 
     ws.set_column(0, 7, 13)
@@ -339,7 +340,6 @@ def create_summary_nkdk():
 
     workbook_wl.close()
     print('Всё записал.')
-
 
 
 

@@ -261,17 +261,7 @@ def check_rfi_journal(db_tracing: dict, short_db: dict):
 
 
 
-db_tracing = read_db()
-
-summary_tracing = check_rfi_journal(db_tracing[0], db_tracing[1])
-
-
-# for key in summary_tracing.keys():
-#     print(key, summary_tracing[key][0], summary_tracing[key][1], summary_tracing[key][2], summary_tracing[key][3],
-#           summary_tracing[key][4], summary_tracing[key][5])
-
-
-def create_summary_tracing():
+def create_summary_tracing(path):
     db_tracing = read_db()
 
     summary_tracing = check_rfi_journal(db_tracing[0], db_tracing[1])
@@ -290,7 +280,7 @@ def create_summary_tracing():
     Запись в файл сводки
     
     """
-    workbook_summary_sputnik = xlsxwriter.Workbook(f'Сводка по теплоспутникам по ФАЗАМ 1, 2, 3 на {datetime.datetime.now().strftime("%d.%m.%Y")}.xlsx')
+    workbook_summary_sputnik = xlsxwriter.Workbook(f'{path}Сводка по теплоспутникам по ФАЗАМ 1, 2, 3 на {datetime.datetime.now().strftime("%d.%m.%Y")}.xlsx')
 
     cell_format_green = workbook_summary_sputnik.add_format()
     cell_format_green.set_bg_color('#98FB98')
@@ -342,4 +332,3 @@ def create_summary_tracing():
     print('Файл по спутникам создан.')
 
 
-create_summary_tracing()
