@@ -159,7 +159,8 @@ def start_handler(path):
                 r'YMT-\d-\d\d\d-HP-\d\d\d\d\d\d-\d\d[A-Z]-\d\d[A-Z]|YMT-\d-\d\d\d-HP-\d\d\d\d\d\d-\d\d-\d\d[A-Z]|'
                 r'YMT-\d-\d\d\d-HP-\d\d\d\d\d\d-\d\d[A-Z]-\d\d|'
                 r'YMT-\d-\d\d-HP-\d\d\d\d\d\d-\d\d[A-Z]-\d\d[A-Z]|YMT-\d-\d\d-HP-\d\d\d\d\d\d-\d\d[A-Z]-\d\d|'
-                r'YMT-\d-\d\d-HP-\d\d\d\d\d\d-\d\d-\d\d[A-Z]|YMT-\d-\d\d-HP-\d\d\d\d\d\d-\d\d-\d\d|',
+                r'YMT-\d-\d\d-HP-\d\d\d\d\d\d-\d\d-\d\d[A-Z]|YMT-\d-\d\d-HP-\d\d\d\d\d\d-\d\d-\d\d\d|'
+                r'YMT-\d-\d\d-HP-\d\d\d\d\d\d-\d\d-\d\d',
                 tp_number)
             if re_tp:
                 tp_number = re_tp[0]
@@ -1567,3 +1568,5 @@ def start_handler(path):
     workbook_summary.close()
 
     print('Всё записал.')
+
+# start_handler(r"C:\Users\IgnatenkoIA\Desktop\\")
