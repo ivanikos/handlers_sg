@@ -121,7 +121,7 @@ def start_handler(path):
 
     # Проверка Журнал заявок АИС Р2 ФАЗА 1, 2, 3-------------------------------------
     df = pd.read_excel('Журнал заявок общий.xlsx', engine='openpyxl')
-    df = df.sort_values(by='Дата подачи / Date of submission', ascending=True)
+    df = df.sort_values(by='Дата назначения инспекции / Date of scheduled inspection', ascending=True)
     df.to_excel('Журнал заявок общий.xlsx', index=0)
 
     print('Журнал заявок отсортирован по дате отработки инспекции.')
@@ -159,8 +159,7 @@ def start_handler(path):
                 r'YMT-\d-\d\d\d-HP-\d\d\d\d\d\d-\d\d[A-Z]-\d\d[A-Z]|YMT-\d-\d\d\d-HP-\d\d\d\d\d\d-\d\d-\d\d[A-Z]|'
                 r'YMT-\d-\d\d\d-HP-\d\d\d\d\d\d-\d\d[A-Z]-\d\d|'
                 r'YMT-\d-\d\d-HP-\d\d\d\d\d\d-\d\d[A-Z]-\d\d[A-Z]|YMT-\d-\d\d-HP-\d\d\d\d\d\d-\d\d[A-Z]-\d\d|'
-                r'YMT-\d-\d\d-HP-\d\d\d\d\d\d-\d\d-\d\d[A-Z]|YMT-\d-\d\d-HP-\d\d\d\d\d\d-\d\d-\d\d\d|'
-                r'YMT-\d-\d\d-HP-\d\d\d\d\d\d-\d\d-\d\d',
+                r'YMT-\d-\d\d-HP-\d\d\d\d\d\d-\d\d-\d\d[A-Z]|YMT-\d-\d\d-HP-\d\d\d\d\d\d-\d\d-\d\d|',
                 tp_number)
             if re_tp:
                 tp_number = re_tp[0]
@@ -1568,5 +1567,3 @@ def start_handler(path):
     workbook_summary.close()
 
     print('Всё записал.')
-
-# start_handler(r"C:\Users\IgnatenkoIA\Desktop\\")
