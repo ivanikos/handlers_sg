@@ -139,27 +139,26 @@ def start_handler(path):
                          '(T.T.ERECTION)', '(T.T.TEST)', '(T.T.AIR BLOWING)', '(T.T.REINSTATEMENT)']
 
 
-    for i in sheet_journal_rfi['B2':'AO550000']:
+    for i in sheet_journal_rfi['B2':'AT550000']:
         if i[0].value:
             rfi_number = str(i[1].value).strip()
             tp_number = str(i[2].value).strip().replace('-HT', '').replace('-VT', '').replace('-PT', '')
             pkk = str(i[4].value).strip()
 
-            description_rfi = str(i[16].value)
-            violation = str(i[35].value)
-            name_insp = str(i[26].value)
+            description_rfi = str(i[18].value)
+            violation = str(i[39].value)
             list_iso = str(i[8].value).replace(' ', '').split(';')
-            volume_m = re.sub(r'[^0-9.]', '', str(i[18].value))
-            category_cancelled = str(i[31].value).strip()
-            comment = str(i[39].value)
+            category_cancelled = str(i[34].value).strip()
+            comment = str(i[44].value)
 
-            date_of_submissions = str(i[10].value)
+            date_of_submissions = str(i[13].value)
 
             re_tp = re.findall(
                 r'YMT-\d-\d\d\d-HP-\d\d\d\d\d\d-\d\d[A-Z]-\d\d[A-Z]|YMT-\d-\d\d\d-HP-\d\d\d\d\d\d-\d\d-\d\d[A-Z]|'
                 r'YMT-\d-\d\d\d-HP-\d\d\d\d\d\d-\d\d[A-Z]-\d\d|'
                 r'YMT-\d-\d\d-HP-\d\d\d\d\d\d-\d\d[A-Z]-\d\d[A-Z]|YMT-\d-\d\d-HP-\d\d\d\d\d\d-\d\d[A-Z]-\d\d|'
-                r'YMT-\d-\d\d-HP-\d\d\d\d\d\d-\d\d-\d\d[A-Z]|YMT-\d-\d\d-HP-\d\d\d\d\d\d-\d\d-\d\d|',
+                r'YMT-\d-\d\d-HP-\d\d\d\d\d\d-\d\d-\d\d[A-Z]|YMT-\d-\d\d-HP-\d\d\d\d\d\d-\d\d-\d\d\d|'
+                r'YMT-\d-\d\d-HP-\d\d\d\d\d\d-\d\d-\d\d',
                 tp_number)
             if re_tp:
                 tp_number = re_tp[0]
@@ -1567,3 +1566,4 @@ def start_handler(path):
     workbook_summary.close()
 
     print('Всё записал.')
+

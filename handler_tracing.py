@@ -41,19 +41,19 @@ def check_rfi_journal(db_tracing: dict, short_db: dict):
 
     wb_tracing = xl.load_workbook('Журнал заявок общий.xlsx')
     sheet_tracing = wb_tracing['Sheet1']
-    for i in sheet_tracing['B2':'AO250000']:
+    for i in sheet_tracing['B2':'AT250000']:
         if i[0].value:
             rfi_number = str(i[1].value)
-            description_rfi = str(i[16].value).replace('\n', '').strip().replace(' ', '').\
+            description_rfi = str(i[18].value).replace('\n', '').strip().replace(' ', '').\
                 replace('TM5-0', 'TM5-ID-A-0').replace('.ID', '-ID').\
                 replace('TM4-0', 'TM4-ID-A-0').replace('TM4.ID-', 'TM4-ID-A-').replace('0055-4', '0055-CPC-GGC-4')
 
             name_insp = str(i[26].value)
             list_iso = str(i[8].value)
             volume_meter = re.sub(r'[^0-9.]', '', str(i[18].value))
-            category_cancelled = str(i[31].value)
-            comment = str(i[39].value)  # комментарий для сортировки Физ. объём подтверждён  на прочность и плотность
-            violation = str(i[35].value)
+            category_cancelled = str(i[34].value)
+            comment = str(i[44].value)  # комментарий для сортировки Физ. объём подтверждён  на прочность и плотность
+            violation = str(i[39].value)
 
 
             # 0055-CPC-GGC-4.3.3.30.436-TM5-0006
