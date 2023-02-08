@@ -19,7 +19,7 @@
     <script src="./script.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
-    <title>SG HANDLER</title>
+    <title>SG Hand P2</title>
     <style>
         body{
             background: #232946;
@@ -108,10 +108,9 @@
 
 
 <div class="box" id="pathes">
-        <form action="#">
-            <label class="form-label">Введите путь куда сохранить сводку</label>
-            <input type="text" id="path_akt" placeholder="Введите путь куда сохранить сводку"
-                   value="C:\Users\IgnatenkoIA\Desktop\">
+        <form action="#" id="path_to_summary">
+            <label class="form-label" >Введите путь куда сохранить сводку</label>
+            <input type="text" id="path_akt" placeholder="Введите путь куда сохранить сводку" value="">
         </form>
 </div>
 
@@ -131,6 +130,11 @@
         <button type="button" id="btn_create_nkdk" class="btn btn-outline-info">Сформировать сводку по % НК и дублирующему НК.</button>
     </div>
 
+    <div>
+        <br>
+        <button type="button" id="btn_update_bdtp" class="btn btn-outline-info">Обновить БД ТП по фазам</button>
+    </div>
+
 </div>
 
 <div class="output_inf" id="aperture">
@@ -144,10 +148,20 @@
 
 
 <script>
+        async function testPath() {
+            var pat = await eel.read_path()();
+            document.getElementById("path_to_summary").innerHTML = pat;
+            };
+
+        window.onload = testPath;
+
+
+
         document.getElementById("btn_create_summary").onclick = function sendData() {
                 $('#btn_create_summary').attr('disabled', true);
                 $('#btn_create_sum_tracing').attr('disabled', true);
                 $('#btn_create_nkdk').attr('disabled', true);
+                $('#btn_update_bdtp').attr('disabled', true);
 
                 document.getElementById("test").innerHTML = '<img src="aperture_150.gif">';
 
@@ -159,12 +173,15 @@
                 $('#btn_create_summary').attr('disabled', false);
                 $('#btn_create_sum_tracing').attr('disabled', false);
                 $('#btn_create_nkdk').attr('disabled', false);
-            })}
+                $('#btn_update_bdtp').attr('disabled', false);
+            })};
 
         document.getElementById("btn_create_sum_tracing").onclick = function sendDataTrace() {
                 $('#btn_create_summary').attr('disabled', true);
                 $('#btn_create_sum_tracing').attr('disabled', true);
                 $('#btn_create_nkdk').attr('disabled', true);
+                $('#btn_update_bdtp').attr('disabled', true);
+
 
                 document.getElementById("test").innerHTML = '<img src="aperture_150.gif">';
 
@@ -176,12 +193,15 @@
                 $('#btn_create_summary').attr('disabled', false);
                 $('#btn_create_sum_tracing').attr('disabled', false);
                 $('#btn_create_nkdk').attr('disabled', false);
-            })}
+                $('#btn_update_bdtp').attr('disabled', false);
+
+            })};
 
         document.getElementById("btn_create_nkdk").onclick = function sendDataNK() {
                 $('#btn_create_summary').attr('disabled', true);
                 $('#btn_create_sum_tracing').attr('disabled', true);
                 $('#btn_create_nkdk').attr('disabled', true);
+                $('#btn_update_bdtp').attr('disabled', true);
 
                 document.getElementById("test").innerHTML = '<img src="aperture_150.gif">';
 
@@ -193,6 +213,27 @@
                 $('#btn_create_summary').attr('disabled', false);
                 $('#btn_create_sum_tracing').attr('disabled', false);
                 $('#btn_create_nkdk').attr('disabled', false);
-            })}
+                $('#btn_update_bdtp').attr('disabled', false);
+
+            })};
+
+            document.getElementById("btn_update_bdtp").onclick = function update_bdtp() {
+                $('#btn_create_summary').attr('disabled', true);
+                $('#btn_create_sum_tracing').attr('disabled', true);
+                $('#btn_create_nkdk').attr('disabled', true);
+                $('#btn_update_bdtp').attr('disabled', true);
+
+                document.getElementById("test").innerHTML = '<img src="aperture_150.gif">';
+
+
+                eel.update_bdtp()((res) => {
+                document.getElementById("test").innerHTML = res;
+
+                $('#btn_create_summary').attr('disabled', false);
+                $('#btn_create_sum_tracing').attr('disabled', false);
+                $('#btn_create_nkdk').attr('disabled', false);
+                $('#btn_update_bdtp').attr('disabled', false);
+
+            })};
 
 </script>
