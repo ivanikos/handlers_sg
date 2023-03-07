@@ -26,11 +26,12 @@ def read_path():
 
 @eel.expose
 def start_handler(path):
+    print(path)
     try:
        handler_beta.start_handler(path)
        return "Сводка по ФАЗАМ 1, 2, 3 сформирована"
-    except:
-        return "Возникла ошибка!"
+    except Exception as e:
+        return f"Возникла ошибка! \n {e}"
 @eel.expose
 def start_handler_tracing(path):
     try:

@@ -1184,7 +1184,7 @@ def start_handler(path):
         print('БД для АТОМа создана')
 
 
-    workbook_summary = xlsxwriter.Workbook(f'{path}Сводка по ФАЗАМ на {datetime.datetime.now().strftime("%d.%m.%Y")}.xlsx')
+    workbook_summary = xlsxwriter.Workbook(f'{path}\\Сводка по ФАЗАМ на {datetime.datetime.now().strftime("%d.%m.%Y")}.xlsx')
 
 
     # -------------------------------------Краткая сводка
