@@ -421,6 +421,40 @@ def start_handler(path):
 
             # ИЗОЛЯЦИЯ ПРОВЕРКА------------------------------ ТРУБА
             if 'завершении работ по теплоизоляц' in pkk:
+                if 'Принято' == category_cancelled:
+                    if 'крепежа и герметизации металлического кожуха согласно изометрическим' in description_rfi \
+                            or ' крепежа и герметизации металлического кожуха согласно изометрическим' in description_rfi:
+                        if list_iso:
+                            for iso in list_iso:
+                                for patt in rep_patt_for_iso:
+                                    iso = iso.replace(patt, '')
+                                if iso.strip() in iso_dic.keys():
+                                    iso_dic[iso.strip()][1] = rfi_number
+                    if 'теплоизоляционного покрытия согласно изометрическим' in description_rfi:
+                        if list_iso:
+                            for iso in list_iso:
+                                for patt in rep_patt_for_iso:
+                                    iso = iso.replace(patt, '')
+                                if iso.strip() in iso_dic.keys():
+                                    iso_dic[iso.strip()][0] = rfi_number
+                if "Принято с замечаниями" == category_cancelled:
+                    if 'крепежа и герметизации металлического кожуха согласно изометрическим' in description_rfi \
+                            or ' крепежа и герметизации металлического кожуха согласно изометрическим' in description_rfi:
+                        if list_iso:
+                            for iso in list_iso:
+                                for patt in rep_patt_for_iso:
+                                    iso = iso.replace(patt, '')
+                                if iso.strip() in iso_dic.keys():
+                                    iso_dic[iso.strip()][1] = rfi_number + " ПЗ"
+                    if 'теплоизоляционного покрытия согласно изометрическим' in description_rfi:
+                        if list_iso:
+                            for iso in list_iso:
+                                for patt in rep_patt_for_iso:
+                                    iso = iso.replace(patt, '')
+                                if iso.strip() in iso_dic.keys():
+                                    iso_dic[iso.strip()][0] = rfi_number + " ПЗ"
+
+
                 if 'представлены не в полном объеме, представлены некорректные документы' in violation or \
                         'документы, подтверждающие качество работ' in violation\
                         or 'подтвержд' in comment or 'подтвржд' in comment:
@@ -1022,56 +1056,56 @@ def start_handler(path):
                     n_dic_4_110[tp_dic[tp][3]][10] += 1
 
     summary_list_units = []
-    for i in n_list_1_70:
-        summary_list_units.append(i)
-    for key in n_dic_1_70.keys():
-        summary_list_units.append([key, n_dic_1_70[key][0], n_dic_1_70[key][1], n_dic_1_70[key][2], n_dic_1_70[key][3],
-                                   n_dic_1_70[key][4], n_dic_1_70[key][5], n_dic_1_70[key][6], n_dic_1_70[key][7],
-                                   n_dic_1_70[key][8], n_dic_1_70[key][9], n_dic_1_70[key][10]])
-        ITOG_list_1_70[2] += n_dic_1_70[key][1]
-        ITOG_list_1_70[3] += n_dic_1_70[key][2]
-        ITOG_list_1_70[4] += n_dic_1_70[key][3]
-        ITOG_list_1_70[5] += n_dic_1_70[key][4]
-        ITOG_list_1_70[6] += n_dic_1_70[key][5]
-        ITOG_list_1_70[7] += n_dic_1_70[key][6]
-        ITOG_list_1_70[8] += n_dic_1_70[key][7]
-        ITOG_list_1_70[9] += n_dic_1_70[key][8]
-        ITOG_list_1_70[10] += n_dic_1_70[key][9]
-        ITOG_list_1_70[11] += n_dic_1_70[key][10]
-
-    summary_list_units.append(ITOG_list_1_70)
-    ost_list_1_70 = ['', 'Остаток:', '', '', ITOG_list_1_70[2] - ITOG_list_1_70[4], ITOG_list_1_70[3] - ITOG_list_1_70[5],
-                        ITOG_list_1_70[2] - ITOG_list_1_70[6], ITOG_list_1_70[3] - ITOG_list_1_70[7],
-                        ITOG_list_1_70[2] - ITOG_list_1_70[8], ITOG_list_1_70[3] - ITOG_list_1_70[9],
-                        ITOG_list_1_70[2] - ITOG_list_1_70[10], ITOG_list_1_70[3] - ITOG_list_1_70[11]]
-    summary_list_units.append(ost_list_1_70)
-    empty_str = [' * ', ' * ', ' * ', '  *  ', '  *  ', '  *  ', '  *  ', '  ', '  ', '  ', '  ', '']
-    summary_list_units.append(empty_str)
-
-    for i in n_list_1_60:
-        summary_list_units.append(i)
-    for key in n_dic_1_60.keys():
-        summary_list_units.append([key, n_dic_1_60[key][0], n_dic_1_60[key][1], n_dic_1_60[key][2], n_dic_1_60[key][3],
-                                   n_dic_1_60[key][4], n_dic_1_60[key][5], n_dic_1_60[key][6], n_dic_1_60[key][7],
-                                   n_dic_1_60[key][8], n_dic_1_60[key][9], n_dic_1_60[key][10]])
-        ITOG_list_1_60[2] += n_dic_1_60[key][1]
-        ITOG_list_1_60[3] += n_dic_1_60[key][2]
-        ITOG_list_1_60[4] += n_dic_1_60[key][3]
-        ITOG_list_1_60[5] += n_dic_1_60[key][4]
-        ITOG_list_1_60[6] += n_dic_1_60[key][5]
-        ITOG_list_1_60[7] += n_dic_1_60[key][6]
-        ITOG_list_1_60[8] += n_dic_1_60[key][7]
-        ITOG_list_1_60[9] += n_dic_1_60[key][8]
-        ITOG_list_1_60[10] += n_dic_1_60[key][9]
-        ITOG_list_1_60[11] += n_dic_1_60[key][10]
-
-    summary_list_units.append(ITOG_list_1_60)
-    ost_list_1_60 = ['', 'Остаток:', '', '', ITOG_list_1_60[2] - ITOG_list_1_60[4], ITOG_list_1_60[3] - ITOG_list_1_60[5],
-                        ITOG_list_1_60[2] - ITOG_list_1_60[6], ITOG_list_1_60[3] - ITOG_list_1_60[7],
-                        ITOG_list_1_60[2] - ITOG_list_1_60[8], ITOG_list_1_60[3] - ITOG_list_1_60[9],
-                        ITOG_list_1_60[2] - ITOG_list_1_60[10], ITOG_list_1_60[3] - ITOG_list_1_60[11]]
-    summary_list_units.append(ost_list_1_60)
-    summary_list_units.append(empty_str)
+    # for i in n_list_1_70:
+    #     summary_list_units.append(i)
+    # for key in n_dic_1_70.keys():
+    #     summary_list_units.append([key, n_dic_1_70[key][0], n_dic_1_70[key][1], n_dic_1_70[key][2], n_dic_1_70[key][3],
+    #                                n_dic_1_70[key][4], n_dic_1_70[key][5], n_dic_1_70[key][6], n_dic_1_70[key][7],
+    #                                n_dic_1_70[key][8], n_dic_1_70[key][9], n_dic_1_70[key][10]])
+    #     ITOG_list_1_70[2] += n_dic_1_70[key][1]
+    #     ITOG_list_1_70[3] += n_dic_1_70[key][2]
+    #     ITOG_list_1_70[4] += n_dic_1_70[key][3]
+    #     ITOG_list_1_70[5] += n_dic_1_70[key][4]
+    #     ITOG_list_1_70[6] += n_dic_1_70[key][5]
+    #     ITOG_list_1_70[7] += n_dic_1_70[key][6]
+    #     ITOG_list_1_70[8] += n_dic_1_70[key][7]
+    #     ITOG_list_1_70[9] += n_dic_1_70[key][8]
+    #     ITOG_list_1_70[10] += n_dic_1_70[key][9]
+    #     ITOG_list_1_70[11] += n_dic_1_70[key][10]
+    #
+    # summary_list_units.append(ITOG_list_1_70)
+    # ost_list_1_70 = ['', 'Остаток:', '', '', ITOG_list_1_70[2] - ITOG_list_1_70[4], ITOG_list_1_70[3] - ITOG_list_1_70[5],
+    #                     ITOG_list_1_70[2] - ITOG_list_1_70[6], ITOG_list_1_70[3] - ITOG_list_1_70[7],
+    #                     ITOG_list_1_70[2] - ITOG_list_1_70[8], ITOG_list_1_70[3] - ITOG_list_1_70[9],
+    #                     ITOG_list_1_70[2] - ITOG_list_1_70[10], ITOG_list_1_70[3] - ITOG_list_1_70[11]]
+    # summary_list_units.append(ost_list_1_70)
+    # empty_str = [' * ', ' * ', ' * ', '  *  ', '  *  ', '  *  ', '  *  ', '  ', '  ', '  ', '  ', '']
+    # summary_list_units.append(empty_str)
+    #
+    # for i in n_list_1_60:
+    #     summary_list_units.append(i)
+    # for key in n_dic_1_60.keys():
+    #     summary_list_units.append([key, n_dic_1_60[key][0], n_dic_1_60[key][1], n_dic_1_60[key][2], n_dic_1_60[key][3],
+    #                                n_dic_1_60[key][4], n_dic_1_60[key][5], n_dic_1_60[key][6], n_dic_1_60[key][7],
+    #                                n_dic_1_60[key][8], n_dic_1_60[key][9], n_dic_1_60[key][10]])
+    #     ITOG_list_1_60[2] += n_dic_1_60[key][1]
+    #     ITOG_list_1_60[3] += n_dic_1_60[key][2]
+    #     ITOG_list_1_60[4] += n_dic_1_60[key][3]
+    #     ITOG_list_1_60[5] += n_dic_1_60[key][4]
+    #     ITOG_list_1_60[6] += n_dic_1_60[key][5]
+    #     ITOG_list_1_60[7] += n_dic_1_60[key][6]
+    #     ITOG_list_1_60[8] += n_dic_1_60[key][7]
+    #     ITOG_list_1_60[9] += n_dic_1_60[key][8]
+    #     ITOG_list_1_60[10] += n_dic_1_60[key][9]
+    #     ITOG_list_1_60[11] += n_dic_1_60[key][10]
+    #
+    # summary_list_units.append(ITOG_list_1_60)
+    # ost_list_1_60 = ['', 'Остаток:', '', '', ITOG_list_1_60[2] - ITOG_list_1_60[4], ITOG_list_1_60[3] - ITOG_list_1_60[5],
+    #                     ITOG_list_1_60[2] - ITOG_list_1_60[6], ITOG_list_1_60[3] - ITOG_list_1_60[7],
+    #                     ITOG_list_1_60[2] - ITOG_list_1_60[8], ITOG_list_1_60[3] - ITOG_list_1_60[9],
+    #                     ITOG_list_1_60[2] - ITOG_list_1_60[10], ITOG_list_1_60[3] - ITOG_list_1_60[11]]
+    # summary_list_units.append(ost_list_1_60)
+    # summary_list_units.append(empty_str)
 
     for i in n_list_2_70:
         summary_list_units.append(i)
