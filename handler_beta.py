@@ -1286,7 +1286,7 @@ def start_handler(path):
     ws5.set_column(6, 11, 22)
     ws5.set_column(12, 17, 25)
     ws5.set_column(18, 18, 13)
-    ws5.autofilter('A1:S1682')
+    ws5.autofilter('A1:S11682')
 
     for i, (testpackage, title, unit, fluid, ggn_status, iso_length, rfi_erection, rfi_test,
             rfi_airblowing, rfi_reinstatement, ncr_status) in enumerate(summary_tp_phase_1, start=1):
