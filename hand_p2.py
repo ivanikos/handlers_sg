@@ -12,6 +12,8 @@ import handler_beta
 import handler_tracing
 import update_dbs
 
+import handler_p3
+
 
 @eel.expose
 def read_path():
@@ -58,8 +60,17 @@ def update_bdtp():
     except:
         return "Возникла ошибка!"
 
+@eel.expose
+def start_handler_p3(path):
+    print(path)
+    try:
+        handler_p3.create_summary_p3(path)
+        return "Сводка Р3 по ФАЗАМ 1, 2, 3, 4, 5 сформирована"
+    except Exception as e:
+        print(e)
+        return "Возникла ошибка! :("
 
 
 if __name__ == '__main__':
     eel.init('front')
-    eel.start('index.html', mode="chrome", size=(850, 700))
+    eel.start('index.html', mode="chrome", size=(900, 780))
