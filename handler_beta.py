@@ -35,6 +35,16 @@ def start_handler(path):
                                'Объём изоляции', 'RFI Мин.вата', 'RFI Металл. кожух', 'RFI Короб/чехол', 'RFI ДИГ',
                                'Статус уведомлений']]
 
+    summary_iso_tp_phase_4 = [['Тестпакет', 'Изометрия', 'Линия', 'Титул', 'Установка', 'Среда', 'Статус ГГН', 'Длина',
+                               'RFI ERECTION', 'RFI TEST', 'RFI AIRBLOWING', 'RFI REINSTATEMENT', 'Тип изоляции',
+                               'Объём изоляции', 'RFI Мин.вата', 'RFI Металл. кожух', 'RFI Короб/чехол', 'RFI ДИГ',
+                               'Статус уведомлений']]
+
+    summary_iso_tp_phase_5 = [['Тестпакет', 'Изометрия', 'Линия', 'Титул', 'Установка', 'Среда', 'Статус ГГН', 'Длина',
+                               'RFI ERECTION', 'RFI TEST', 'RFI AIRBLOWING', 'RFI REINSTATEMENT', 'Тип изоляции',
+                               'Объём изоляции', 'RFI Мин.вата', 'RFI Металл. кожух', 'RFI Короб/чехол', 'RFI ДИГ',
+                               'Статус уведомлений']]
+
     summary_tp_phase_1 = [['Тестпакет', 'Титул', 'Установка', 'Среда', 'Статус ГГН', 'Длина',
                                'RFI ERECTION', 'RFI TEST', 'RFI AIRBLOWING', 'RFI REINSTATEMENT', 'Статус уведомлений']]
 
@@ -43,6 +53,12 @@ def start_handler(path):
 
     summary_tp_phase_3 = [['Тестпакет', 'Титул', 'Установка', 'Среда', 'Статус ГГН', 'Длина',
                                'RFI ERECTION', 'RFI TEST', 'RFI AIRBLOWING', 'RFI REINSTATEMENT', 'Статус уведомлений']]
+
+    summary_tp_phase_4 = [['Тестпакет', 'Титул', 'Установка', 'Среда', 'Статус ГГН', 'Длина',
+                           'RFI ERECTION', 'RFI TEST', 'RFI AIRBLOWING', 'RFI REINSTATEMENT', 'Статус уведомлений']]
+
+    summary_tp_phase_5 = [['Тестпакет', 'Титул', 'Установка', 'Среда', 'Статус ГГН', 'Длина',
+                           'RFI ERECTION', 'RFI TEST', 'RFI AIRBLOWING', 'RFI REINSTATEMENT', 'Статус уведомлений']]
 
 
     """
@@ -119,7 +135,7 @@ def start_handler(path):
 
 
 
-    # Проверка Журнал заявок АИС Р2 ФАЗА 1, 2, 3-------------------------------------
+    # Проверка Журнал заявок АИС Р2 ФАЗА 1, 2, 3, 4, 5-------------------------------------
     df = pd.read_excel('Журнал заявок общий.xlsx', engine='openpyxl')
     df = df.sort_values(by='Дата назначения инспекции / Date of scheduled inspection', ascending=True)
     df.to_excel('Журнал заявок общий.xlsx', index=0)
@@ -853,7 +869,6 @@ def start_handler(path):
                                            isotp_dic[isotp][18]
                                            ])
 
-
         if isotp_dic[isotp][19] == '2' and 'SUPER' not in isotp_dic[isotp][0]:
             summary_iso_tp_phase_2.append([isotp_dic[isotp][0], isotp_dic[isotp][1], isotp_dic[isotp][2],
                                            isotp_dic[isotp][3], isotp_dic[isotp][4], isotp_dic[isotp][5],
@@ -866,6 +881,26 @@ def start_handler(path):
 
         if isotp_dic[isotp][19] == '3' and 'SUPER' not in isotp_dic[isotp][0]:
             summary_iso_tp_phase_3.append([isotp_dic[isotp][0], isotp_dic[isotp][1], isotp_dic[isotp][2],
+                                           isotp_dic[isotp][3], isotp_dic[isotp][4], isotp_dic[isotp][5],
+                                           isotp_dic[isotp][6], isotp_dic[isotp][7], isotp_dic[isotp][8],
+                                           isotp_dic[isotp][9], isotp_dic[isotp][10], isotp_dic[isotp][11],
+                                           isotp_dic[isotp][12], isotp_dic[isotp][13], isotp_dic[isotp][14],
+                                           isotp_dic[isotp][15], isotp_dic[isotp][16], isotp_dic[isotp][17],
+                                           isotp_dic[isotp][18]
+                                           ])
+
+        if isotp_dic[isotp][19] == '4' and 'SUPER' not in isotp_dic[isotp][0]:
+            summary_iso_tp_phase_4.append([isotp_dic[isotp][0], isotp_dic[isotp][1], isotp_dic[isotp][2],
+                                           isotp_dic[isotp][3], isotp_dic[isotp][4], isotp_dic[isotp][5],
+                                           isotp_dic[isotp][6], isotp_dic[isotp][7], isotp_dic[isotp][8],
+                                           isotp_dic[isotp][9], isotp_dic[isotp][10], isotp_dic[isotp][11],
+                                           isotp_dic[isotp][12], isotp_dic[isotp][13], isotp_dic[isotp][14],
+                                           isotp_dic[isotp][15], isotp_dic[isotp][16], isotp_dic[isotp][17],
+                                           isotp_dic[isotp][18]
+                                           ])
+
+        if isotp_dic[isotp][19] == '5' and 'SUPER' not in isotp_dic[isotp][0]:
+            summary_iso_tp_phase_5.append([isotp_dic[isotp][0], isotp_dic[isotp][1], isotp_dic[isotp][2],
                                            isotp_dic[isotp][3], isotp_dic[isotp][4], isotp_dic[isotp][5],
                                            isotp_dic[isotp][6], isotp_dic[isotp][7], isotp_dic[isotp][8],
                                            isotp_dic[isotp][9], isotp_dic[isotp][10], isotp_dic[isotp][11],
@@ -913,12 +948,13 @@ def start_handler(path):
     summary_tp_for_db_atom = []
     for tp in tp_dic.keys():
 
-        if 'SUPER' not in tp_dic[tp][0] and 'INTERFACE' not in tp_dic[tp][0]:
+        if 'SUPER' not in tp_dic[tp][0] and 'INTERFACE' not in tp_dic[tp][0] and "n/d" not in tp_dic[tp][0]:
             summary_tp_for_db_atom.append([tp_dic[tp][0], tp_dic[tp][1], tp_dic[tp][2], tp_dic[tp][3], tp_dic[tp][4],
                                        tp_dic[tp][5], tp_dic[tp][6], tp_dic[tp][7], tp_dic[tp][8], tp_dic[tp][9],
                                        tp_dic[tp][10]])
 
-        if tp_dic[tp][11] == '1' and 'SUPER' not in tp_dic[tp][0] and 'INTERFACE' not in tp_dic[tp][0]:
+        if tp_dic[tp][11] == '1' and 'SUPER' not in tp_dic[tp][0] and 'INTERFACE'\
+                not in tp_dic[tp][0] and "n/d" not in tp_dic[tp][0]:
             summary_tp_phase_1.append([tp_dic[tp][0], tp_dic[tp][1], tp_dic[tp][2], tp_dic[tp][3], tp_dic[tp][4],
                                        tp_dic[tp][5], tp_dic[tp][6],tp_dic[tp][7], tp_dic[tp][8], tp_dic[tp][9],
                                        tp_dic[tp][10]])
@@ -964,7 +1000,8 @@ def start_handler(path):
                     n_dic_1_70[tp_dic[tp][3]][9] += tp_dic[tp][5]
                     n_dic_1_70[tp_dic[tp][3]][10] += 1
 
-        if tp_dic[tp][11] == '2' and 'SUPER' not in tp_dic[tp][0] and 'INTERFACE' not in tp_dic[tp][0]:
+        if tp_dic[tp][11] == '2' and 'SUPER' not in tp_dic[tp][0] and 'INTERFACE'\
+                not in tp_dic[tp][0] and "n/d" not in tp_dic[tp][0]:
             summary_tp_phase_2.append([tp_dic[tp][0], tp_dic[tp][1], tp_dic[tp][2], tp_dic[tp][3], tp_dic[tp][4],
                                        tp_dic[tp][5], tp_dic[tp][6],tp_dic[tp][7], tp_dic[tp][8], tp_dic[tp][9],
                                        tp_dic[tp][10]])
@@ -1009,12 +1046,11 @@ def start_handler(path):
                     n_dic_2_70[tp_dic[tp][3]][9] += tp_dic[tp][5]
                     n_dic_2_70[tp_dic[tp][3]][10] += 1
 
-        if tp_dic[tp][11] == '3' and 'SUPER' not in tp_dic[tp][0] and 'INTERFACE' not in tp_dic[tp][0]:
+        if tp_dic[tp][11] == '3' and 'SUPER' not in tp_dic[tp][0] and 'INTERFACE'\
+                not in tp_dic[tp][0] and "n/d" not in tp_dic[tp][0]:
             summary_tp_phase_3.append([tp_dic[tp][0], tp_dic[tp][1], tp_dic[tp][2], tp_dic[tp][3], tp_dic[tp][4],
                                        tp_dic[tp][5], tp_dic[tp][6],tp_dic[tp][7], tp_dic[tp][8], tp_dic[tp][9],
                                        tp_dic[tp][10]])
-
-
             if tp_dic[tp][2] == '4-30':
                 n_dic_4_30[tp_dic[tp][3]][1] += tp_dic[tp][5]
                 n_dic_4_30[tp_dic[tp][3]][2] += 1
@@ -1054,6 +1090,20 @@ def start_handler(path):
                 if tp_dic[tp][9]:
                     n_dic_4_110[tp_dic[tp][3]][9] += tp_dic[tp][5]
                     n_dic_4_110[tp_dic[tp][3]][10] += 1
+
+        if tp_dic[tp][11] == '4' and 'SUPER' not in tp_dic[tp][0] and 'INTERFACE'\
+                not in tp_dic[tp][0] and "n/d" not in tp_dic[tp][0]:
+            summary_tp_phase_4.append([tp_dic[tp][0], tp_dic[tp][1], tp_dic[tp][2], tp_dic[tp][3], tp_dic[tp][4],
+                                       tp_dic[tp][5], tp_dic[tp][6], tp_dic[tp][7], tp_dic[tp][8], tp_dic[tp][9],
+                                       tp_dic[tp][10]])
+
+        if tp_dic[tp][11] == '5' and 'SUPER' not in tp_dic[tp][0] and 'INTERFACE'\
+                not in tp_dic[tp][0] and "n/d" not in tp_dic[tp][0]:
+            summary_tp_phase_5.append([tp_dic[tp][0], tp_dic[tp][1], tp_dic[tp][2], tp_dic[tp][3], tp_dic[tp][4],
+                                       tp_dic[tp][5], tp_dic[tp][6], tp_dic[tp][7], tp_dic[tp][8], tp_dic[tp][9],
+                                       tp_dic[tp][10]])
+
+
 
     summary_list_units = []
     # for i in n_list_1_70:
@@ -1210,7 +1260,7 @@ def start_handler(path):
 
 
     """
-    Запись БД для работы скрипта atom-results
+    Запись БД для работы скрипта AICT
     """
     with open('bd_tp_rfi.csv', 'w', newline='') as write_file:
         writed_file = csv.writer(write_file, delimiter=";")
@@ -1398,9 +1448,81 @@ def start_handler(path):
         ws2.write(f'J{i}', rfi_reinstatement, color)
         ws2.write(f'K{i}', ncr_status, color)
 
+    # -------------------------------------------------------------------------------------------------
+    ws4 = workbook_summary.add_worksheet('Сводка ТП ФАЗА 4')
 
+    ws4.set_column(0, 0, 30)
+    ws4.set_column(1, 5, 15)
+    ws4.set_column(6, 11, 22)
+    ws4.set_column(12, 17, 25)
+    ws4.set_column(18, 18, 13)
+    ws4.autofilter(f'A1:S{len(summary_tp_phase_4)}')
 
+    for i, (testpackage, title, unit, fluid, ggn_status, iso_length, rfi_erection, rfi_test,
+            rfi_airblowing, rfi_reinstatement, ncr_status) in enumerate(summary_tp_phase_4, start=1):
+        if testpackage == 'Тестпакет':
+            color = cell_format_hat
+            color.set_bold('bold')
+        elif '-CC' in rfi_reinstatement:
+            color = cell_format_green
+        else:
+            color = cell_format_blue
 
+        try:
+            color.set_border(style=1)
+            color.set_text_wrap(text_wrap=1)
+        except:
+            pass
+
+        ws4.write(f'A{i}', testpackage, color)
+        ws4.write(f'B{i}', title, color)
+        ws4.write(f'C{i}', unit, color)
+        ws4.write(f'D{i}', fluid, color)
+        ws4.write(f'E{i}', ggn_status, color)
+        ws4.write(f'F{i}', iso_length, color)
+        ws4.write(f'G{i}', rfi_erection, color)
+        ws4.write(f'H{i}', rfi_test, color)
+        ws4.write(f'I{i}', rfi_airblowing, color)
+        ws4.write(f'J{i}', rfi_reinstatement, color)
+        ws4.write(f'K{i}', ncr_status, color)
+
+    # -------------------------------------------------------------------------------------------------
+    ws5 = workbook_summary.add_worksheet('Сводка ТП ФАЗА 5')
+
+    ws5.set_column(0, 0, 30)
+    ws5.set_column(1, 5, 15)
+    ws5.set_column(6, 11, 22)
+    ws5.set_column(12, 17, 25)
+    ws5.set_column(18, 18, 13)
+    ws5.autofilter(f'A1:S{len(summary_tp_phase_5)}')
+
+    for i, (testpackage, title, unit, fluid, ggn_status, iso_length, rfi_erection, rfi_test,
+            rfi_airblowing, rfi_reinstatement, ncr_status) in enumerate(summary_tp_phase_5, start=1):
+        if testpackage == 'Тестпакет':
+            color = cell_format_hat
+            color.set_bold('bold')
+        elif '-CC' in rfi_reinstatement:
+            color = cell_format_green
+        else:
+            color = cell_format_blue
+
+        try:
+            color.set_border(style=1)
+            color.set_text_wrap(text_wrap=1)
+        except:
+            pass
+
+        ws5.write(f'A{i}', testpackage, color)
+        ws5.write(f'B{i}', title, color)
+        ws5.write(f'C{i}', unit, color)
+        ws5.write(f'D{i}', fluid, color)
+        ws5.write(f'E{i}', ggn_status, color)
+        ws5.write(f'F{i}', iso_length, color)
+        ws5.write(f'G{i}', rfi_erection, color)
+        ws5.write(f'H{i}', rfi_test, color)
+        ws5.write(f'I{i}', rfi_airblowing, color)
+        ws5.write(f'J{i}', rfi_reinstatement, color)
+        ws5.write(f'K{i}', ncr_status, color)
 
 
     # Сводка по изометриям
@@ -1596,6 +1718,133 @@ def start_handler(path):
         wsi3.write(f'R{i}', rfi_dig, color)
         wsi3.write(f'S{i}', ncr, color)
 
+    # ---------------------------------------------------------------------------
+    wsi4 = workbook_summary.add_worksheet('Сводка по ИЗО ФАЗА 4')
+    wsi4.set_column(0, 1, 32)
+    wsi4.set_column(2, 7, 14)
+    wsi4.set_column(8, 11, 20)
+
+    wsi4.set_column(12, 13, 13)
+    wsi4.set_column(14, 16, 20)
+    wsi4.set_column(17, 18, 14)
+
+    cell_format_ins = workbook_summary.add_format()
+    cell_format_ins.set_bg_color('#FFEBCD')
+
+    wsi4.autofilter('A1:S20000')
+    for i, (testpackage, isometric, line, title, unit, fluid, ggn_status, iso_length, rfi_erection,
+            rfi_test, rfi_airblowing, rfi_reinstatement, type_ins, volume_ins, rfi_ins_cotton,
+            rfi_ins_metall, rfi_ins_box, rfi_dig, ncr) in enumerate(summary_iso_tp_phase_4, start=1):
+
+        if testpackage == 'Тестпакет':
+            color = cell_format_hat
+            color.set_bold('bold')
+            color.set_text_wrap(text_wrap=1)
+            color_2 = cell_format_hat
+            color_2.set_bold('bold')
+            color_2.set_text_wrap(text_wrap=1)
+
+        elif rfi_reinstatement:
+            color = cell_format_green
+            color.set_text_wrap(text_wrap=0)
+            color_2 = cell_format_ins
+            color_2.set_text_wrap(text_wrap=0)
+
+        else:
+            color = cell_format_blue
+            color.set_text_wrap(text_wrap=0)
+            color_2 = cell_format_ins
+            color_2.set_text_wrap(text_wrap=0)
+
+        try:
+            color.set_border(style=1)
+            color_2.set_border(style=1)
+        except:
+            pass
+
+        wsi4.write(f'A{i}', testpackage, color)
+        wsi4.write(f'B{i}', isometric, color)
+        wsi4.write(f'C{i}', line, color)
+        wsi4.write(f'D{i}', title, color)
+        wsi4.write(f'E{i}', unit, color)
+        wsi4.write(f'F{i}', fluid, color)
+        wsi4.write(f'G{i}', ggn_status, color)
+        wsi4.write(f'H{i}', iso_length, color)
+        wsi4.write(f'I{i}', rfi_erection, color)
+        wsi4.write(f'J{i}', rfi_test, color)
+        wsi4.write(f'K{i}', rfi_airblowing, color)
+        wsi4.write(f'L{i}', rfi_reinstatement, color)
+        wsi4.write(f'M{i}', type_ins, color_2)
+        wsi4.write(f'N{i}', volume_ins, color_2)
+        wsi4.write(f'O{i}', rfi_ins_cotton, color_2)
+        wsi4.write(f'P{i}', rfi_ins_metall, color_2)
+        wsi4.write(f'Q{i}', rfi_ins_box, color_2)
+        wsi4.write(f'R{i}', rfi_dig, color)
+        wsi4.write(f'S{i}', ncr, color)
+
+    # ---------------------------------------------------------------------------
+    wsi5 = workbook_summary.add_worksheet('Сводка по ИЗО ФАЗА 5')
+    wsi5.set_column(0, 1, 32)
+    wsi5.set_column(2, 7, 14)
+    wsi5.set_column(8, 11, 20)
+
+    wsi5.set_column(12, 13, 13)
+    wsi5.set_column(14, 16, 20)
+    wsi5.set_column(17, 18, 14)
+
+    cell_format_ins = workbook_summary.add_format()
+    cell_format_ins.set_bg_color('#FFEBCD')
+
+    wsi5.autofilter('A1:S20000')
+    for i, (testpackage, isometric, line, title, unit, fluid, ggn_status, iso_length, rfi_erection,
+            rfi_test, rfi_airblowing, rfi_reinstatement, type_ins, volume_ins, rfi_ins_cotton,
+            rfi_ins_metall, rfi_ins_box, rfi_dig, ncr) in enumerate(summary_iso_tp_phase_5, start=1):
+
+        if testpackage == 'Тестпакет':
+            color = cell_format_hat
+            color.set_bold('bold')
+            color.set_text_wrap(text_wrap=1)
+            color_2 = cell_format_hat
+            color_2.set_bold('bold')
+            color_2.set_text_wrap(text_wrap=1)
+
+        elif rfi_reinstatement:
+            color = cell_format_green
+            color.set_text_wrap(text_wrap=0)
+            color_2 = cell_format_ins
+            color_2.set_text_wrap(text_wrap=0)
+
+        else:
+            color = cell_format_blue
+            color.set_text_wrap(text_wrap=0)
+            color_2 = cell_format_ins
+            color_2.set_text_wrap(text_wrap=0)
+
+        try:
+            color.set_border(style=1)
+            color_2.set_border(style=1)
+        except:
+            pass
+
+        wsi5.write(f'A{i}', testpackage, color)
+        wsi5.write(f'B{i}', isometric, color)
+        wsi5.write(f'C{i}', line, color)
+        wsi5.write(f'D{i}', title, color)
+        wsi5.write(f'E{i}', unit, color)
+        wsi5.write(f'F{i}', fluid, color)
+        wsi5.write(f'G{i}', ggn_status, color)
+        wsi5.write(f'H{i}', iso_length, color)
+        wsi5.write(f'I{i}', rfi_erection, color)
+        wsi5.write(f'J{i}', rfi_test, color)
+        wsi5.write(f'K{i}', rfi_airblowing, color)
+        wsi5.write(f'L{i}', rfi_reinstatement, color)
+        wsi5.write(f'M{i}', type_ins, color_2)
+        wsi5.write(f'N{i}', volume_ins, color_2)
+        wsi5.write(f'O{i}', rfi_ins_cotton, color_2)
+        wsi5.write(f'P{i}', rfi_ins_metall, color_2)
+        wsi5.write(f'Q{i}', rfi_ins_box, color_2)
+        wsi5.write(f'R{i}', rfi_dig, color)
+        wsi5.write(f'S{i}', ncr, color)
 
     workbook_summary.close()
 
