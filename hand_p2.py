@@ -31,7 +31,7 @@ def start_handler(path):
     print(path)
     try:
        handler_beta.start_handler(path)
-       return "Сводка по ФАЗАМ 1, 2, 3 сформирована"
+       return "Сводка по ФАЗАМ 1, 2, 3, 4, 5 сформирована"
     except Exception as e:
         return f"Возникла ошибка! \n {e}"
 @eel.expose
