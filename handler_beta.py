@@ -167,7 +167,7 @@ def start_handler(path):
             category_cancelled = str(i[34].value).strip()
             comment = str(i[44].value)
 
-            date_of_submissions = str(i[13].value)
+            date_of_submissions = str(i[12].value)
 
             re_tp = re.findall(
                 r'YMT-\d-\d\d\d-HP-\d\d\d\d\d\d-\d\d[A-Z]-\d\d[A-Z]|YMT-\d-\d\d\d-HP-\d\d\d\d\d\d-\d\d-\d\d[A-Z]|'
@@ -453,6 +453,17 @@ def start_handler(path):
                                     iso = iso.replace(patt, '')
                                 if iso.strip() in iso_dic.keys():
                                     iso_dic[iso.strip()][0] = rfi_number
+
+                    if "Окончательная приемка теплоизоляционного " \
+                       "покрытия и металлического кожуха технологического" in description_rfi:
+                        if list_iso:
+                            for iso in list_iso:
+                                for patt in rep_patt_for_iso:
+                                    iso = iso.replace(patt, '')
+                                if iso.strip() in iso_dic.keys():
+                                    iso_dic[iso.strip()][0] = rfi_number
+                                    iso_dic[iso.strip()][1] = rfi_number
+
                 if "Принято с замечаниями" == category_cancelled:
                     if 'крепежа и герметизации металлического кожуха согласно изометрическим' in description_rfi \
                             or ' крепежа и герметизации металлического кожуха согласно изометрическим' in description_rfi:
@@ -469,6 +480,15 @@ def start_handler(path):
                                     iso = iso.replace(patt, '')
                                 if iso.strip() in iso_dic.keys():
                                     iso_dic[iso.strip()][0] = rfi_number + " ПЗ"
+                    if "Окончательная приемка теплоизоляционного " \
+                       "покрытия и металлического кожуха технологического" in description_rfi:
+                        if list_iso:
+                            for iso in list_iso:
+                                for patt in rep_patt_for_iso:
+                                    iso = iso.replace(patt, '')
+                                if iso.strip() in iso_dic.keys():
+                                    iso_dic[iso.strip()][0] = rfi_number + " ПЗ"
+                                    iso_dic[iso.strip()][1] = rfi_number + " ПЗ"
 
 
                 if 'представлены не в полном объеме, представлены некорректные документы' in violation or \
