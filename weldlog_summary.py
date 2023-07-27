@@ -23,11 +23,11 @@ summary_WL_phase_1 = [['Линия', 'Процент контроля по пр�
               'Необходим контроль ПО', 'Проконтролировано ПО',
               'Необходим НК СГ, ст.', 'Проведён НК СГ ст.', 'Статус % НК СГ']]
 
-summary_WL_phase_2 = [['Линия', 'Тестпакет', 'Установка', 'Процент контроля по проекту', 'Сварено стыков',
+summary_WL_phase_2 = [['Линия', 'Тестпакет', 'Установка', "Категория", 'Процент контроля по проекту', 'Сварено стыков',
               'Необходим контроль ПО', 'Проконтролировано ПО',
               'Необходим НК СГ, ст.', 'Проведён НК СГ ст.', 'Статус % НК СГ']]
 
-summary_WL_phase_4 = [['Линия', 'Тестпакет', 'Установка', 'Процент контроля по проекту', 'Сварено стыков',
+summary_WL_phase_4 = [['Линия', 'Тестпакет', 'Установка', "Категория", 'Процент контроля по проекту', 'Сварено стыков',
               'Необходим контроль ПО', 'Проконтролировано ПО',
               'Необходим НК СГ, ст.', 'Проведён НК СГ ст.', 'Статус % НК СГ']]
 
@@ -303,7 +303,10 @@ def create_summary_nkdk(path):
             if summ_control_sg >= need_control_sg:
                 status_sg = 'OK'
 
-            summary_WL_phase_2.append([line, testpackage_number, unit, line_control_percent, tp_lines_p2[i][0],
+            category_line = ll_dic[line][2].replace("\n", " ")
+
+            summary_WL_phase_2.append([line, testpackage_number, unit, category_line, line_control_percent,
+                                       tp_lines_p2[i][0],
                                        need_control_po, summ_control_po,
                                        need_control_sg, summ_control_sg, status_sg])
         except:
@@ -329,7 +332,9 @@ def create_summary_nkdk(path):
             if summ_control_sg >= need_control_sg:
                 status_sg = 'OK'
 
-            summary_WL_phase_4.append([line, testpackage_number, unit, line_control_percent, tp_lines_p4[i][0],
+            category_line = ll_dic[line][2].replace("\n", " ")
+
+            summary_WL_phase_4.append([line, testpackage_number, unit, category_line, line_control_percent, tp_lines_p4[i][0],
                                        need_control_po, summ_control_po,
                                        need_control_sg, summ_control_sg, status_sg])
         except Exception as e:
@@ -391,13 +396,13 @@ def create_summary_nkdk(path):
     ws2.set_column(1, 1, 30)
     ws2.set_column(2, 9, 13)
 
-    ws2.autofilter(f'A1:J100000')
+    ws2.autofilter(f'A1:J{len(summary_WL_phase_2)}')
 
     cell_form = workbook_wl.add_format()
     cell_form.set_text_wrap(text_wrap=1)
 
     for i, (short_tp, number_line, number_iso, number_joint, percent_control, number_ut, res_ut,
-            number_xr, nine, ten) in enumerate(summary_WL_phase_2, start=1):
+            number_xr, nine, ten, eleven) in enumerate(summary_WL_phase_2, start=1):
 
         if short_tp == 'Линия':
             color = cell_format_hat
@@ -405,7 +410,7 @@ def create_summary_nkdk(path):
 
         else:
             try:
-                if ten == 'OK':
+                if eleven == 'OK':
                     color = cell_format_green
                 else:
                     color = cell_format_blue
@@ -429,6 +434,7 @@ def create_summary_nkdk(path):
         ws2.write(f'H{i}', number_xr, color)
         ws2.write(f'I{i}', nine, color)
         ws2.write(f'J{i}', ten, color)
+        ws2.write(f'J{i}', eleven, color)
 
     ws3 = workbook_wl.add_worksheet('Phase_4')
 
@@ -436,13 +442,13 @@ def create_summary_nkdk(path):
     ws3.set_column(1, 1, 30)
     ws3.set_column(2, 9, 13)
 
-    ws3.autofilter(f'A1:J100000')
+    ws3.autofilter(f'A1:J{len(summary_WL_phase_4)}')
 
     cell_form = workbook_wl.add_format()
     cell_form.set_text_wrap(text_wrap=1)
 
     for i, (short_tp, number_line, number_iso, number_joint, percent_control, number_ut, res_ut,
-            number_xr, nine, ten) in enumerate(summary_WL_phase_4, start=1):
+            number_xr, nine, ten, eleven) in enumerate(summary_WL_phase_4, start=1):
 
         if short_tp == 'Линия':
             color = cell_format_hat
@@ -450,7 +456,7 @@ def create_summary_nkdk(path):
 
         else:
             try:
-                if ten == 'OK':
+                if eleven == 'OK':
                     color = cell_format_green
                 else:
                     color = cell_format_blue
@@ -473,6 +479,7 @@ def create_summary_nkdk(path):
         ws3.write(f'H{i}', number_xr, color)
         ws3.write(f'I{i}', nine, color)
         ws3.write(f'J{i}', ten, color)
+        ws3.write(f'J{i}', eleven, color)
 
 
     workbook_wl.close()
